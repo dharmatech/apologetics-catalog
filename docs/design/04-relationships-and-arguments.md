@@ -137,6 +137,8 @@ Argumentative relationships should preserve their own metadata.
 
 The system should use controlled vocabulary values.
 
+Core relationship type values should be defined by the active schema version.
+
 Structural relationship examples:
 
 ```text
@@ -165,6 +167,19 @@ appeals_to_tradition
 ```
 
 Avoid unrestricted free-form relationship types.
+
+Custom relationship types must be declared as vocabulary extensions before use.
+
+Example:
+
+```yaml
+vocabulary_extensions:
+  relationship_types:
+    - id: project.appeals_to_liturgical_usage
+      label: "Appeals to liturgical usage"
+      description: >
+        Used when an argument appeals to historical worship practice.
+```
 
 Argumentative relationships should usually be represented as first-class
 relationship records rather than anonymous edges.

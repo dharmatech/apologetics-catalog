@@ -244,3 +244,92 @@ Example:
 ```text
 /docs/schema/CHANGELOG.md
 ```
+
+---
+
+## Controlled Vocabularies
+
+Controlled vocabularies should live with each schema version.
+
+Examples:
+
+```text
+/schema/0.1/vocab/document-kinds.yaml
+/schema/0.1/vocab/relationship-types.yaml
+/schema/0.1/vocab/argument-roles.yaml
+/schema/0.1/vocab/source-types.yaml
+/schema/0.1/vocab/provenance-agent-types.yaml
+/schema/0.1/vocab/locator-types.yaml
+```
+
+The compiler should validate controlled fields against the vocabulary files for
+the document's declared `schema_version`.
+
+Core vocabulary values should use short field-local IDs.
+
+Examples:
+
+```yaml
+kind: topic
+source:
+  type: scripture
+argument:
+  role: objection
+relationship:
+  type: supports
+```
+
+Extensions should be declared explicitly at the dataset or project level, not
+introduced inline.
+
+Unknown vocabulary values should be validation errors unless they are declared
+as extensions.
+
+Extension IDs should be namespaced.
+
+Examples:
+
+```text
+project.appeals_to_liturgical_usage
+org.example.some_relation
+```
+
+Vocabulary extensions should be dataset-level or project-level, not file-local.
+
+Example:
+
+```yaml
+schema_version: "0.1"
+
+kind: project
+
+vocabulary_extensions:
+  relationship_types:
+    - id: project.appeals_to_liturgical_usage
+      label: "Appeals to liturgical usage"
+      description: >
+        Used when an argument appeals to historical worship practice.
+```
+
+Vocabulary entries should support at least:
+
+```yaml
+id: supports
+label: "Supports"
+description: >
+  Indicates that one entity is used to support another entity.
+```
+
+Vocabulary entries may later support additional validation metadata.
+
+Examples:
+
+```yaml
+inverse: supported_by
+allowed_from:
+  - Argument
+  - Interpretation
+allowed_to:
+  - Claim
+  - Interpretation
+```

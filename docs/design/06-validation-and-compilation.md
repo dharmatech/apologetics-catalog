@@ -26,7 +26,8 @@ The schema phase validates each entity's required fields and local structure
 against the schema files for the declared schema version.
 
 The vocabulary phase validates controlled values such as relationship types and
-argument roles.
+argument roles. It should validate core values and declared project-level
+extensions.
 
 The identity phase validates entity IDs, detects duplicate IDs, and confirms
 that every entity declares its own stable `id`.
@@ -70,6 +71,8 @@ Validation should include:
 * reference field naming validation
 * relationship validation
 * controlled vocabulary validation
+* vocabulary extension declaration validation
+* unknown vocabulary value validation
 * argument role validation
 * provenance validation
 * section list validation
@@ -86,6 +89,8 @@ Examples:
 * missing or invalid `kind`
 * mixed document versions without a supported migration path
 * invalid relationship types
+* unknown vocabulary values without explicit extension declarations
+* malformed vocabulary extension declarations
 * invalid argument roles
 * invalid provenance source references
 * sections represented as maps keyed by ID instead of lists of records
@@ -106,6 +111,8 @@ Example:
 /schema/0.1/topic.schema.json
 /schema/0.1/claim.schema.json
 /schema/0.1/relationship.schema.json
+/schema/0.1/vocab/relationship-types.yaml
+/schema/0.1/vocab/argument-roles.yaml
 /schema/0.2/topic.schema.json
 ```
 
