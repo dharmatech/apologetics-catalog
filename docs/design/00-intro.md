@@ -36,6 +36,7 @@ in a machine-readable form that can be validated, queried, visualized, analyzed,
 * [Validation and Compilation](06-validation-and-compilation.md)
 * [Generated Outputs and CLI](07-outputs-and-cli.md)
 * [Initial Scope and Success Criteria](08-initial-scope.md)
+* [v0.1 YAML Authoring Schema](09-v0.1-schema.md)
 
 ### Overview
 

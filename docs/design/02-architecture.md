@@ -342,6 +342,10 @@ schema_version: "0.1"
 
 kind: project
 
+project:
+  id: project.apologetics
+  title: "Apologetics Viewpoint Catalog"
+
 vocabulary_extensions:
   relationship_types:
     - id: project.appeals_to_liturgical_usage
