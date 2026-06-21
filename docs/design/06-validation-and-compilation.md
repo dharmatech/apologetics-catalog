@@ -26,10 +26,9 @@ The schema phase validates each entity's required fields and local structure
 against the schema files for the declared schema version.
 
 The vocabulary phase validates controlled values such as relationship types,
-argument roles, question types, question statuses, agent types, position stances,
-position statuses,
-interpretation methods, and assumption categories. It should validate core
-values and declared project-level extensions.
+argument roles, question types, question statuses, agent types, position
+stances, position statuses, interpretation methods, and assumption categories.
+It should validate core values and declared project-level extensions.
 
 The identity phase validates entity IDs, detects duplicate IDs, and confirms
 that every entity declares its own stable `id`.
@@ -127,6 +126,132 @@ Examples:
 * first-class relationships whose `from_id` or `to_id` targets do not exist
 
 The compiler should reject invalid datasets.
+
+---
+
+## Normalized Catalog
+
+After validation succeeds, YAML should compile into a normalized catalog.
+
+The normalized catalog is the compiler's canonical intermediate representation.
+
+It should preserve:
+
+* every entity by stable `id`
+* entity `kind`
+* first-class `Relationship` records
+* provenance and rights metadata
+* source file and location metadata where practical
+* schema version used for validation
+
+IDs are globally unique across all entity kinds.
+
+The compiler should not build a full normalized catalog from an invalid dataset.
+
+Diagnostics may still use partial parse or schema context when validation fails.
+
+Example:
+
+```yaml
+catalog:
+  schema_version: "0.1"
+
+  entities:
+    claim.jesus_created:
+      kind: Claim
+      source_ref:
+        file: content/questions/christology/created-being.yaml
+        line: 42
+        column: 5
+
+  relationships:
+    relationship.claims.created_vs_not_created:
+      kind: Relationship
+      type: contradicts
+      from_id: claim.jesus_created
+      to_id: claim.jesus_not_created
+      source_ref:
+        file: content/questions/christology/created-being.yaml
+        line: 88
+        column: 5
+```
+
+Source locations may be best-effort initially.
+
+The normalized catalog should be deterministically ordered.
+
+Entity ordering:
+
+```text
+kind
+id
+```
+
+Relationship ordering:
+
+```text
+type
+from_id
+to_id
+id
+```
+
+---
+
+## Graph Projection
+
+The graph projection is derived from the normalized catalog.
+
+First-class `Relationship` records are canonical data.
+
+Graph edges are generated projections.
+
+Structural references such as `question_id`, `source_id`, `topic_ids`, and
+`holder` should become derived graph edges.
+
+First-class relationship records may also be rendered as graph edges.
+
+Edges should record their origin.
+
+Examples:
+
+```text
+explicit_relationship
+derived_reference
+```
+
+Example:
+
+```yaml
+graph:
+  nodes:
+    - id: claim.jesus_created
+      kind: Claim
+
+  edges:
+    - type: belongs_to
+      from_id: claim.jesus_created
+      to_id: question.christology.created_being
+      origin: derived_reference
+      derived_from: claim.jesus_created.question_id
+
+    - id: relationship.claims.created_vs_not_created
+      type: contradicts
+      from_id: claim.jesus_created
+      to_id: claim.jesus_not_created
+      origin: explicit_relationship
+```
+
+Graph projection ordering should be deterministic.
+
+Edge ordering:
+
+```text
+type
+from_id
+to_id
+id
+```
 
 ---
 
@@ -271,3 +396,5 @@ Diagnostic output should also be deterministic so validation tests and CI output
 do not churn.
 
 Migration output should be deterministic and covered by exact-output fixtures.
+
+Normalized catalog and graph projection output should be deterministic.

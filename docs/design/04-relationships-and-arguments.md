@@ -348,6 +348,16 @@ First-class relationship records may be rendered as graph edges in generated
 views, but the canonical graph should preserve the relationship record and its
 metadata.
 
+Generated graph edges should identify whether they came from an explicit
+first-class relationship or from a derived structural reference.
+
+Example edge origins:
+
+```text
+explicit_relationship
+derived_reference
+```
+
 This enables:
 
 * visualization

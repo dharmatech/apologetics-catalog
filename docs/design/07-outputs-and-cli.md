@@ -6,6 +6,7 @@ Generated artifacts may include:
 
 ```text
 /generated/json
+/generated/catalog
 /generated/html
 /generated/markdown
 /generated/python
@@ -36,12 +37,21 @@ Examples:
 /generated/json/claims.json
 /generated/json/evidence.json
 /generated/json/relationships.json
+/generated/catalog/catalog.json
 /generated/graph/full.graph.json
 ```
 
 Graph databases, search indexes, HTML views, and query-oriented stores should be
 treated as generated projections unless the project explicitly changes the
 canonical storage model.
+
+The normalized catalog output should preserve the compiler's validated
+intermediate representation.
+
+The graph output should be a projection derived from that normalized catalog.
+
+Generated graph edges should distinguish first-class relationship records from
+derived structural references.
 
 ---
 
