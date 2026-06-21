@@ -348,6 +348,7 @@ Examples:
 
 ```yaml
 inverse: supported_by
+symmetric: false
 allowed_from:
   - Argument
   - Interpretation

@@ -133,6 +133,43 @@ Argumentative relationships should preserve their own metadata.
 
 ---
 
+## Claim Relationships
+
+Claims may relate to other claims.
+
+Opposing claims should be separate `Claim` records connected by a first-class
+relationship.
+
+Example:
+
+```yaml
+id: relationship.claims.created_vs_not_created
+
+type: contradicts
+
+from_id: claim.jesus_created
+
+to_id: claim.jesus_not_created
+
+summary: >
+  These claims cannot both be true in the same sense.
+```
+
+Other claim-to-claim relationships may include:
+
+```text
+entails
+qualifies
+narrows
+broadens
+depends_on
+```
+
+The system should use the existing first-class `Relationship` model for
+claim-to-claim relationships rather than introducing a separate mechanism.
+
+---
+
 ## Relationship Types
 
 The system should use controlled vocabulary values.
@@ -155,7 +192,11 @@ Argumentative or interpretive relationship examples:
 ```text
 supports
 challenges
+contradicts
+entails
 qualifies
+narrows
+broadens
 depends_on
 responds_to
 contrasts_with
@@ -187,6 +228,35 @@ relationship records rather than anonymous edges.
 
 Simple structural relationships may remain as direct references when they do not
 need independent provenance or explanation.
+
+Relationship type vocabulary entries may define graph behavior and validation
+metadata.
+
+Examples:
+
+```yaml
+id: contradicts
+label: "Contradicts"
+symmetric: true
+allowed_from:
+  - Claim
+allowed_to:
+  - Claim
+```
+
+```yaml
+id: entails
+label: "Entails"
+symmetric: false
+inverse: entailed_by
+allowed_from:
+  - Claim
+allowed_to:
+  - Claim
+```
+
+Symmetric relationship types may eventually support diagnostics for duplicate
+reverse edges.
 
 ---
 

@@ -70,6 +70,7 @@ Validation should include:
 * reference validation
 * reference field naming validation
 * relationship validation
+* claim relationship validation
 * controlled vocabulary validation
 * vocabulary extension declaration validation
 * unknown vocabulary value validation
@@ -96,6 +97,7 @@ Examples:
 * missing or invalid `kind`
 * mixed document versions without a supported migration path
 * invalid relationship types
+* invalid claim relationship endpoints
 * unknown vocabulary values without explicit extension declarations
 * malformed vocabulary extension declarations
 * invalid argument roles
@@ -203,6 +205,8 @@ W001 orphan node
 W002 unused source
 W003 missing source rights metadata
 W004 unusually long quotation
+W005 possible duplicate claim summary
+W006 duplicate reverse edge for symmetric relationship
 ```
 
 Diagnostic ordering should be deterministic.

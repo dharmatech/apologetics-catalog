@@ -20,6 +20,15 @@ A question acts as a container for competing claims.
 
 A specific answer or assertion related to a question.
 
+Claims represent atomic propositions.
+
+The `summary` field is required and should be author-friendly.
+
+The optional `proposition` field may provide a stricter formulation.
+
+Claims may also include optional `scope` or `qualifiers` fields when the
+boundaries of the proposition need clarification.
+
 Examples:
 
 ```yaml
@@ -29,6 +38,15 @@ question_id: question.christology.created_being
 
 summary: >
   Jesus is a created being.
+
+proposition: >
+  Jesus is a member of the class of created beings.
+
+scope:
+  domain: christology
+
+qualifiers:
+  - "with respect to created ontology"
 ```
 
 ```yaml
@@ -43,6 +61,16 @@ summary: >
 Claims represent propositions.
 
 Questions represent the broader issue under discussion.
+
+Opposing answers should be modeled as separate claims.
+
+Claim opposition, implication, dependency, narrowing, broadening, or
+qualification should be represented through first-class relationships.
+
+The model should not use a claim `polarity` field initially.
+
+The compiler should not attempt automatic semantic deduplication of similar
+claims initially.
 
 ---
 
