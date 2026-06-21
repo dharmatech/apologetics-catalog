@@ -75,3 +75,19 @@ query
 ```
 
 These commands should remain simple and implementation-independent.
+
+The `validate` command should support human-readable diagnostics by default.
+
+It should also support machine-readable JSON output.
+
+Examples:
+
+```text
+validate
+validate --format json
+validate --warnings-as-errors
+```
+
+Warnings should not fail validation by default.
+
+The `--warnings-as-errors` option allows stricter CI or release workflows.
