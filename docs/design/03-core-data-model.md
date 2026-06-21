@@ -296,6 +296,18 @@ Citation-like references should be represented with `source_id`, `evidence_id`,
 
 A particular reading or understanding of evidence.
 
+An interpretation should say what evidence is taken to mean.
+
+It should not contain the full argument or doctrinal conclusion that may be
+drawn from that interpretation.
+
+Prefer one primary `evidence_id`.
+
+Use `related_evidence_ids` when an interpretation synthesizes multiple pieces of
+evidence.
+
+The optional `method` field identifies how the evidence is being interpreted.
+
 Example:
 
 ```yaml
@@ -303,10 +315,31 @@ id: interpretation.jw.colossians.1.15.firstborn
 
 evidence_id: evidence.colossians.1.15.firstborn
 
+related_evidence_ids:
+  - evidence.revelation.3.14.beginning
+
+method: lexical
+
 summary: >
   Firstborn is interpreted as
   first-created.
 ```
+
+Initial interpretation method values:
+
+```text
+lexical
+grammatical
+historical
+theological
+textual
+translation
+contextual
+traditional
+```
+
+Arguments should use or relate to interpretations rather than duplicating their
+interpretive content.
 
 ---
 
@@ -314,17 +347,37 @@ summary: >
 
 An explicit or implicit premise required by an interpretation.
 
+Assumptions are reusable standalone entities.
+
+The optional `category` field identifies the kind of premise.
+
 Example:
 
 ```yaml
 id: assumption.firstborn_means_first_created
+
+category: lexical
 
 summary: >
   Firstborn denotes membership
   within the created order.
 ```
 
-Interpretations may depend upon assumptions.
+Initial assumption category values:
+
+```text
+lexical
+historical
+theological
+methodological
+textual
+translation
+```
+
+Interpretations and arguments may depend upon assumptions.
+
+Dependencies on assumptions should be represented through first-class
+relationships.
 
 ---
 

@@ -26,8 +26,9 @@ The schema phase validates each entity's required fields and local structure
 against the schema files for the declared schema version.
 
 The vocabulary phase validates controlled values such as relationship types,
-argument roles, agent types, position stances, and position statuses. It should
-validate core values and declared project-level extensions.
+argument roles, agent types, position stances, position statuses,
+interpretation methods, and assumption categories. It should validate core
+values and declared project-level extensions.
 
 The identity phase validates entity IDs, detects duplicate IDs, and confirms
 that every entity declares its own stable `id`.
@@ -79,6 +80,8 @@ Validation should include:
 * position holder validation
 * position claim stance validation
 * position status validation
+* interpretation method validation
+* assumption category validation
 * provenance validation
 * locator validation
 * source rights metadata validation
@@ -105,6 +108,8 @@ Examples:
 * missing or invalid position holders
 * invalid position claim stances
 * invalid position statuses
+* invalid interpretation methods
+* invalid assumption categories
 * invalid provenance source references
 * malformed locators
 * exact quotations attached to abstract sources
@@ -131,6 +136,8 @@ Example:
 /schema/0.1/vocab/agent-types.yaml
 /schema/0.1/vocab/position-stances.yaml
 /schema/0.1/vocab/position-statuses.yaml
+/schema/0.1/vocab/interpretation-methods.yaml
+/schema/0.1/vocab/assumption-categories.yaml
 /schema/0.2/topic.schema.json
 ```
 

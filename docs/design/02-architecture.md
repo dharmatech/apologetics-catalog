@@ -275,6 +275,8 @@ Examples:
 /schema/0.1/vocab/agent-types.yaml
 /schema/0.1/vocab/position-stances.yaml
 /schema/0.1/vocab/position-statuses.yaml
+/schema/0.1/vocab/interpretation-methods.yaml
+/schema/0.1/vocab/assumption-categories.yaml
 /schema/0.1/vocab/provenance-agent-types.yaml
 /schema/0.1/vocab/locator-types.yaml
 ```
@@ -297,6 +299,10 @@ argument:
 position_claim:
   stance: affirms
   status: official
+interpretation:
+  method: lexical
+assumption:
+  category: lexical
 relationship:
   type: supports
 ```

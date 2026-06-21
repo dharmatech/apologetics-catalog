@@ -5,6 +5,9 @@
 A reasoned statement that supports, challenges, qualifies, clarifies, or
 responds to another entity.
 
+An argument performs an inferential move from evidence, interpretation, or
+assumptions toward a claim or another argument.
+
 Arguments subsume objections, counter-objections, rebuttals, supporting
 arguments, qualifications, and other moves in an argumentative exchange.
 
@@ -49,6 +52,10 @@ arguments.
 Argument targets should usually be represented through first-class relationship
 records so that the support, challenge, qualification, or response can preserve
 its own metadata.
+
+Arguments should not duplicate interpretation content.
+
+They should use or relate to interpretations through first-class relationships.
 
 ---
 
@@ -117,6 +124,19 @@ to_id: argument.trinitarian.firstborn_rank
 summary: >
   The response answers the rank or preeminence objection
   by restating the created-order reading.
+```
+
+```yaml
+id: relationship.jw.created_from_firstborn.uses_interpretation
+
+type: uses
+
+from_id: argument.jw.created_from_firstborn
+
+to_id: interpretation.jw.colossians.1.15.firstborn
+
+summary: >
+  The argument uses the interpretation that firstborn means first-created.
 ```
 
 First-class relationships allow the system to distinguish:
@@ -198,6 +218,7 @@ qualifies
 narrows
 broadens
 depends_on
+uses
 responds_to
 contrasts_with
 interprets
@@ -286,6 +307,7 @@ Edge types:
 supports
 challenges
 depends_on
+uses
 responds_to
 cites
 interprets
