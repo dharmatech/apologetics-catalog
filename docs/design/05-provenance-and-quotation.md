@@ -8,8 +8,9 @@ support structured provenance metadata.
 The system should distinguish:
 
 ```text
-Source        original document, artifact, or text
-Evidence      extracted material from a source
+Source        work, edition, translation, manuscript, publication, or dataset
+Locator       location within a source, such as verse, page, or timestamp
+Evidence      extracted material from a concrete source at a locator
 Interpretation derived reading of evidence
 Argument      reasoned statement made by an author, group, or tradition
 Relationship  assertion that one entity supports, challenges, qualifies, or
@@ -21,6 +22,9 @@ Provenance should not replace `Source` or `Evidence`.
 
 Instead, provenance records who made, preserved, published, summarized, or
 transmitted a derived statement.
+
+Provenance may include a `locator` when citing a specific page, section,
+paragraph, verse, timestamp, or other location within a work.
 
 Example:
 
@@ -82,6 +86,28 @@ original source.
 
 ---
 
+## Source Rights
+
+Sources may include rights and licensing metadata.
+
+Example:
+
+```yaml
+rights:
+  status: public_domain
+  license: CC0
+  attribution: "Example Source"
+  url: https://example.org/rights
+```
+
+Rights metadata may vary by source, edition, translation, or publication.
+
+For exact quotations, the evidence should cite the concrete source whose wording
+is quoted, because rights and attribution requirements may differ between
+editions or translations.
+
+---
+
 ## Quotation Separation
 
 The system should distinguish between:
@@ -105,3 +131,26 @@ commentary:
 Human explanation or interpretation.
 
 These should never be conflated.
+
+Exact quotations should cite the concrete source, edition, translation, or
+publication whose wording is being quoted.
+
+Example:
+
+```yaml
+source_id: source.bible.bsb
+
+locator:
+  type: verse
+  value: "Colossians 1:15"
+
+quotation: "firstborn over all creation"
+```
+
+Avoid attaching exact quotation text to an abstract source when the wording
+comes from a specific edition or translation.
+
+Evidence quotations should be as short as practical.
+
+Generated outputs may eventually need quote-length, rights, or attribution
+rules.

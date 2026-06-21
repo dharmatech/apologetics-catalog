@@ -81,11 +81,24 @@ name: "Jehovah's Witnesses"
 
 ## Source
 
-A document, verse, manuscript, publication, council, article, book, or other original source.
+A work, edition, translation, manuscript, publication, council, article, book,
+dataset, or other source of evidence.
+
+A `Source` may represent either an abstract work or a concrete edition,
+translation, manuscript, or publication.
+
+Exact quotations should normally point to the concrete source whose wording is
+being quoted.
+
+Abstract sources are useful for grouping related concrete sources, but they are
+not sufficient for exact quotation wording.
 
 Examples:
 
-* Scripture passage
+* Biblical book or corpus
+* Bible translation
+* Critical text
+* Manuscript
 * Church council
 * Church father
 * Scholarly paper
@@ -95,30 +108,83 @@ Examples:
 Example:
 
 ```yaml
-id: source.scripture.colossians.1.15
+id: source.bible.bsb
 
-type: scripture
+type: translation
 
-reference: "Colossians 1:15"
+title: "Berean Standard Bible"
+
+work_id: source.bible
+
+rights:
+  status: copyrighted
+  attribution: "Berean Standard Bible"
+  url: https://bereanbible.com/
 ```
+
+---
+
+## Locator
+
+A structured field identifying where material appears within a source.
+
+Locators are not standalone entities initially.
+
+Example:
+
+```yaml
+locator:
+  type: verse
+  value: "Colossians 1:15"
+```
+
+Common locator types may include:
+
+```text
+verse
+page
+section
+paragraph
+timestamp
+canon
+article
+```
+
+If reusable canonical passages or locations become necessary later, the design
+may introduce a standalone `Passage` or `Location` entity.
 
 ---
 
 ## Evidence
 
-A specific piece of evidence extracted from a source.
+A specific piece of evidence extracted from a concrete source at a locator.
+
+Evidence should contain the specific quoted, paraphrased, or structured material
+being used, not merely a reference.
 
 Example:
 
 ```yaml
-id: evidence.colossians.firstborn
+id: evidence.colossians.1.15.firstborn
 
-source_id: source.scripture.colossians.1.15
+source_id: source.bible.bsb
 
-quotation: "firstborn of all creation"
+locator:
+  type: verse
+  value: "Colossians 1:15"
+
+quotation: "firstborn over all creation"
 ```
 
-Multiple evidence items may originate from the same source.
+Multiple evidence items may originate from the same source and locator.
+
+The same verse, page, paragraph, or timestamp may yield multiple evidence
+records when different excerpts or details matter.
+
+No separate `Citation` entity is required initially.
+
+Citation-like references should be represented with `source_id`, `evidence_id`,
+`locator`, provenance, or first-class relationships as appropriate.
 
 ---
 
@@ -129,9 +195,9 @@ A particular reading or understanding of evidence.
 Example:
 
 ```yaml
-id: interpretation.jw.colossians.firstborn
+id: interpretation.jw.colossians.1.15.firstborn
 
-evidence_id: evidence.colossians.firstborn
+evidence_id: evidence.colossians.1.15.firstborn
 
 summary: >
   Firstborn is interpreted as
@@ -171,7 +237,8 @@ Preferred:
 ```text
 question.christology.created_being
 claim.jesus_created
-source.scripture.colossians.1.15
+source.bible.bsb
+evidence.colossians.1.15.firstborn
 ```
 
 Avoid identifiers that depend upon display wording.

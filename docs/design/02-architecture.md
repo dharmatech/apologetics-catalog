@@ -84,9 +84,12 @@ claims:
       Jesus is a created being.
 
 evidence:
-  - id: evidence.colossians.firstborn
-    source_id: source.scripture.colossians.1.15
-    quotation: "firstborn of all creation"
+  - id: evidence.colossians.1.15.firstborn
+    source_id: source.bible.bsb
+    locator:
+      type: verse
+      value: "Colossians 1:15"
+    quotation: "firstborn over all creation"
 ```
 
 Single-record files should use the same envelope pattern.
@@ -136,11 +139,11 @@ Examples:
 
 ```yaml
 question_id: question.christology.created_being
-source_id: source.scripture.colossians.1.15
+source_id: source.bible.bsb
 tradition_id: tradition.jehovahs_witnesses
-evidence_id: evidence.colossians.firstborn
+evidence_id: evidence.colossians.1.15.firstborn
 from_id: argument.trinitarian.firstborn_rank
-to_id: interpretation.jw.colossians.firstborn
+to_id: interpretation.jw.colossians.1.15.firstborn
 target_ids:
   - claim.jesus_created
 depends_on_ids:

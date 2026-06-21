@@ -75,6 +75,9 @@ Validation should include:
 * unknown vocabulary value validation
 * argument role validation
 * provenance validation
+* locator validation
+* source rights metadata validation
+* evidence quotation validation
 * section list validation
 * orphan node detection
 * consistency checking
@@ -93,6 +96,8 @@ Examples:
 * malformed vocabulary extension declarations
 * invalid argument roles
 * invalid provenance source references
+* malformed locators
+* exact quotations attached to abstract sources
 * sections represented as maps keyed by ID instead of lists of records
 * references to nonexistent entities
 * first-class relationships whose `from_id` or `to_id` targets do not exist
@@ -185,6 +190,8 @@ E003 invalid reference
 E004 invalid controlled vocabulary value
 W001 orphan node
 W002 unused source
+W003 missing source rights metadata
+W004 unusually long quotation
 ```
 
 Diagnostic ordering should be deterministic.

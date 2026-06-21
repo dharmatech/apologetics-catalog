@@ -68,7 +68,7 @@ claim:
 
 ```yaml
 evidence:
-  source_id: source.scripture.colossians.1.15
+  source_id: source.bible.bsb
 ```
 
 Argumentative or interpretive relationships should be modeled as first-class
@@ -82,7 +82,7 @@ id: relationship.jw.colossians_firstborn.supports_created
 
 type: supports
 
-from_id: interpretation.jw.colossians.firstborn
+from_id: interpretation.jw.colossians.1.15.firstborn
 
 to_id: claim.jesus_created
 
@@ -98,7 +98,7 @@ type: challenges
 
 from_id: argument.trinitarian.firstborn_rank
 
-to_id: interpretation.jw.colossians.firstborn
+to_id: interpretation.jw.colossians.1.15.firstborn
 
 summary: >
   The argument challenges the interpretation that
