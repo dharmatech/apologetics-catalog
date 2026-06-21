@@ -1,8 +1,31 @@
 # Core Data Model
 
+## Topic
+
+A lightweight classification entity used to group questions.
+
+Topics are not the primary debate container.
+
+Questions remain the central issue being investigated.
+
+Example:
+
+```yaml
+id: topic.christology
+
+title: "Christology"
+```
+
+---
+
 ## Question
 
 A topic or issue being investigated.
+
+Questions may be classified by topic, organized into a primary hierarchy, and
+linked to related questions.
+
+Non-hierarchical question links should use first-class relationships.
 
 Example:
 
@@ -10,9 +33,41 @@ Example:
 id: question.christology.created_being
 
 title: "Is Jesus a created being?"
+
+question_type: yes_no
+
+status: active
+
+topic_ids:
+  - topic.christology
+
+parent_question_id: question.christology.nature_of_christ
+
+description: >
+  Concerns whether the Son is a created being
+  or eternally divine.
 ```
 
 A question acts as a container for competing claims.
+
+Initial question type values:
+
+```text
+yes_no
+interpretive
+historical
+comparative
+classificatory
+open
+```
+
+Initial question status values:
+
+```text
+draft
+active
+deprecated
+```
 
 ---
 
@@ -35,6 +90,9 @@ Examples:
 id: claim.jesus_created
 
 question_id: question.christology.created_being
+
+related_question_ids:
+  - question.christology.firstborn_meaning
 
 summary: >
   Jesus is a created being.
@@ -61,6 +119,10 @@ summary: >
 Claims represent propositions.
 
 Questions represent the broader issue under discussion.
+
+Claims should have one primary `question_id` initially.
+
+Use `related_question_ids` when a claim is relevant to other questions.
 
 Opposing answers should be modeled as separate claims.
 
@@ -392,6 +454,7 @@ File paths and titles may suggest an ID, but they do not define identity.
 Preferred:
 
 ```text
+topic.christology
 question.christology.created_being
 claim.jesus_created
 agent.council.nicaea_325

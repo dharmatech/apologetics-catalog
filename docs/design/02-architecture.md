@@ -76,6 +76,10 @@ kind: topic
 question:
   id: question.christology.created_being
   title: "Is Jesus a created being?"
+  question_type: yes_no
+  status: active
+  topic_ids:
+    - topic.christology
 
 claims:
   - id: claim.jesus_created
@@ -139,6 +143,7 @@ Examples:
 
 ```yaml
 question_id: question.christology.created_being
+topic_id: topic.christology
 source_id: source.bible.bsb
 agent_id: agent.council.nicaea_325
 evidence_id: evidence.colossians.1.15.firstborn
@@ -246,6 +251,7 @@ Example:
 
 ```text
 /schema/0.1/topic.schema.json
+/schema/0.1/question.schema.json
 /schema/0.1/claim.schema.json
 /schema/0.1/relationship.schema.json
 /schema/0.2/topic.schema.json
@@ -269,6 +275,8 @@ Examples:
 
 ```text
 /schema/0.1/vocab/document-kinds.yaml
+/schema/0.1/vocab/question-types.yaml
+/schema/0.1/vocab/question-statuses.yaml
 /schema/0.1/vocab/relationship-types.yaml
 /schema/0.1/vocab/argument-roles.yaml
 /schema/0.1/vocab/source-types.yaml
@@ -290,6 +298,9 @@ Examples:
 
 ```yaml
 kind: topic
+question:
+  question_type: yes_no
+  status: active
 source:
   type: scripture
 agent:

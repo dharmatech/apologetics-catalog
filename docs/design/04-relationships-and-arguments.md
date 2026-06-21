@@ -205,6 +205,7 @@ has_source
 has_question
 has_tradition
 held_by
+classified_as
 ```
 
 Argumentative or interpretive relationship examples:
@@ -221,6 +222,7 @@ depends_on
 uses
 responds_to
 contrasts_with
+related_to
 interprets
 appeals_to_translation
 appeals_to_context
@@ -281,6 +283,30 @@ reverse edges.
 
 ---
 
+## Question Relationships
+
+Questions may have one primary parent through `parent_question_id`.
+
+Non-hierarchical links between questions should use first-class relationships.
+
+Example:
+
+```yaml
+id: relationship.questions.created_being.related_to_firstborn_meaning
+
+type: related_to
+
+from_id: question.christology.created_being
+
+to_id: question.christology.firstborn_meaning
+
+summary: >
+  The created-being question is related to the interpretation
+  of firstborn language.
+```
+
+---
+
 ## Graph Representation
 
 The entire dataset should be representable as a graph.
@@ -289,6 +315,7 @@ Node types:
 
 ```text
 Question
+Topic
 Claim
 Position
 Tradition
@@ -313,6 +340,8 @@ cites
 interprets
 belongs_to
 held_by
+classified_as
+related_to
 ```
 
 First-class relationship records may be rendered as graph edges in generated

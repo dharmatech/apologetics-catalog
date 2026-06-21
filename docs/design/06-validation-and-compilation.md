@@ -26,7 +26,8 @@ The schema phase validates each entity's required fields and local structure
 against the schema files for the declared schema version.
 
 The vocabulary phase validates controlled values such as relationship types,
-argument roles, agent types, position stances, position statuses,
+argument roles, question types, question statuses, agent types, position stances,
+position statuses,
 interpretation methods, and assumption categories. It should validate core
 values and declared project-level extensions.
 
@@ -70,6 +71,10 @@ Validation should include:
 * ID format validation
 * reference validation
 * reference field naming validation
+* topic reference validation
+* question hierarchy validation
+* question type validation
+* question status validation
 * relationship validation
 * claim relationship validation
 * controlled vocabulary validation
@@ -100,6 +105,10 @@ Examples:
 * missing or invalid `kind`
 * mixed document versions without a supported migration path
 * invalid relationship types
+* invalid topic references
+* invalid parent question references
+* invalid question types
+* invalid question statuses
 * invalid claim relationship endpoints
 * unknown vocabulary values without explicit extension declarations
 * malformed vocabulary extension declarations
@@ -129,8 +138,11 @@ Example:
 
 ```text
 /schema/0.1/topic.schema.json
+/schema/0.1/question.schema.json
 /schema/0.1/claim.schema.json
 /schema/0.1/relationship.schema.json
+/schema/0.1/vocab/question-types.yaml
+/schema/0.1/vocab/question-statuses.yaml
 /schema/0.1/vocab/relationship-types.yaml
 /schema/0.1/vocab/argument-roles.yaml
 /schema/0.1/vocab/agent-types.yaml
