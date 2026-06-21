@@ -140,7 +140,7 @@ Examples:
 ```yaml
 question_id: question.christology.created_being
 source_id: source.bible.bsb
-tradition_id: tradition.jehovahs_witnesses
+agent_id: agent.council.nicaea_325
 evidence_id: evidence.colossians.1.15.firstborn
 from_id: argument.trinitarian.firstborn_rank
 to_id: interpretation.jw.colossians.1.15.firstborn
@@ -148,6 +148,17 @@ target_ids:
   - claim.jesus_created
 depends_on_ids:
   - assumption.firstborn_means_first_created
+```
+
+Typed references may use an object when the reference needs both a target kind
+and a target ID.
+
+Example:
+
+```yaml
+holder:
+  type: tradition
+  id: tradition.jehovahs_witnesses
 ```
 
 YAML list order may be preserved for readability and default display, but list
@@ -261,6 +272,9 @@ Examples:
 /schema/0.1/vocab/relationship-types.yaml
 /schema/0.1/vocab/argument-roles.yaml
 /schema/0.1/vocab/source-types.yaml
+/schema/0.1/vocab/agent-types.yaml
+/schema/0.1/vocab/position-stances.yaml
+/schema/0.1/vocab/position-statuses.yaml
 /schema/0.1/vocab/provenance-agent-types.yaml
 /schema/0.1/vocab/locator-types.yaml
 ```
@@ -276,8 +290,13 @@ Examples:
 kind: topic
 source:
   type: scripture
+agent:
+  type: council
 argument:
   role: objection
+position_claim:
+  stance: affirms
+  status: official
 relationship:
   type: supports
 ```

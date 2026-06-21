@@ -71,8 +71,9 @@ edition
 language
 ```
 
-The `attributed_to` value may identify an author, editor, translator,
-organization, tradition, council, school, or dataset contributor.
+The `attributed_to` value may identify or reference an `Agent`, such as an
+author, editor, translator, organization, tradition, council, school, or dataset
+contributor.
 
 The `locator` value should identify the relevant page, section, paragraph,
 verse, timestamp, canon, article, or other location within the cited work.

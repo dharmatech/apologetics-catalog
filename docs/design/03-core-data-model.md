@@ -46,25 +46,6 @@ Questions represent the broader issue under discussion.
 
 ---
 
-## Position
-
-A tradition, school, group, or author's support for one or more claims.
-
-Example:
-
-```yaml
-id: position.jw.christology
-
-tradition_id: tradition.jehovahs_witnesses
-
-claim_ids:
-  - claim.jesus_created
-```
-
-A position may support multiple claims.
-
----
-
 ## Tradition
 
 A group, school, denomination, movement, or intellectual tradition.
@@ -76,6 +57,101 @@ id: tradition.jehovahs_witnesses
 
 name: "Jehovah's Witnesses"
 ```
+
+---
+
+## Agent
+
+An entity capable of making, holding, publishing, preserving, transmitting, or
+being attributed with a claim, argument, interpretation, or position.
+
+Agents may include:
+
+```text
+person
+organization
+council
+tradition
+dataset_contributor
+```
+
+`Tradition` remains a domain concept for schools, movements, denominations, and
+intellectual traditions.
+
+`Agent` is the broader attribution and position-holder concept.
+
+Publications are usually modeled as `Source` records rather than `Agent`
+records.
+
+A council may be modeled as an `Agent`, while a creed, canon, declaration, or
+other resulting text may be modeled as a `Source`.
+
+Example:
+
+```yaml
+id: agent.council.nicaea_325
+
+type: council
+
+name: "Council of Nicaea"
+```
+
+---
+
+## Position
+
+A stance attributed to a holder in relation to one or more claims.
+
+The `holder` identifies who or what holds the position.
+
+Example:
+
+```yaml
+id: position.jw.christology.created_being
+
+holder:
+  type: tradition
+  id: tradition.jehovahs_witnesses
+
+claim_stances:
+  - claim_id: claim.jesus_created
+    stance: affirms
+    status: official
+```
+
+One position should have one holder initially.
+
+If multiple holders share a stance, use separate positions unless a later design
+introduces explicit position grouping.
+
+Position-to-claim links should use structured `claim_stances` rather than a
+plain `claim_ids` list.
+
+Each `claim_stances` item should identify the claim, the holder's stance toward
+the claim, and the attribution status.
+
+Initial stance values:
+
+```text
+affirms
+rejects
+qualifies
+permits
+unclear
+```
+
+Initial status values:
+
+```text
+official
+common
+historical
+disputed
+attributed
+```
+
+A position may be supported by provenance, such as a publication, council
+document, or dataset contributor's summary.
 
 ---
 
@@ -237,6 +313,8 @@ Preferred:
 ```text
 question.christology.created_being
 claim.jesus_created
+agent.council.nicaea_325
+tradition.jehovahs_witnesses
 source.bible.bsb
 evidence.colossians.1.15.firstborn
 ```

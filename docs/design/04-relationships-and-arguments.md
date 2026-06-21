@@ -147,6 +147,7 @@ cites
 has_source
 has_question
 has_tradition
+held_by
 ```
 
 Argumentative or interpretive relationship examples:
@@ -200,6 +201,7 @@ Question
 Claim
 Position
 Tradition
+Agent
 Source
 Evidence
 Interpretation
@@ -218,6 +220,7 @@ responds_to
 cites
 interprets
 belongs_to
+held_by
 ```
 
 First-class relationship records may be rendered as graph edges in generated
