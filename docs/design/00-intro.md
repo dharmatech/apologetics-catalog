@@ -20,8 +20,7 @@ Instead, it is intended to represent:
 * evidence
 * interpretations
 * assumptions
-* objections
-* counter-objections
+* arguments
 * provenance
 * relationships
 
@@ -310,37 +309,55 @@ Interpretations may depend upon assumptions.
 
 ---
 
-## Objection
+## Argument
 
-A challenge directed at a claim, interpretation, or assumption.
+A reasoned statement that supports, challenges, qualifies, clarifies, or
+responds to another entity.
+
+Arguments subsume objections, counter-objections, rebuttals, supporting
+arguments, qualifications, and other moves in an argumentative exchange.
 
 Example:
 
 ```yaml
-id: objection.trinitarian.firstborn
+id: argument.trinitarian.firstborn_rank
 
-targets:
-  - interpretation.jw.colossians.firstborn
+role: objection
 
 summary: >
   Firstborn frequently indicates
   rank or preeminence.
 ```
 
----
-
-## Counter-Objection
-
-A response to an objection.
-
 Example:
 
 ```yaml
-id: counter.jw.firstborn
+id: argument.jw.firstborn_created_order_response
 
-targets:
-  - objection.trinitarian.firstborn
+role: response
+
+summary: >
+  The phrase firstborn of all creation is read as placing
+  the Son within the created order.
 ```
+
+Common argument roles:
+
+```text
+support
+objection
+response
+rebuttal
+qualification
+clarification
+```
+
+Arguments may target claims, interpretations, assumptions, evidence, or other
+arguments.
+
+Argument targets should usually be represented through first-class relationship
+records so that the support, challenge, qualification, or response can preserve
+its own metadata.
 
 ---
 
@@ -388,13 +405,27 @@ id: relationship.trinitarian.firstborn.challenges_jw
 
 type: challenges
 
-from: objection.trinitarian.firstborn
+from: argument.trinitarian.firstborn_rank
 
 to: interpretation.jw.colossians.firstborn
 
 summary: >
-  The objection challenges the interpretation that
+  The argument challenges the interpretation that
   firstborn means first-created.
+```
+
+```yaml
+id: relationship.jw.firstborn_response.responds_to_rank_objection
+
+type: responds_to
+
+from: argument.jw.firstborn_created_order_response
+
+to: argument.trinitarian.firstborn_rank
+
+summary: >
+  The response answers the rank or preeminence objection
+  by restating the created-order reading.
 ```
 
 First-class relationships allow the system to distinguish:
@@ -413,29 +444,83 @@ Argumentative relationships should preserve their own metadata.
 
 # Provenance
 
-Interpretations, objections, and other derived statements should support provenance metadata.
+Interpretations, arguments, relationships, and other derived statements should
+support structured provenance metadata.
+
+The system should distinguish:
+
+```text
+Source        original document, artifact, or text
+Evidence      extracted material from a source
+Interpretation derived reading of evidence
+Argument      reasoned statement made by an author, group, or tradition
+Relationship  assertion that one entity supports, challenges, qualifies, or
+              responds to another entity
+Provenance    attribution for a derived statement or relationship
+```
+
+Provenance should not replace `Source` or `Evidence`.
+
+Instead, provenance records who made, preserved, published, summarized, or
+transmitted a derived statement.
 
 Example:
 
 ```yaml
 provenance:
 
-  source_type: publication
+  attributed_to:
+    type: author
+    name: Example Author
 
-  title: Example Publication
-
-  author: Example Author
+  work:
+    source: source.publication.example_work
+    title: Example Publication
 
   date: 2026
 
-  url: https://example.org
+  locator:
+    type: page
+    value: "42"
+
+  url: https://example.org/example-work
+
+  accessed: 2026-06-21
 ```
 
 The purpose of provenance is to distinguish:
 
 * what a source says
 * who made a particular interpretation
-* where that interpretation originated
+* who made a particular argument
+* who asserted a relationship between entities
+* where a derived statement originated
+
+Common provenance fields:
+
+```text
+attributed_to
+work
+date
+locator
+url
+accessed
+edition
+language
+```
+
+The `attributed_to` value may identify an author, editor, translator,
+organization, tradition, council, school, or dataset contributor.
+
+The `locator` value should identify the relevant page, section, paragraph,
+verse, timestamp, canon, article, or other location within the cited work.
+
+When a provenance record cites a work already represented as a `Source`, it
+should reference that source by stable identifier.
+
+When the provenance belongs to a dataset author's summary, the attribution
+should make that clear rather than implying the wording came directly from the
+original source.
 
 ---
 
@@ -517,6 +602,8 @@ Validation should include:
 * reference validation
 * relationship validation
 * controlled vocabulary validation
+* argument role validation
+* provenance validation
 * orphan node detection
 * consistency checking
 * first-class relationship validation
@@ -526,6 +613,8 @@ Examples:
 * missing references
 * duplicate identifiers
 * invalid relationship types
+* invalid argument roles
+* invalid provenance source references
 * references to nonexistent entities
 * first-class relationships whose `from` or `to` targets do not exist
 
@@ -582,8 +671,7 @@ Source
 Evidence
 Interpretation
 Assumption
-Objection
-CounterObjection
+Argument
 Relationship
 ```
 
