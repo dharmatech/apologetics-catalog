@@ -21,7 +21,7 @@ Initial sources:
 
 Initial positions:
 
-* Jehovah's Witness
+* Jehovah's Witnesses
 * Arian
 * Nicene Trinitarian
 
@@ -34,6 +34,11 @@ Initial deliverables:
 * HTML generation
 * graph visualization
 * command-line query interface
+
+The first apologetics dataset should follow the authoring rules in
+[v0.1 Modeling Guidelines](11-modeling-guidelines.md), especially the rules for
+neutral summaries, representative-first modeling, symmetrical treatment of major
+positions, and minimum completeness for a modeled position.
 
 ---
 
