@@ -41,6 +41,8 @@ in a machine-readable form that can be validated, queried, visualized, analyzed,
 
 The canonical source format is human-authored YAML.
 
+For authoring convenience, YAML content may be grouped by topic or question.
+
 The YAML files are treated as source code. A compiler/validator checks the source data, constructs the graph, and generates derived outputs.
 
 The foundational model is descriptive rather than prescriptive. It models what a position claims, how evidence is interpreted, and how arguments relate to one another without embedding truth judgments into the core data model.

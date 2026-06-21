@@ -27,6 +27,22 @@ They are not authoritative.
 
 The YAML source remains the canonical representation.
 
+Generated outputs may reorganize the data into forms optimized for machines.
+
+Examples:
+
+```text
+/generated/json/questions.json
+/generated/json/claims.json
+/generated/json/evidence.json
+/generated/json/relationships.json
+/generated/graph/full.graph.json
+```
+
+Graph databases, search indexes, HTML views, and query-oriented stores should be
+treated as generated projections unless the project explicitly changes the
+canonical storage model.
+
 ---
 
 ## Strongly Typed Future
