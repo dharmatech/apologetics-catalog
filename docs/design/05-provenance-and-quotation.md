@@ -32,7 +32,7 @@ provenance:
     name: Example Author
 
   work:
-    source: source.publication.example_work
+    source_id: source.publication.example_work
     title: Example Publication
 
   date: 2026

@@ -63,12 +63,12 @@ Examples:
 
 ```yaml
 claim:
-  question: question.christology.created_being
+  question_id: question.christology.created_being
 ```
 
 ```yaml
 evidence:
-  source: source.scripture.colossians.1.15
+  source_id: source.scripture.colossians.1.15
 ```
 
 Argumentative or interpretive relationships should be modeled as first-class
@@ -82,9 +82,9 @@ id: relationship.jw.colossians_firstborn.supports_created
 
 type: supports
 
-from: interpretation.jw.colossians.firstborn
+from_id: interpretation.jw.colossians.firstborn
 
-to: claim.jesus_created
+to_id: claim.jesus_created
 
 summary: >
   This interpretation is used to support the claim
@@ -96,9 +96,9 @@ id: relationship.trinitarian.firstborn.challenges_jw
 
 type: challenges
 
-from: argument.trinitarian.firstborn_rank
+from_id: argument.trinitarian.firstborn_rank
 
-to: interpretation.jw.colossians.firstborn
+to_id: interpretation.jw.colossians.firstborn
 
 summary: >
   The argument challenges the interpretation that
@@ -110,9 +110,9 @@ id: relationship.jw.firstborn_response.responds_to_rank_objection
 
 type: responds_to
 
-from: argument.jw.firstborn_created_order_response
+from_id: argument.jw.firstborn_created_order_response
 
-to: argument.trinitarian.firstborn_rank
+to_id: argument.trinitarian.firstborn_rank
 
 summary: >
   The response answers the rank or preeminence objection

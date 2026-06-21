@@ -59,6 +59,108 @@ Generated outputs may be normalized by entity type or graph structure.
 
 ---
 
+## YAML Document Shape
+
+YAML documents should use a predictable envelope.
+
+Topic-centered files should declare a schema version and document kind, then
+group records into named sections.
+
+Example:
+
+```yaml
+schema_version: 0.1
+
+kind: topic
+
+question:
+  id: question.christology.created_being
+  title: "Is Jesus a created being?"
+
+claims:
+  - id: claim.jesus_created
+    question_id: question.christology.created_being
+    summary: >
+      Jesus is a created being.
+
+evidence:
+  - id: evidence.colossians.firstborn
+    source_id: source.scripture.colossians.1.15
+    quotation: "firstborn of all creation"
+```
+
+Single-record files should use the same envelope pattern.
+
+Example:
+
+```yaml
+schema_version: 0.1
+
+kind: claim
+
+claim:
+  id: claim.jesus_created
+  question_id: question.christology.created_being
+  summary: >
+    Jesus is a created being.
+```
+
+Sections containing multiple records should be lists of records, not maps keyed
+by ID.
+
+Preferred:
+
+```yaml
+claims:
+  - id: claim.jesus_created
+    question_id: question.christology.created_being
+```
+
+Avoid:
+
+```yaml
+claims:
+  claim.jesus_created:
+    question_id: question.christology.created_being
+```
+
+Every entity must declare its own stable `id`.
+
+The compiler should not infer canonical IDs from file paths, titles, or section
+names.
+
+References should use explicit `_id` fields for single references and `_ids`
+fields for lists.
+
+Examples:
+
+```yaml
+question_id: question.christology.created_being
+source_id: source.scripture.colossians.1.15
+tradition_id: tradition.jehovahs_witnesses
+evidence_id: evidence.colossians.firstborn
+from_id: argument.trinitarian.firstborn_rank
+to_id: interpretation.jw.colossians.firstborn
+target_ids:
+  - claim.jesus_created
+depends_on_ids:
+  - assumption.firstborn_means_first_created
+```
+
+YAML list order may be preserved for readability and default display, but list
+order should not imply truth, strength, priority, or dependency.
+
+If ordering has semantic meaning, it should be represented explicitly.
+
+Examples:
+
+```yaml
+display_order: 1
+sequence: 2
+```
+
+---
+
 ## Validation and Compiler Layer
 
 A compiler/validator processes all YAML files.

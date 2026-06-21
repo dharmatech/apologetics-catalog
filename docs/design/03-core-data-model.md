@@ -25,8 +25,7 @@ Examples:
 ```yaml
 id: claim.jesus_created
 
-question:
-  question.christology.created_being
+question_id: question.christology.created_being
 
 summary: >
   Jesus is a created being.
@@ -35,8 +34,7 @@ summary: >
 ```yaml
 id: claim.jesus_not_created
 
-question:
-  question.christology.created_being
+question_id: question.christology.created_being
 
 summary: >
   Jesus is not a created being.
@@ -57,8 +55,10 @@ Example:
 ```yaml
 id: position.jw.christology
 
-tradition:
-  tradition.jehovahs_witnesses
+tradition_id: tradition.jehovahs_witnesses
+
+claim_ids:
+  - claim.jesus_created
 ```
 
 A position may support multiple claims.
@@ -113,8 +113,7 @@ Example:
 ```yaml
 id: evidence.colossians.firstborn
 
-source:
-  source.scripture.colossians.1.15
+source_id: source.scripture.colossians.1.15
 
 quotation: "firstborn of all creation"
 ```
@@ -132,8 +131,7 @@ Example:
 ```yaml
 id: interpretation.jw.colossians.firstborn
 
-evidence:
-  evidence.colossians.firstborn
+evidence_id: evidence.colossians.firstborn
 
 summary: >
   Firstborn is interpreted as
@@ -163,6 +161,10 @@ Interpretations may depend upon assumptions.
 ## Stable Identifier Strategy
 
 Identifiers should be stable and semantic.
+
+Every entity should declare its own `id` explicitly.
+
+File paths and titles may suggest an ID, but they do not define identity.
 
 Preferred:
 
