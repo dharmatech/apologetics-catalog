@@ -72,6 +72,7 @@ validate
 build
 graph
 query
+migrate
 ```
 
 These commands should remain simple and implementation-independent.
@@ -91,3 +92,18 @@ validate --warnings-as-errors
 Warnings should not fail validation by default.
 
 The `--warnings-as-errors` option allows stricter CI or release workflows.
+
+The `migrate` command should handle explicit schema migrations.
+
+Examples:
+
+```text
+migrate --to 0.2
+migrate --to 0.2 --write
+migrate --to 0.2 --output migrated/
+```
+
+Migration commands should never be implied by `build`.
+
+Without `--write`, migration commands should preview or write to an explicit
+output location rather than modifying source files in place.

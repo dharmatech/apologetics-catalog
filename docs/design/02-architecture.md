@@ -69,7 +69,7 @@ group records into named sections.
 Example:
 
 ```yaml
-schema_version: 0.1
+schema_version: "0.1"
 
 kind: topic
 
@@ -94,7 +94,7 @@ Single-record files should use the same envelope pattern.
 Example:
 
 ```yaml
-schema_version: 0.1
+schema_version: "0.1"
 
 kind: claim
 
@@ -194,7 +194,53 @@ All datasets and schemas should include explicit version information.
 Example:
 
 ```yaml
-schema_version: 0.1
+schema_version: "0.1"
 ```
 
-Future schema changes should support migrations where practical.
+Schema versions should be strings, not numbers, so YAML parsers do not treat
+versions such as `0.1` as floating point values.
+
+The `schema_version` field applies to each YAML document.
+
+The compiler should maintain an explicit list of supported schema versions.
+
+The current schema version should be validated directly.
+
+Older supported schema versions should require explicit migration.
+
+Unsupported schema versions should produce clear validation errors.
+
+Mixed document versions should be rejected unless a supported migration path
+exists.
+
+The compiler should not silently migrate source documents during `build`.
+
+Migrations should be explicit, deterministic, and reviewed like code.
+
+Migrations should write updated YAML source files or migrated YAML output, not
+only transform data in memory.
+
+During early `0.x` versions, schema changes may be breaking.
+
+Migration scripts should be provided where practical.
+
+Generated outputs do not need backward compatibility across schema versions.
+
+Schema files should be stored in versioned directories.
+
+Example:
+
+```text
+/schema/0.1/topic.schema.json
+/schema/0.1/claim.schema.json
+/schema/0.1/relationship.schema.json
+/schema/0.2/topic.schema.json
+```
+
+Each schema version should have human-readable change notes.
+
+Example:
+
+```text
+/docs/schema/CHANGELOG.md
+```

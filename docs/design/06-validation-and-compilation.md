@@ -20,9 +20,10 @@ outputs
 The parser phase loads YAML and reports syntax errors.
 
 The envelope phase validates document-level fields such as `schema_version` and
-`kind`.
+`kind`, including whether the declared schema version is supported.
 
-The schema phase validates each entity's required fields and local structure.
+The schema phase validates each entity's required fields and local structure
+against the schema files for the declared schema version.
 
 The vocabulary phase validates controlled values such as relationship types and
 argument roles.
@@ -60,6 +61,7 @@ Validation should include:
 
 * schema validation
 * document envelope validation
+* schema version validation
 * required field validation
 * duplicate ID detection
 * explicit entity ID validation
@@ -80,7 +82,9 @@ Examples:
 * missing references
 * duplicate identifiers
 * missing `schema_version`
+* unsupported `schema_version`
 * missing or invalid `kind`
+* mixed document versions without a supported migration path
 * invalid relationship types
 * invalid argument roles
 * invalid provenance source references
@@ -89,6 +93,33 @@ Examples:
 * first-class relationships whose `from_id` or `to_id` targets do not exist
 
 The compiler should reject invalid datasets.
+
+---
+
+## Schema Files and Migrations
+
+Schema files should be versioned.
+
+Example:
+
+```text
+/schema/0.1/topic.schema.json
+/schema/0.1/claim.schema.json
+/schema/0.1/relationship.schema.json
+/schema/0.2/topic.schema.json
+```
+
+The compiler should report the schema version and schema file used during
+validation when verbose diagnostics are requested.
+
+Migrations should be deterministic.
+
+Migrations should be idempotent where practical.
+
+Migration tests should compare exact output so YAML formatting and ordering
+remain reviewable.
+
+The compiler should not silently migrate data during validation or build.
 
 ---
 
@@ -177,6 +208,9 @@ Recommended structure:
 ```text
 /examples
 /tests/fixtures
+/tests/fixtures/schema/0.1/valid
+/tests/fixtures/schema/0.1/invalid
+/tests/fixtures/migrations/0.1-to-0.2
 ```
 
 The initial apologetics dataset should serve as a canonical validation dataset.
@@ -187,3 +221,5 @@ Generated outputs should be deterministic.
 
 Diagnostic output should also be deterministic so validation tests and CI output
 do not churn.
+
+Migration output should be deterministic and covered by exact-output fixtures.
