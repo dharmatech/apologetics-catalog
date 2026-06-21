@@ -194,21 +194,23 @@ claim-to-claim relationships rather than introducing a separate mechanism.
 
 The system should use controlled vocabulary values.
 
-Core relationship type values should be defined by the active schema version.
-
-Structural relationship examples:
+Core author-facing relationship type values should be defined by the active
+schema version. The initial v0.1 seed set and extension policy are defined in:
 
 ```text
-belongs_to
-cites
-has_source
-has_question
-has_tradition
-held_by
-classified_as
+/docs/design/10-vocabularies.md
 ```
 
-Argumentative or interpretive relationship examples:
+Author-written `Relationship.type` values should be reserved for
+argumentative, interpretive, claim-to-claim, question-to-question, dependency,
+response, or other metadata-bearing connections.
+
+Structural graph edge names such as `has_source`, `has_question`, `held_by`,
+and `classified_as` may be emitted by the compiler from direct reference fields,
+but they are not necessarily valid author-written `Relationship.type` values in
+v0.1.
+
+Author-facing relationship examples:
 
 ```text
 supports
@@ -224,11 +226,6 @@ responds_to
 contrasts_with
 related_to
 interprets
-appeals_to_translation
-appeals_to_context
-appeals_to_language
-appeals_to_history
-appeals_to_tradition
 ```
 
 Avoid unrestricted free-form relationship types.

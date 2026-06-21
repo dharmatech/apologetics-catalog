@@ -269,7 +269,16 @@ Example:
 
 ## Controlled Vocabularies
 
-Controlled vocabularies should live with each schema version.
+Controlled vocabularies should live with each schema version. The v0.1 seed
+values, extension policy, and distinction between author-facing relationship
+types and compiler-generated graph edge types are defined in:
+
+```text
+/docs/design/10-vocabularies.md
+```
+
+Machine-readable vocabulary files should eventually be generated from or kept
+consistent with that design contract.
 
 Examples:
 
@@ -281,12 +290,15 @@ Examples:
 /schema/0.1/vocab/argument-roles.yaml
 /schema/0.1/vocab/source-types.yaml
 /schema/0.1/vocab/agent-types.yaml
+/schema/0.1/vocab/holder-types.yaml
+/schema/0.1/vocab/locator-types.yaml
+/schema/0.1/vocab/rights-statuses.yaml
 /schema/0.1/vocab/position-stances.yaml
 /schema/0.1/vocab/position-statuses.yaml
 /schema/0.1/vocab/interpretation-methods.yaml
 /schema/0.1/vocab/assumption-categories.yaml
 /schema/0.1/vocab/provenance-agent-types.yaml
-/schema/0.1/vocab/locator-types.yaml
+/schema/0.1/vocab/generated-edge-types.yaml
 ```
 
 The compiler should validate controlled fields against the vocabulary files for
@@ -307,7 +319,7 @@ agent:
   type: council
 argument:
   role: objection
-position_claim:
+claim_stance:
   stance: affirms
   status: official
 interpretation:
@@ -322,7 +334,7 @@ Extensions should be declared explicitly at the dataset or project level, not
 introduced inline.
 
 Unknown vocabulary values should be validation errors unless they are declared
-as extensions.
+as extensions in an extensible vocabulary.
 
 Extension IDs should be namespaced.
 

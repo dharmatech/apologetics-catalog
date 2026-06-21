@@ -1,5 +1,11 @@
 # Core Data Model
 
+Controlled field seed values and extension rules are consolidated in
+[v0.1 Controlled Vocabularies](10-vocabularies.md). The initial values shown in
+this document should stay consistent with that contract.
+
+---
+
 ## Topic
 
 A lightweight classification entity used to group questions.
