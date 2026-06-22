@@ -17,3 +17,15 @@ question:
     - topic.christology
   description: >
     Concerns whether Jesus, the Son, belongs to the created order.
+
+questions:
+  - id: question.christology.firstborn_preeminence
+    title: "Can firstborn indicate rank or preeminence rather than birth order?"
+    question_type: yes_no
+    status: active
+    topic_ids:
+      - topic.christology
+    parent_question_id: question.christology.created_being
+    description: >
+      Concerns whether the term firstborn can carry a rank or preeminence sense
+      in Scripture, rather than always indicating chronological birth order.

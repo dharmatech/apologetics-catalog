@@ -5,6 +5,7 @@ from typing import Any
 
 from ruamel.yaml.comments import CommentedMap, CommentedSeq
 
+from apologetics_catalog.catalog import Catalog, EntityRecord
 from apologetics_catalog.diagnostics import Diagnostic, Severity, ValidationResult
 from apologetics_catalog.yaml_loader import (
     LoadedYamlDocument,
@@ -47,6 +48,33 @@ LIST_RECORD_SECTIONS = {
     "relationships",
 }
 
+SECTION_KINDS = {
+    "project": "project",
+    "topic": "topic",
+    "question": "question",
+    "claim": "claim",
+    "tradition": "tradition",
+    "agent": "agent",
+    "position": "position",
+    "source": "source",
+    "evidence": "evidence",
+    "interpretation": "interpretation",
+    "assumption": "assumption",
+    "argument": "argument",
+    "relationship": "relationship",
+    "topics": "topic",
+    "questions": "question",
+    "claims": "claim",
+    "traditions": "tradition",
+    "agents": "agent",
+    "positions": "position",
+    "sources": "source",
+    "interpretations": "interpretation",
+    "assumptions": "assumption",
+    "arguments": "argument",
+    "relationships": "relationship",
+}
+
 TYPED_REFERENCE_FIELDS = {"holder", "attributed_to"}
 
 
@@ -60,6 +88,14 @@ class EntityId:
 class EntityReference:
     id: str
     field: str
+    location: SourceLocation
+
+
+@dataclass(frozen=True)
+class RawEntityRecord:
+    section: str
+    kind: str
+    record: CommentedMap
     location: SourceLocation
 
 
@@ -128,10 +164,14 @@ def validate_project(manifest_path: Path = DEFAULT_MANIFEST) -> ValidationResult
 
     diagnostics.extend(_duplicate_id_diagnostics(id_index))
     diagnostics.extend(_unresolved_reference_diagnostics(id_index, references))
+    catalog = (
+        _build_catalog([manifest, *documents]) if not _has_errors(diagnostics) else None
+    )
 
     return ValidationResult(
         diagnostics=diagnostics,
         content_files=[str(path) for path in content_files],
+        catalog=catalog,
     )
 
 
@@ -322,6 +362,73 @@ def _collect_entity_ids(
     return ids, diagnostics
 
 
+def _iter_entity_records(
+    document: LoadedYamlDocument,
+) -> tuple[list[RawEntityRecord], list[Diagnostic]]:
+    records: list[RawEntityRecord] = []
+    diagnostics: list[Diagnostic] = []
+    data = document.data
+
+    if not isinstance(data, CommentedMap):
+        return records, diagnostics
+
+    for section, value in data.items():
+        kind = SECTION_KINDS.get(section)
+        if kind is None:
+            continue
+
+        if section in SINGLE_RECORD_SECTIONS:
+            if not isinstance(value, CommentedMap):
+                diagnostics.append(_invalid_section(document, section, "mapping"))
+                continue
+            records.append(
+                RawEntityRecord(
+                    section=section,
+                    kind=kind,
+                    record=value,
+                    location=location_for_key(document.path, value, "id"),
+                )
+            )
+            continue
+
+        if section == "evidence" and isinstance(value, CommentedMap):
+            records.append(
+                RawEntityRecord(
+                    section=section,
+                    kind=kind,
+                    record=value,
+                    location=location_for_key(document.path, value, "id"),
+                )
+            )
+            continue
+
+        if section in LIST_RECORD_SECTIONS:
+            if not isinstance(value, CommentedSeq):
+                diagnostics.append(_invalid_section(document, section, "list"))
+                continue
+            for index, item in enumerate(value):
+                if not isinstance(item, CommentedMap):
+                    diagnostics.append(
+                        location_for_sequence_item(
+                            document.path, value, index
+                        ).to_diagnostic(
+                            code="E007",
+                            message=f"Record section {section!r} must contain mappings.",
+                        )
+                    )
+                    continue
+                records.append(
+                    RawEntityRecord(
+                        section=section,
+                        kind=kind,
+                        record=item,
+                        location=location_for_key(document.path, item, "id"),
+                    )
+                )
+
+    return records, diagnostics
+
+
 def _invalid_section(
     document: LoadedYamlDocument,
     section: str,
@@ -435,6 +542,47 @@ def _duplicate_id_diagnostics(
                 )
             )
     return diagnostics
+
+
+def _build_catalog(documents: list[LoadedYamlDocument]) -> Catalog:
+    entities: dict[str, EntityRecord] = {}
+    relationships: list[EntityRecord] = []
+
+    for document in documents:
+        records, _diagnostics = _iter_entity_records(document)
+        for raw_record in records:
+            entity_id = raw_record.record.get("id")
+            if not isinstance(entity_id, str):
+                continue
+            entity = EntityRecord(
+                id=entity_id,
+                kind=raw_record.kind,
+                section=raw_record.section,
+                data=_plain_value(raw_record.record),
+                file=str(document.path),
+                line=raw_record.location.line,
+                column=raw_record.location.column,
+            )
+            entities[entity.id] = entity
+            if entity.kind == "relationship":
+                relationships.append(entity)
+
+    return Catalog(
+        entities=dict(sorted(entities.items())),
+        relationships=tuple(sorted(relationships, key=lambda item: item.id)),
+    )
+
+
+def _plain_value(value: Any) -> Any:
+    if isinstance(value, CommentedMap):
+        return {str(key): _plain_value(item) for key, item in value.items()}
+    if isinstance(value, CommentedSeq):
+        return [_plain_value(item) for item in value]
+    return value
+
+
+def _has_errors(diagnostics: list[Diagnostic]) -> bool:
+    return any(diagnostic.severity == Severity.ERROR for diagnostic in diagnostics)
 
 
 def _unresolved_reference_diagnostics(

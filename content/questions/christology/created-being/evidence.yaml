@@ -9,3 +9,17 @@ evidence:
       type: verse
       value: "Colossians 1:15"
     quotation: "firstborn over all creation"
+
+  - id: evidence.nwt.colossians.1_15.firstborn
+    source_id: source.bible.nwt
+    locator:
+      type: verse
+      value: "Colossians 1:15"
+    quotation: "firstborn of all creation"
+
+  - id: evidence.nwt.psalms.89_27.firstborn_highest
+    source_id: source.bible.nwt
+    locator:
+      type: verse
+      value: "Psalm 89:27"
+    quotation: "firstborn, The highest of the kings of the earth"

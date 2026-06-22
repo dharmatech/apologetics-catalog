@@ -1,0 +1,11 @@
+schema_version: "0.1"
+
+kind: argument
+
+arguments:
+  - id: argument.trinitarian.firstborn_not_necessarily_created
+    role: objection
+    summary: >
+      Since Psalm 89:27 can use firstborn in a rank or preeminence sense,
+      Colossians 1:15's use of firstborn does not by itself establish that
+      Jesus is created.

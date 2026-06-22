@@ -33,3 +33,51 @@ relationships:
     to_id: interpretation.jw.colossians.1_15.firstborn_created_order
     summary: >
       The preeminence reading challenges the created-order reading of firstborn.
+
+  - id: relationship.trinitarian.psalms_89_firstborn.supports_preeminence
+    type: supports
+    from_id: interpretation.trinitarian.psalms.89_27.firstborn_rank
+    to_id: claim.firstborn_can_indicate_preeminence
+    summary: >
+      The Psalm 89:27 rank reading supports the claim that firstborn can indicate
+      rank or preeminence rather than birth order.
+
+  - id: relationship.trinitarian.firstborn_preeminence.challenges_created_reading
+    type: challenges
+    from_id: claim.firstborn_can_indicate_preeminence
+    to_id: interpretation.jw.colossians.1_15.firstborn_created_order
+    summary: >
+      If firstborn can indicate rank or preeminence, then the word does not by
+      itself require the created-order reading of Colossians 1:15.
+
+  - id: relationship.trinitarian.firstborn_not_necessarily_created.uses_psalms_89
+    type: uses
+    from_id: argument.trinitarian.firstborn_not_necessarily_created
+    to_id: interpretation.trinitarian.psalms.89_27.firstborn_rank
+    summary: >
+      The argument uses Psalm 89:27's rank reading as evidence that firstborn
+      need not indicate chronological birth order.
+
+  - id: relationship.trinitarian.firstborn_not_necessarily_created.uses_preeminence_claim
+    type: uses
+    from_id: argument.trinitarian.firstborn_not_necessarily_created
+    to_id: claim.firstborn_can_indicate_preeminence
+    summary: >
+      The argument uses the broader lexical claim that firstborn can indicate
+      rank or preeminence.
+
+  - id: relationship.trinitarian.firstborn_not_necessarily_created.supports_limited_claim
+    type: supports
+    from_id: argument.trinitarian.firstborn_not_necessarily_created
+    to_id: claim.colossians_firstborn_not_decisive_created
+    summary: >
+      The argument supports the limited claim that firstborn in Colossians 1:15
+      does not, by itself, establish that Jesus is created.
+
+  - id: relationship.trinitarian.firstborn_not_necessarily_created.challenges_jw_reading
+    type: challenges
+    from_id: argument.trinitarian.firstborn_not_necessarily_created
+    to_id: interpretation.jw.colossians.1_15.firstborn_created_order
+    summary: >
+      The argument challenges the inference from firstborn of all creation to
+      created status.

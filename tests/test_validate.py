@@ -27,6 +27,35 @@ def test_cli_validate_current_dataset() -> None:
     assert "Validation passed:" in result.stdout
 
 
+def test_cli_show_nwt_evidence() -> None:
+    result = runner.invoke(app, ["show", "evidence.nwt.colossians.1_15.firstborn"])
+
+    assert result.exit_code == 0
+    assert "Evidence" in result.stdout
+    assert "New World Translation (nwt-E)" in result.stdout
+    assert "firstborn of all creation" in result.stdout
+    assert "Jehovah's Witnesses" in result.stdout
+    assert "Claim: Jesus is a created being." in result.stdout
+
+
+def test_cli_show_claim_uses_direction_labels() -> None:
+    result = runner.invoke(app, ["show", "claim.jesus_created"])
+
+    assert result.exit_code == 0
+    assert "Supported by" in result.stdout
+    assert "Contradicts" in result.stdout
+    assert "Jehovah's Witnesses" in result.stdout
+    assert "affirms" in result.stdout
+
+
+def test_cli_show_missing_id_suggests_matches() -> None:
+    result = runner.invoke(app, ["show", "evidence.nwt.colossians"])
+
+    assert result.exit_code == 1
+    assert "No entity found for id: evidence.nwt.colossians" in result.stdout
+    assert "evidence.nwt.colossians.1_15.firstborn" in result.stdout
+
+
 def test_missing_manifest_reports_error(tmp_path: Path) -> None:
     result = validate_project(tmp_path / "missing.yaml")
 

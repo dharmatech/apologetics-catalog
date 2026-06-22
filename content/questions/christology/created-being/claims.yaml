@@ -20,3 +20,24 @@ claims:
       Jesus, the Son, does not belong to the created order.
     scope:
       domain: christology
+
+  - id: claim.firstborn_can_indicate_preeminence
+    question_id: question.christology.firstborn_preeminence
+    summary: >
+      Firstborn can indicate rank or preeminence rather than birth order.
+    proposition: >
+      The term firstborn is not limited to chronological birth order and can be
+      used to indicate rank or preeminence.
+    scope:
+      domain: lexical_scripture_usage
+
+  - id: claim.colossians_firstborn_not_decisive_created
+    question_id: question.christology.created_being
+    summary: >
+      Colossians 1:15's use of firstborn does not by itself prove that Jesus is
+      created.
+    proposition: >
+      The word firstborn in Colossians 1:15 is not sufficient by itself to
+      establish that Jesus belongs to the created order.
+    scope:
+      domain: christology

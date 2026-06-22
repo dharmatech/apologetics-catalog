@@ -16,6 +16,24 @@ sources:
       attribution: "Berean Standard Bible"
       url: https://bereanbible.com/
 
+  - id: source.bible.nwt
+    type: translation
+    title: "New World Translation (nwt-E)"
+    work_id: source.bible
+    author: "WATCHTOWER"
+    language: en
+    edition: "EPUB"
+    rights:
+      status: copyrighted
+      attribution: >
+        New World Translation (nwt-E), Watchtower Bible and Tract Society of
+        New York, Inc.
+    description: >
+      Concrete English New World Translation EPUB used as a local reference
+      source for Jehovah's Witnesses Scripture evidence. The EPUB metadata
+      identifies WATCHTOWER as creator and Watchtower Bible and Tract Society of
+      New York, Inc. as publisher.
+
   - id: source.publication.jw.official_christology_summary
     type: web_page
     title: "Official Jehovah's Witnesses Christology Summary"

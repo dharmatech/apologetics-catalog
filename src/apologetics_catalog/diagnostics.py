@@ -2,6 +2,8 @@ from enum import StrEnum
 
 from pydantic import BaseModel, ConfigDict
 
+from apologetics_catalog.catalog import Catalog
+
 
 class Severity(StrEnum):
     ERROR = "error"
@@ -31,6 +33,7 @@ class Diagnostic(BaseModel):
 class ValidationResult(BaseModel):
     diagnostics: list[Diagnostic]
     content_files: list[str]
+    catalog: Catalog | None = None
 
     @property
     def error_count(self) -> int:

@@ -4,10 +4,10 @@ kind: interpretation
 
 interpretations:
   - id: interpretation.jw.colossians.1_15.firstborn_created_order
-    evidence_id: evidence.bsb.colossians.1_15.firstborn
+    evidence_id: evidence.nwt.colossians.1_15.firstborn
     method: lexical
     summary: >
-      The phrase firstborn over all creation is read as placing the Son within
+      The phrase firstborn of all creation is read as placing the Son within
       the created order.
     provenance:
       attributed_to:
@@ -28,3 +28,17 @@ interpretations:
         id: tradition.nicene_trinitarian
       work:
         source_id: source.creed.nicene.trinitarian_summary
+
+  - id: interpretation.trinitarian.psalms.89_27.firstborn_rank
+    evidence_id: evidence.nwt.psalms.89_27.firstborn_highest
+    method: contextual
+    summary: >
+      Psalm 89:27 applies firstborn language to the Davidic king in parallel
+      with being highest of the kings of the earth, so firstborn is read here
+      as rank or preeminence rather than mere birth order.
+    provenance:
+      attributed_to:
+        type: tradition
+        id: tradition.nicene_trinitarian
+      work:
+        title: "Dataset author synthesis"
