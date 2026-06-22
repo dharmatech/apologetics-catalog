@@ -247,3 +247,21 @@ relationships:
       The Luke firstborn-child and temple-presentation context supports the
       Jehovah's Witnesses response that firstborn in Colossians 1:15 should
       retain its usual meaning.
+
+  - id: relationship.jw.six_of_eight_prototokos.supports_usual_meaning_response
+    type: supports
+    from_id: interpretation.jw.nt_prototokos.six_of_eight_jesus_occurrences
+    to_id: argument.jw.firstborn_usual_meaning_response
+    summary: >
+      The Study Bible note's occurrence-count claim provides cumulative support
+      for the Jehovah's Witnesses response that firstborn in Colossians 1:15
+      should retain its usual meaning.
+
+  - id: relationship.methodology.bibleforge_g4416_count.qualifies_jw_six_of_eight
+    type: qualifies
+    from_id: interpretation.methodology.bibleforge.nt_g4416_count_source_sensitive
+    to_id: interpretation.jw.nt_prototokos.six_of_eight_jesus_occurrences
+    summary: >
+      The BibleForgeDB count qualifies the Study Bible note's count-based
+      argument by showing that New Testament prototokos occurrence counts depend
+      on the textual source or database being counted.

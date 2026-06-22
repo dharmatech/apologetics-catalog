@@ -88,6 +88,31 @@ interpretations:
       work:
         source_id: source.publication.jw.study_bible.colossians_1_15
 
+  - id: interpretation.jw.nt_prototokos.six_of_eight_jesus_occurrences
+    evidence_id: evidence.jw_study_bible.colossians.1_15.six_of_eight_jesus
+    method: lexical_distribution
+    summary: >
+      The Study Bible note's count claim is used as cumulative support that
+      Christian Greek Scripture usage of prototokos, especially in references
+      to Jesus, favors retaining the usual temporal sense in Colossians 1:15.
+    provenance:
+      attributed_to:
+        type: tradition
+        id: tradition.jehovahs_witnesses
+      work:
+        source_id: source.publication.jw.study_bible.colossians_1_15
+
+  - id: interpretation.methodology.bibleforge.nt_g4416_count_source_sensitive
+    evidence_id: evidence.bibleforge.greek.prototokos.nt_g4416_occurrences
+    method: source_comparison
+    summary: >
+      BibleForgeDB returns nine New Testament rows tagged G4416, including
+      Matthew 1:25, so occurrence-count arguments about prototokos should name
+      the textual source or database being counted.
+    provenance:
+      work:
+        title: "Dataset author synthesis"
+
   - id: interpretation.nicene.colossians.1_15.firstborn_preeminence
     evidence_id: evidence.bsb.colossians.1_15.firstborn
     method: lexical

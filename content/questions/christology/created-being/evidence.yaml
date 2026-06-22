@@ -71,6 +71,17 @@ evidence:
       BibleForgeDB tags both Luke 2:7 and Colossians 1:15 with the same Greek
       Strong's number, G4416.
 
+  - id: evidence.bibleforge.greek.prototokos.nt_g4416_occurrences
+    source_id: source.bibleforge.original_language_db
+    locator:
+      type: query_result
+      value: "bible_original New Testament rows where strongs = 4416"
+    paraphrase: >
+      A local query of BibleForgeDB returns nine New Testament rows tagged
+      Strong's G4416: Matthew 1:25; Luke 2:7; Romans 8:29; Colossians 1:15;
+      Colossians 1:18; Hebrews 1:6; Hebrews 11:28; Hebrews 12:23; Revelation
+      1:5.
+
   - id: evidence.jw_study_bible.colossians.1_15.no_basis_other_meaning
     source_id: source.publication.jw.study_bible.colossians_1_15
     locator:
@@ -88,6 +99,15 @@ evidence:
     quotation: >
       The usual Scriptural meaning of the term "firstborn" is the one born first
       in order of time
+
+  - id: evidence.jw_study_bible.colossians.1_15.six_of_eight_jesus
+    source_id: source.publication.jw.study_bible.colossians_1_15
+    locator:
+      type: study_note
+      value: "Colossians 1:15, note on 'the firstborn of all creation'"
+    quotation: >
+      Six of the eight occurrences of the Greek term for "firstborn"
+      (pro·toʹto·kos) in the Christian Greek Scriptures refer to Jesus.
 
   - id: evidence.jw_study_bible.colossians.1_15.mary_firstborn_law
     source_id: source.publication.jw.study_bible.colossians_1_15
