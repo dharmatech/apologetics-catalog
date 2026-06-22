@@ -38,6 +38,20 @@ arguments:
       work:
         source_id: source.bible.nwt
 
+  - id: argument.trinitarian.nwt_1984_bracketed_other_response
+    role: response
+    summary: >
+      A Trinitarian response appeals to the 1984 reference edition's bracketed
+      "All [other]" evidence and bracket convention to argue that other is a
+      supplied English word, so the NWT all-other-things wording should not be
+      treated as independent proof of the Jehovah's Witnesses scope reading.
+    provenance:
+      attributed_to:
+        type: tradition
+        id: tradition.nicene_trinitarian
+      work:
+        title: "Dataset author synthesis using NWT 1984 reference materials"
+
   - id: argument.jw.firstborn_usual_meaning_response
     role: response
     summary: >

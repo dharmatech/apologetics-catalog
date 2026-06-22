@@ -33,6 +33,25 @@ interpretations:
       work:
         source_id: source.bible.nwt
 
+  - id: interpretation.trinitarian.nwt_1984_bracketed_other.supplied_english
+    evidence_id: evidence.nwt_1984_reference.colossians.1_16.bracketed_other_footnote
+    related_evidence_ids:
+      - evidence.nwt_1984_reference.introduction.bracket_convention
+      - evidence.nwt.colossians.1_16.all_other_things_created
+    method: translation_history
+    summary: >
+      A Trinitarian reads the 1984 reference edition's bracketed "All [other]"
+      footnote together with its bracket convention as evidence that other is a
+      supplied English word used to complete the sense. On this reading, the
+      later unbracketed NWT wording should not be treated as independent proof
+      that Paul explicitly excluded Jesus from all things.
+    provenance:
+      attributed_to:
+        type: tradition
+        id: tradition.nicene_trinitarian
+      work:
+        title: "Dataset author synthesis using NWT 1984 reference materials"
+
   - id: interpretation.trinitarian.john_1_14.word_identified_with_jesus
     evidence_id: evidence.nwt.john.1_14.word_became_flesh
     method: contextual

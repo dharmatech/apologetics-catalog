@@ -234,6 +234,55 @@ relationships:
       surrounding NWT Colossians context reinforces, rather than weakens, the
       created-order reading of firstborn.
 
+  - id: relationship.trinitarian.nwt_1984_bracketed_other.uses_interpretation
+    type: uses
+    from_id: argument.trinitarian.nwt_1984_bracketed_other_response
+    to_id: interpretation.trinitarian.nwt_1984_bracketed_other.supplied_english
+    summary: >
+      The response uses the Trinitarian reading of the 1984 NWT bracketed-other
+      evidence as its main support.
+
+  - id: relationship.trinitarian.nwt_1984_bracketed_other.responds_to_jw_response
+    type: responds_to
+    from_id: argument.trinitarian.nwt_1984_bracketed_other_response
+    to_id: argument.jw.colossians_1_16_all_other_things_response
+    summary: >
+      The response answers the Jehovah's Witnesses all-other-things response by
+      arguing that the translation history marks other as supplied English.
+
+  - id: relationship.trinitarian.nwt_1984_bracketed_other.qualifies_jw_scope
+    type: qualifies
+    from_id: interpretation.trinitarian.nwt_1984_bracketed_other.supplied_english
+    to_id: interpretation.jw.colossians_1_16.all_other_things_scope
+    summary: >
+      The bracketed-other evidence qualifies the Jehovah's Witnesses scope
+      reading by treating the word other as an interpretive rendering rather
+      than independent textual proof.
+
+  - id: relationship.trinitarian.nwt_1984_bracketed_other.challenges_jw_scope_assumption
+    type: challenges
+    from_id: argument.trinitarian.nwt_1984_bracketed_other_response
+    to_id: assumption.jw.all_things_language_can_be_contextually_scoped
+    summary: >
+      The response challenges this scope assumption as applied to Colossians
+      1:16 by arguing that the key scoping word was supplied in English.
+
+  - id: relationship.trinitarian.nwt_1984_bracketed_other.supports_john_1_3_response
+    type: supports
+    from_id: argument.trinitarian.nwt_1984_bracketed_other_response
+    to_id: argument.trinitarian.john_1_3_created_things_response
+    summary: >
+      By weakening the NWT all-other-things reply, the bracketed-other response
+      supports the Trinitarian John 1:3 argument.
+
+  - id: relationship.trinitarian.nwt_1984_bracketed_other.supports_limited_claim
+    type: supports
+    from_id: argument.trinitarian.nwt_1984_bracketed_other_response
+    to_id: claim.colossians_firstborn_not_decisive_created
+    summary: >
+      The response supports the limited claim that Colossians 1:15 and its NWT
+      immediate context do not by themselves establish that Jesus is created.
+
   - id: relationship.jw.firstborn_usual_meaning_response.uses_study_note
     type: uses
     from_id: argument.jw.firstborn_usual_meaning_response

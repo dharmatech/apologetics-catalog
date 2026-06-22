@@ -24,6 +24,22 @@ evidence:
       value: "Colossians 1:16"
     quotation: "all other things were created"
 
+  - id: evidence.nwt_1984_reference.introduction.bracket_convention
+    source_id: source.bible.nwt_1984_reference
+    locator:
+      type: introduction
+      value: "Introduction, Technical Features: BRACKETS"
+    quotation: >
+      Single brackets [ ] enclose words inserted to complete the sense in the
+      English text.
+
+  - id: evidence.nwt_1984_reference.colossians.1_16.bracketed_other_footnote
+    source_id: source.bible.nwt_1984_reference
+    locator:
+      type: footnote
+      value: "Colossians 1:16"
+    quotation: '"All [other]," as in Lu 11:41, 42.'
+
   - id: evidence.nwt.colossians.1_13_20.other_pattern
     source_id: source.bible.nwt
     locator:
