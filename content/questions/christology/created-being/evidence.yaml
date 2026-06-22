@@ -52,6 +52,13 @@ evidence:
       value: "Luke 2:23"
     quotation: "Every firstborn male must be called holy to Jehovah"
 
+  - id: evidence.nwt.romans.8_29.firstborn_many_brothers
+    source_id: source.bible.nwt
+    locator:
+      type: verse
+      value: "Romans 8:29"
+    quotation: "firstborn among many brothers"
+
   - id: evidence.lxx.ccat.genesis.49_3.reuben_firstborn
     source_id: source.greek.lxx.ccat_morph
     locator:
@@ -70,6 +77,15 @@ evidence:
     paraphrase: >
       BibleForgeDB tags both Luke 2:7 and Colossians 1:15 with the same Greek
       Strong's number, G4416.
+
+  - id: evidence.bibleforge.greek.romans.8_29.prototokos
+    source_id: source.bibleforge.original_language_db
+    locator:
+      type: verse_word
+      value: "Romans 8:29"
+    quotation: "πρωτότοκον (G4416)"
+    paraphrase: >
+      BibleForgeDB tags the Romans 8:29 form πρωτότοκον with Strong's G4416.
 
   - id: evidence.bibleforge.greek.prototokos.nt_g4416_occurrences
     source_id: source.bibleforge.original_language_db

@@ -102,6 +102,19 @@ interpretations:
       work:
         source_id: source.publication.jw.study_bible.colossians_1_15
 
+  - id: interpretation.modeling.romans_8_29.jesus_related_g4416_occurrence
+    evidence_id: evidence.bibleforge.greek.romans.8_29.prototokos
+    related_evidence_ids:
+      - evidence.nwt.romans.8_29.firstborn_many_brothers
+    method: lexical_distribution
+    summary: >
+      Romans 8:29 is modeled as a Jesus-related G4416 occurrence relevant to
+      the Study Bible note's distribution appeal, without deciding by itself
+      what sense firstborn has in Colossians 1:15.
+    provenance:
+      work:
+        title: "Dataset author synthesis"
+
   - id: interpretation.methodology.bibleforge.nt_g4416_count_source_sensitive
     evidence_id: evidence.bibleforge.greek.prototokos.nt_g4416_occurrences
     method: source_comparison

@@ -257,6 +257,15 @@ relationships:
       for the Jehovah's Witnesses response that firstborn in Colossians 1:15
       should retain its usual meaning.
 
+  - id: relationship.modeling.romans_8_29.supports_jw_six_of_eight
+    type: supports
+    from_id: interpretation.modeling.romans_8_29.jesus_related_g4416_occurrence
+    to_id: interpretation.jw.nt_prototokos.six_of_eight_jesus_occurrences
+    summary: >
+      The Romans 8:29 observation supports the Study Bible note's
+      occurrence-count appeal by identifying another Jesus-related G4416
+      occurrence.
+
   - id: relationship.methodology.bibleforge_g4416_count.qualifies_jw_six_of_eight
     type: qualifies
     from_id: interpretation.methodology.bibleforge.nt_g4416_count_source_sensitive
