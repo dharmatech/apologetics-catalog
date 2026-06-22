@@ -20,6 +20,9 @@ Bibliography source conventions for official publications, creeds, web pages,
 books, articles, and historical reconstruction sources are defined in
 [v0.1 Bibliography Sources](16-bibliography-sources.md).
 
+Provenance object shape and validation rules are defined in
+[v0.1 Provenance Conventions](17-provenance-conventions.md).
+
 ---
 
 ## Attribution Principle

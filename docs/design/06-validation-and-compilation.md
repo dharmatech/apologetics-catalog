@@ -363,6 +363,8 @@ E001 missing required field
 E002 duplicate id
 E003 invalid reference
 E004 invalid controlled vocabulary value
+E005 invalid provenance reference
+E006 invalid provenance shape
 W001 orphan node
 W002 unused source
 W003 missing source rights metadata
@@ -371,6 +373,9 @@ W005 possible duplicate claim summary
 W006 duplicate reverse edge for symmetric relationship
 W007 position has no attribution support
 W008 incomplete source metadata
+W009 provisional provenance reference
+W010 provenance URL missing accessed date
+W011 dataset-author synthesis lacks modeled support
 ```
 
 Diagnostic ordering should be deterministic.

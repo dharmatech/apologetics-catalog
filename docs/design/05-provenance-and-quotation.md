@@ -9,6 +9,9 @@ Position attribution provenance is discussed in
 Non-Scripture source and bibliography conventions are defined in
 [v0.1 Bibliography Sources](16-bibliography-sources.md).
 
+The v0.1 provenance object shape is defined in
+[v0.1 Provenance Conventions](17-provenance-conventions.md).
+
 ## Provenance
 
 Interpretations, arguments, relationships, and other derived statements should
@@ -79,6 +82,9 @@ accessed
 edition
 language
 ```
+
+The exact v0.1 object shapes for `attributed_to`, `work`, and `locator` are
+defined in [v0.1 Provenance Conventions](17-provenance-conventions.md).
 
 The `attributed_to` value may identify or reference an `Agent`, such as an
 author, editor, translator, organization, tradition, council, school, or dataset

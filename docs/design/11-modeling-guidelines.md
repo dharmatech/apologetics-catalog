@@ -20,6 +20,9 @@ Scripture passage modeling should follow
 Position attribution should follow
 [v0.1 Position Attribution](15-position-attribution.md).
 
+Provenance object shape and validation rules should follow
+[v0.1 Provenance Conventions](17-provenance-conventions.md).
+
 ---
 
 ## Authoring Posture

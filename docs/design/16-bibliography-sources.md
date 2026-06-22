@@ -7,6 +7,9 @@ This document defines v0.1 conventions for non-Scripture sources.
 It covers official publications, creeds, council documents, books, articles,
 web pages, historical sources, and secondary historical reconstructions.
 
+Provenance object shape and validation rules are defined in
+[v0.1 Provenance Conventions](17-provenance-conventions.md).
+
 It does not add source quality scoring or reliability ranking. Source quality
 and evaluation can be modeled later as a separate layer if needed.
 
