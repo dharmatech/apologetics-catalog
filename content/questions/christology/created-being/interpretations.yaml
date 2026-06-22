@@ -71,6 +71,23 @@ interpretations:
       work:
         source_id: source.publication.jw.study_bible.colossians_1_15
 
+  - id: interpretation.jw.luke_2_7.firstborn_child_law_context
+    evidence_id: evidence.jw_study_bible.colossians.1_15.mary_firstborn_law
+    related_evidence_ids:
+      - evidence.nwt.luke.2_7.mary_firstborn_child
+      - evidence.nwt.luke.2_23.firstborn_male_holy
+    method: contextual
+    summary: >
+      Luke 2:7 and the temple-presentation context are read as a concrete
+      firstborn-child usage, supporting the ordinary birth-order sense of
+      firstborn in the Jehovah's Witnesses response.
+    provenance:
+      attributed_to:
+        type: tradition
+        id: tradition.jehovahs_witnesses
+      work:
+        source_id: source.publication.jw.study_bible.colossians_1_15
+
   - id: interpretation.nicene.colossians.1_15.firstborn_preeminence
     evidence_id: evidence.bsb.colossians.1_15.firstborn
     method: lexical

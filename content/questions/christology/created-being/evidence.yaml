@@ -38,6 +38,20 @@ evidence:
       value: "Psalm 89:27"
     quotation: "firstborn, The highest of the kings of the earth"
 
+  - id: evidence.nwt.luke.2_7.mary_firstborn_child
+    source_id: source.bible.nwt
+    locator:
+      type: verse
+      value: "Luke 2:7"
+    quotation: "her son, the firstborn"
+
+  - id: evidence.nwt.luke.2_23.firstborn_male_holy
+    source_id: source.bible.nwt
+    locator:
+      type: verse
+      value: "Luke 2:23"
+    quotation: "Every firstborn male must be called holy to Jehovah"
+
   - id: evidence.lxx.ccat.genesis.49_3.reuben_firstborn
     source_id: source.greek.lxx.ccat_morph
     locator:
@@ -74,6 +88,15 @@ evidence:
     quotation: >
       The usual Scriptural meaning of the term "firstborn" is the one born first
       in order of time
+
+  - id: evidence.jw_study_bible.colossians.1_15.mary_firstborn_law
+    source_id: source.publication.jw.study_bible.colossians_1_15
+    locator:
+      type: study_note
+      value: "Colossians 1:15, note on 'the firstborn of all creation'"
+    quotation: >
+      Because Jesus was "the firstborn" child of Mary, he was presented at the
+      temple in accordance with Jehovah's Law.
 
   - id: evidence.jw_study_bible.colossians.1_15.first_creation_gloss
     source_id: source.publication.jw.study_bible.colossians_1_15
