@@ -105,3 +105,19 @@ relationships:
     summary: >
       The response supports the Jehovah's Witnesses interpretation that
       firstborn of all creation places the Son within the created order.
+
+  - id: relationship.jw.study_note_usual_meaning.supports_temporal_priority_claim
+    type: supports
+    from_id: evidence.jw_study_bible.colossians.1_15.usual_scriptural_meaning
+    to_id: claim.prototokos_usually_indicates_temporal_priority
+    summary: >
+      The Study Bible note's usual-meaning statement supports the claim that
+      prototokos usually indicates temporal priority in Scriptural usage.
+
+  - id: relationship.jw.temporal_priority_claim.supports_usual_meaning_response
+    type: supports
+    from_id: claim.prototokos_usually_indicates_temporal_priority
+    to_id: argument.jw.firstborn_usual_meaning_response
+    summary: >
+      The general temporal-priority claim supports the Jehovah's Witnesses
+      response that Colossians 1:15 should retain the usual meaning.

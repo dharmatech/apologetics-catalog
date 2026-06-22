@@ -31,6 +31,16 @@ claims:
     scope:
       domain: lexical_scripture_usage
 
+  - id: claim.prototokos_usually_indicates_temporal_priority
+    question_id: question.christology.firstborn_preeminence
+    summary: >
+      Prototokos usually indicates temporal priority in Scriptural usage.
+    proposition: >
+      The Greek term prototokos, commonly rendered firstborn, usually indicates
+      being first in order of time unless the context gives reason otherwise.
+    scope:
+      domain: lexical_scripture_usage
+
   - id: claim.colossians_firstborn_not_decisive_created
     question_id: question.christology.created_being
     summary: >

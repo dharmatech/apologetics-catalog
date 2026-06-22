@@ -32,3 +32,12 @@ evidence:
     quotation: >
       there is no basis for the assertion that the term "firstborn" here takes
       on a meaning other than its usual one
+
+  - id: evidence.jw_study_bible.colossians.1_15.usual_scriptural_meaning
+    source_id: source.publication.jw.study_bible.colossians_1_15
+    locator:
+      type: study_note
+      value: "Colossians 1:15, note on 'the firstborn of all creation'"
+    quotation: >
+      The usual Scriptural meaning of the term "firstborn" is the one born first
+      in order of time
