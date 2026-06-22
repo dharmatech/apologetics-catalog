@@ -50,6 +50,21 @@ sources:
       and the CCAT analysis notes describe the text field as following Rahlfs'
       text.
 
+  - id: source.bibleforge.original_language_db
+    type: database
+    title: "BibleForgeDB Original-Language Bible Data"
+    url: https://github.com/bibleforge/BibleForgeDB
+    accessed: 2026-06-22
+    rights:
+      status: public_domain
+      attribution: "BibleForgeDB"
+      url: https://github.com/bibleforge/BibleForgeDB/tree/master/licenses
+    description: >
+      Local reference clone of BibleForgeDB used for public-domain
+      original-language Bible words, Strong's numbers, morphology, word order,
+      and Greek/Hebrew lexicon data. The local clone is kept under archive/ and
+      is not distributed with the catalog.
+
   - id: source.publication.jw.official_christology_summary
     type: web_page
     title: "Official Jehovah's Witnesses Christology Summary"

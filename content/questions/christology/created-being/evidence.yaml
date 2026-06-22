@@ -46,6 +46,17 @@ evidence:
     quotation: "*ROUBHN PRWTO/TOKO/S MOU SU/"
     paraphrase: "Reuben, you are my firstborn."
 
+  - id: evidence.bibleforge.greek.prototokos.luke_2_7_colossians_1_15
+    source_id: source.bibleforge.original_language_db
+    locator:
+      type: lexical_verse_comparison
+      value: "Luke 2:7; Colossians 1:15"
+    quotation: >
+      Luke 2:7: πρωτότοκον (G4416); Colossians 1:15: πρωτότοκος (G4416)
+    paraphrase: >
+      BibleForgeDB tags both Luke 2:7 and Colossians 1:15 with the same Greek
+      Strong's number, G4416.
+
   - id: evidence.jw_study_bible.colossians.1_15.no_basis_other_meaning
     source_id: source.publication.jw.study_bible.colossians_1_15
     locator:

@@ -58,6 +58,19 @@ interpretations:
       work:
         source_id: source.publication.jw.study_bible.colossians_1_15
 
+  - id: interpretation.jw.luke_2_7.prototokos_birth_order
+    evidence_id: evidence.bibleforge.greek.prototokos.luke_2_7_colossians_1_15
+    method: lexical
+    summary: >
+      Luke 2:7 uses a form of prototokos for Jesus as Mary's firstborn child,
+      and is used as an example of ordinary birth-order usage of the term.
+    provenance:
+      attributed_to:
+        type: tradition
+        id: tradition.jehovahs_witnesses
+      work:
+        source_id: source.publication.jw.study_bible.colossians_1_15
+
   - id: interpretation.nicene.colossians.1_15.firstborn_preeminence
     evidence_id: evidence.bsb.colossians.1_15.firstborn
     method: lexical

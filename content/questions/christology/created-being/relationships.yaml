@@ -212,3 +212,20 @@ relationships:
       The Genesis 49:3 LXX example provides lexical support for the
       Jehovah's Witnesses response that firstborn in Colossians 1:15 should
       retain its usual meaning.
+
+  - id: relationship.jw.luke_2_7_prototokos.supports_temporal_priority_claim
+    type: supports
+    from_id: interpretation.jw.luke_2_7.prototokos_birth_order
+    to_id: claim.prototokos_usually_indicates_temporal_priority
+    summary: >
+      The Luke 2:7 Greek example supports the claim that prototokos can carry
+      ordinary birth-order meaning in Scriptural usage.
+
+  - id: relationship.jw.luke_2_7_prototokos.supports_usual_meaning_response
+    type: supports
+    from_id: interpretation.jw.luke_2_7.prototokos_birth_order
+    to_id: argument.jw.firstborn_usual_meaning_response
+    summary: >
+      The Luke 2:7 example provides lexical support for the Jehovah's Witnesses
+      response that firstborn in Colossians 1:15 should retain its usual
+      meaning.
