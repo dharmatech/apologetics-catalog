@@ -7,6 +7,7 @@ Validation should be layered.
 Recommended phases:
 
 ```text
+discovery
 parse
 envelope
 schema
@@ -17,10 +18,16 @@ graph
 outputs
 ```
 
+The discovery phase finds and validates the root project manifest, resolves
+manifest-relative content include and exclude patterns, rejects empty include
+matches, and determines the dataset file set. Manifest rules are defined in
+[v0.1 Project Manifest](13-project-manifest.md).
+
 The parser phase loads YAML and reports syntax errors.
 
 The envelope phase validates document-level fields such as `schema_version` and
-`kind`, including whether the declared schema version is supported.
+`kind`, including whether the declared schema version is supported. In v0.1,
+content document schema versions must match the root manifest schema version.
 
 The schema phase validates each entity's required fields and local structure
 against the schema files for the declared schema version.
@@ -62,9 +69,13 @@ cause.
 
 Validation should include:
 
+* project manifest validation
+* manifest content include and exclude validation
+* empty include match validation
 * schema validation
 * document envelope validation
 * schema version validation
+* content schema version matching validation
 * required field validation
 * duplicate ID detection
 * explicit entity ID validation
@@ -126,6 +137,8 @@ Examples:
 * sections represented as maps keyed by ID instead of lists of records
 * references to nonexistent entities
 * first-class relationships whose `from_id` or `to_id` targets do not exist
+* content files whose `schema_version` differs from the root manifest
+* include patterns that match no files
 
 The compiler should reject invalid datasets.
 

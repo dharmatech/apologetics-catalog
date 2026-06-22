@@ -5,21 +5,21 @@
 Generated artifacts may include:
 
 ```text
-/generated/json
-/generated/catalog
-/generated/html
-/generated/markdown
-/generated/python
-/generated/typescript
-/generated/graph
+generated/json
+generated/catalog
+generated/html
+generated/markdown
+generated/python
+generated/typescript
+generated/graph
 ```
 
 Future targets may include:
 
 ```text
-/generated/ocaml
-/generated/haskell
-/generated/lean
+generated/ocaml
+generated/haskell
+generated/lean
 ```
 
 Generated outputs are derived artifacts.
@@ -33,13 +33,16 @@ Generated outputs may reorganize the data into forms optimized for machines.
 Examples:
 
 ```text
-/generated/json/questions.json
-/generated/json/claims.json
-/generated/json/evidence.json
-/generated/json/relationships.json
-/generated/catalog/catalog.json
-/generated/graph/full.graph.json
+generated/json/questions.json
+generated/json/claims.json
+generated/json/evidence.json
+generated/json/relationships.json
+generated/catalog/catalog.json
+generated/graph/full.graph.json
 ```
+
+Generated output paths should default to the manifest's `outputs.generated_dir`
+value, as defined in [v0.1 Project Manifest](13-project-manifest.md).
 
 Graph databases, search indexes, HTML views, and query-oriented stores should be
 treated as generated projections unless the project explicitly changes the
@@ -86,6 +89,22 @@ migrate
 ```
 
 These commands should remain simple and implementation-independent.
+
+By default, commands should resolve the project manifest from the current
+working directory using:
+
+```text
+./apologetics.yaml
+```
+
+Commands should also accept:
+
+```text
+--manifest path/to/apologetics.yaml
+```
+
+Paths inside the manifest should resolve relative to the manifest file, not the
+shell's current working directory.
 
 The `validate` command should support human-readable diagnostics by default.
 

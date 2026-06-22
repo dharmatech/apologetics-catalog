@@ -14,9 +14,34 @@ The YAML files represent the source of truth.
 
 YAML is the canonical authoring and interchange format.
 
+The dataset root is discovered through a v0.1 project manifest, as defined in
+[v0.1 Project Manifest](13-project-manifest.md).
+
 Other interfaces may be built on top of the same model, but they should read
 from and write to the canonical YAML source unless the project deliberately
 changes its storage model.
+
+---
+
+## Project Manifest and Dataset Discovery
+
+The initial project should use one root manifest:
+
+```text
+/apologetics.yaml
+```
+
+The manifest declares project metadata, dataset schema version, content include
+patterns, generated output defaults, and project-wide vocabulary extensions.
+
+Content files still declare their own `schema_version` and `kind`, but in v0.1
+their schema version must match the manifest schema version.
+
+The compiler should load source content from manifest-declared include patterns
+rather than scanning the entire repository implicitly.
+
+Generated directories, hidden tool directories, and version-control directories
+should never be scanned as source content.
 
 ---
 

@@ -106,7 +106,9 @@ Project-specific values in extensible vocabularies must be declared before use.
 
 ## Extension Declaration
 
-Vocabulary extensions should be dataset-level or project-level, not file-local.
+Vocabulary extensions should be project-level, not file-local. In v0.1, they
+should be declared in the root project manifest defined by
+[v0.1 Project Manifest](13-project-manifest.md).
 
 Example:
 
