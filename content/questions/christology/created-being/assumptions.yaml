@@ -20,3 +20,16 @@ assumptions:
         id: tradition.nicene_trinitarian
       work:
         title: "Dataset author synthesis"
+
+  - id: assumption.jw.all_things_language_can_be_contextually_scoped
+    category: textual
+    summary: >
+      In the Jehovah's Witnesses reading modeled here, all things language can
+      be contextually scoped to mean all other things when the subject is
+      distinguished from the group under discussion.
+    provenance:
+      attributed_to:
+        type: tradition
+        id: tradition.jehovahs_witnesses
+      work:
+        title: "Dataset author synthesis from NWT Colossians 1:16-20"

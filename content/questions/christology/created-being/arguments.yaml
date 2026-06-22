@@ -24,6 +24,20 @@ arguments:
       work:
         title: "Dataset author synthesis using NWT John 1:3 and John 1:14"
 
+  - id: argument.jw.colossians_1_16_all_other_things_response
+    role: response
+    summary: >
+      A Jehovah's Witnesses response appeals to the NWT rendering of Colossians
+      1:16-20, where all things language around Jesus is rendered as all other
+      things. This answers the Trinitarian John 1:3 argument by treating Jesus
+      as excluded from the things created through him.
+    provenance:
+      attributed_to:
+        type: tradition
+        id: tradition.jehovahs_witnesses
+      work:
+        source_id: source.bible.nwt
+
   - id: argument.jw.firstborn_usual_meaning_response
     role: response
     summary: >

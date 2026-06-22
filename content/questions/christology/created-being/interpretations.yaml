@@ -16,6 +16,23 @@ interpretations:
       work:
         source_id: source.publication.jw.official_christology_summary
 
+  - id: interpretation.jw.colossians_1_16.all_other_things_scope
+    evidence_id: evidence.nwt.colossians.1_16.all_other_things_created
+    related_evidence_ids:
+      - evidence.nwt.colossians.1_13_20.other_pattern
+    method: translation_scope
+    summary: >
+      The NWT rendering of Colossians 1:16 is read as scoping the created
+      things made through Jesus as all other things. On this reading, Jesus is
+      excluded from the class of things created by means of him while remaining
+      the agent through whom the rest of creation came into existence.
+    provenance:
+      attributed_to:
+        type: tradition
+        id: tradition.jehovahs_witnesses
+      work:
+        source_id: source.bible.nwt
+
   - id: interpretation.trinitarian.john_1_14.word_identified_with_jesus
     evidence_id: evidence.nwt.john.1_14.word_became_flesh
     method: contextual

@@ -164,6 +164,76 @@ relationships:
       The argument supports the Nicene preeminence reading as a way to read
       Colossians 1:15 consistently with John 1:3.
 
+  - id: relationship.jw.colossians_1_16_scope.depends_on_contextual_scope
+    type: depends_on
+    from_id: interpretation.jw.colossians_1_16.all_other_things_scope
+    to_id: assumption.jw.all_things_language_can_be_contextually_scoped
+    summary: >
+      The Jehovah's Witnesses all-other-things interpretation depends on
+      allowing all things language to be scoped by context.
+
+  - id: relationship.jw.colossians_1_16_scope.challenges_trinitarian_scope
+    type: challenges
+    from_id: interpretation.jw.colossians_1_16.all_other_things_scope
+    to_id: assumption.trinitarian.john_1_3.all_things_scope
+    summary: >
+      The NWT all-other-things reading challenges the Trinitarian assumption
+      that all things language in this argument must include the whole class of
+      things that came into existence.
+
+  - id: relationship.jw.colossians_1_16_response.uses_scope_interpretation
+    type: uses
+    from_id: argument.jw.colossians_1_16_all_other_things_response
+    to_id: interpretation.jw.colossians_1_16.all_other_things_scope
+    summary: >
+      The response uses the NWT Colossians 1:16 all-other-things interpretation
+      as its main answer to the Trinitarian John 1:3 argument.
+
+  - id: relationship.jw.colossians_1_16_response.responds_to_john_1_3_argument
+    type: responds_to
+    from_id: argument.jw.colossians_1_16_all_other_things_response
+    to_id: argument.trinitarian.john_1_3_created_things_response
+    summary: >
+      The response answers the Trinitarian John 1:3 argument by proposing that
+      all things language concerning Jesus can be understood as all other
+      things.
+
+  - id: relationship.jw.colossians_1_16_response.challenges_john_1_3_interpretation
+    type: challenges
+    from_id: argument.jw.colossians_1_16_all_other_things_response
+    to_id: interpretation.trinitarian.john_1_3.excludes_created_word
+    summary: >
+      The response challenges the Trinitarian John 1:3 interpretation by
+      disputing the scope of the all things language rather than the link
+      between the Word and Jesus.
+
+  - id: relationship.jw.colossians_1_16_scope.supports_created_reading
+    type: supports
+    from_id: interpretation.jw.colossians_1_16.all_other_things_scope
+    to_id: interpretation.jw.colossians.1_15.firstborn_created_order
+    summary: >
+      The all-other-things reading supports the Jehovah's Witnesses
+      created-order interpretation by distinguishing Jesus from the rest of the
+      things created through him.
+
+  - id: relationship.jw.colossians_1_16_response.challenges_preeminence_reading
+    type: challenges
+    from_id: argument.jw.colossians_1_16_all_other_things_response
+    to_id: interpretation.nicene.colossians.1_15.firstborn_preeminence
+    summary: >
+      The response challenges the Nicene preeminence reading by arguing that
+      the immediate NWT Colossians context itself frames creation language as
+      all other things.
+
+  - id: relationship.jw.colossians_1_16_response.challenges_limited_claim
+    type: challenges
+    from_id: argument.jw.colossians_1_16_all_other_things_response
+    to_id: claim.colossians_firstborn_not_decisive_created
+    summary: >
+      The response challenges the limited Trinitarian claim by arguing that the
+      surrounding NWT Colossians context reinforces, rather than weakens, the
+      created-order reading of firstborn.
+
   - id: relationship.jw.firstborn_usual_meaning_response.uses_study_note
     type: uses
     from_id: argument.jw.firstborn_usual_meaning_response

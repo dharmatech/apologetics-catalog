@@ -17,6 +17,23 @@ evidence:
       value: "Colossians 1:15"
     quotation: "firstborn of all creation"
 
+  - id: evidence.nwt.colossians.1_16.all_other_things_created
+    source_id: source.bible.nwt
+    locator:
+      type: verse
+      value: "Colossians 1:16"
+    quotation: "all other things were created"
+
+  - id: evidence.nwt.colossians.1_13_20.other_pattern
+    source_id: source.bible.nwt
+    locator:
+      type: passage
+      value: "Colossians 1:13-20"
+    quotation: "all other things"
+    paraphrase: >
+      A local check of the NWT EPUB finds five occurrences of other in
+      Colossians 1:13-20: twice in 1:16, twice in 1:17, and once in 1:20.
+
   - id: evidence.nwt.john.1_3.all_things_through_him
     source_id: source.bible.nwt
     locator:
