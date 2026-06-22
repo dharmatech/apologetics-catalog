@@ -81,3 +81,27 @@ relationships:
     summary: >
       The argument challenges the inference from firstborn of all creation to
       created status.
+
+  - id: relationship.jw.firstborn_usual_meaning_response.uses_study_note
+    type: uses
+    from_id: argument.jw.firstborn_usual_meaning_response
+    to_id: evidence.jw_study_bible.colossians.1_15.no_basis_other_meaning
+    summary: >
+      The response uses the Study Bible note's assertion that Colossians 1:15
+      gives no basis for firstborn to take a non-usual meaning.
+
+  - id: relationship.jw.firstborn_usual_meaning_response.responds_to_trinitarian_argument
+    type: responds_to
+    from_id: argument.jw.firstborn_usual_meaning_response
+    to_id: argument.trinitarian.firstborn_not_necessarily_created
+    summary: >
+      The response answers the Trinitarian argument that firstborn need not
+      imply created status in Colossians 1:15.
+
+  - id: relationship.jw.firstborn_usual_meaning_response.supports_created_reading
+    type: supports
+    from_id: argument.jw.firstborn_usual_meaning_response
+    to_id: interpretation.jw.colossians.1_15.firstborn_created_order
+    summary: >
+      The response supports the Jehovah's Witnesses interpretation that
+      firstborn of all creation places the Son within the created order.

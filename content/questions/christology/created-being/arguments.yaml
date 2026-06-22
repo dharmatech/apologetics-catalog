@@ -9,3 +9,16 @@ arguments:
       Since Psalm 89:27 can use firstborn in a rank or preeminence sense,
       Colossians 1:15's use of firstborn does not by itself establish that
       Jesus is created.
+
+  - id: argument.jw.firstborn_usual_meaning_response
+    role: response
+    summary: >
+      The Jehovah's Witnesses Study Bible response argues that firstborn in
+      Colossians 1:15 should retain its usual temporal sense, so the
+      rank-or-preeminence objection does not overturn the created-order reading.
+    provenance:
+      attributed_to:
+        type: tradition
+        id: tradition.jehovahs_witnesses
+      work:
+        source_id: source.publication.jw.study_bible.colossians_1_15

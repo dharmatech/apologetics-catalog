@@ -45,6 +45,18 @@ sources:
       publication, replace or refine this with a concrete title, URL, access
       date, and locator.
 
+  - id: source.publication.jw.study_bible.colossians_1_15
+    type: study_note
+    title: "New World Translation Study Bible Note on Colossians 1:15"
+    url: https://www.jw.org/en/library/bible/study-bible/books/colossians/1/#v51001015
+    accessed: 2026-06-22
+    rights:
+      status: copyrighted
+      attribution: "New World Translation Study Bible, jw.org"
+    description: >
+      JW.org study note on Colossians 1:15, captured as a dated web source
+      because study notes may change over time.
+
   - id: source.creed.nicene.trinitarian_summary
     type: creed
     title: "Nicene Creed"

@@ -23,3 +23,12 @@ evidence:
       type: verse
       value: "Psalm 89:27"
     quotation: "firstborn, The highest of the kings of the earth"
+
+  - id: evidence.jw_study_bible.colossians.1_15.no_basis_other_meaning
+    source_id: source.publication.jw.study_bible.colossians_1_15
+    locator:
+      type: study_note
+      value: "Colossians 1:15, note on 'the firstborn of all creation'"
+    quotation: >
+      there is no basis for the assertion that the term "firstborn" here takes
+      on a meaning other than its usual one
