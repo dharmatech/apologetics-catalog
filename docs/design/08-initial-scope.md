@@ -54,6 +54,11 @@ The first apologetics dataset should follow the authoring rules in
 neutral summaries, representative-first modeling, symmetrical treatment of major
 positions, and minimum completeness for a modeled position.
 
+The concrete first modeling pass is defined in
+[First Topic Modeling Plan](18-first-topic-modeling-plan.md). That plan should
+be treated as the initial fixture target for validation, generated JSON, HTML,
+and graph output.
+
 ---
 
 ## Success Criteria
