@@ -171,6 +171,41 @@ relationships:
       Jehovah's Witnesses response that firstborn in Colossians 1:15 should
       retain its usual temporal meaning.
 
+  - id: relationship.modeling.revelation_1_5.related_to_colossians_1_18
+    type: related_to
+    from_id: interpretation.modeling.revelation_1_5.firstborn_from_dead_parallel
+    to_id: interpretation.jw.colossians.1_18.firstborn_from_dead_temporal
+    summary: >
+      Revelation 1:5 and Colossians 1:18 both apply firstborn from the dead
+      language to Jesus, making Revelation 1:5 a close resurrection-context
+      parallel to the Colossians 1:18 usage cited in the Study Bible note.
+
+  - id: relationship.modeling.revelation_1_5.supports_temporal_priority_claim
+    type: supports
+    from_id: interpretation.modeling.revelation_1_5.firstborn_from_dead_parallel
+    to_id: claim.prototokos_usually_indicates_temporal_priority
+    summary: >
+      The Revelation 1:5 resurrection-context usage supports the narrower claim
+      that firstborn can mark order or priority within a concrete sequence.
+
+  - id: relationship.modeling.revelation_1_5.supports_usual_meaning_response
+    type: supports
+    from_id: interpretation.modeling.revelation_1_5.firstborn_from_dead_parallel
+    to_id: argument.jw.firstborn_usual_meaning_response
+    summary: >
+      The Revelation 1:5 parallel provides additional bounded support for the
+      Jehovah's Witnesses response that firstborn in Colossians 1:15 should not
+      be moved away from its usual temporal sense without contextual reason.
+
+  - id: relationship.modeling.revelation_1_5.supports_jw_six_of_eight
+    type: supports
+    from_id: interpretation.modeling.revelation_1_5.firstborn_from_dead_parallel
+    to_id: interpretation.jw.nt_prototokos.six_of_eight_jesus_occurrences
+    summary: >
+      The Revelation 1:5 observation supports the Study Bible note's
+      occurrence-count appeal by identifying another Jesus-related G4416
+      occurrence.
+
   - id: relationship.jw.revelation_3_14_beginning.supports_created
     type: supports
     from_id: interpretation.jw.revelation.3_14.beginning_created_by_god

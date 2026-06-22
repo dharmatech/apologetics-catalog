@@ -24,6 +24,13 @@ evidence:
       value: "Colossians 1:18"
     quotation: "firstborn from the dead"
 
+  - id: evidence.nwt.revelation.1_5.firstborn_from_dead
+    source_id: source.bible.nwt
+    locator:
+      type: verse
+      value: "Revelation 1:5"
+    quotation: "the firstborn from the dead"
+
   - id: evidence.nwt.revelation.3_14.beginning_creation
     source_id: source.bible.nwt
     locator:
@@ -86,6 +93,15 @@ evidence:
     quotation: "πρωτότοκον (G4416)"
     paraphrase: >
       BibleForgeDB tags the Romans 8:29 form πρωτότοκον with Strong's G4416.
+
+  - id: evidence.bibleforge.greek.revelation.1_5.prototokos
+    source_id: source.bibleforge.original_language_db
+    locator:
+      type: verse_word
+      value: "Revelation 1:5"
+    quotation: "πρωτότοκος (G4416)"
+    paraphrase: >
+      BibleForgeDB tags the Revelation 1:5 form πρωτότοκος with Strong's G4416.
 
   - id: evidence.bibleforge.greek.prototokos.nt_g4416_occurrences
     source_id: source.bibleforge.original_language_db

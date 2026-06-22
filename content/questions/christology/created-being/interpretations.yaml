@@ -30,6 +30,21 @@ interpretations:
       work:
         source_id: source.publication.jw.study_bible.colossians_1_15
 
+  - id: interpretation.modeling.revelation_1_5.firstborn_from_dead_parallel
+    evidence_id: evidence.nwt.revelation.1_5.firstborn_from_dead
+    related_evidence_ids:
+      - evidence.bibleforge.greek.revelation.1_5.prototokos
+      - evidence.nwt.colossians.1_18.firstborn_from_dead
+    method: contextual
+    summary: >
+      Revelation 1:5 uses firstborn from the dead for Jesus in a resurrection
+      context parallel to Colossians 1:18. It is modeled as support for
+      firstborn carrying order or priority within a concrete sequence, without
+      deciding by itself how Colossians 1:15 should be read.
+    provenance:
+      work:
+        title: "Dataset author synthesis"
+
   - id: interpretation.jw.revelation.3_14.beginning_created_by_god
     evidence_id: evidence.nwt.revelation.3_14.beginning_creation
     method: contextual
