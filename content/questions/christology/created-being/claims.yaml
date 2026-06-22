@@ -21,6 +21,16 @@ claims:
     scope:
       domain: christology
 
+  - id: claim.jesus_preeminent_in_relation_to_other_creatures
+    question_id: question.christology.created_being
+    summary: >
+      Jesus is preeminent in relation to all other creatures.
+    proposition: >
+      Jesus has preeminent rank in relation to all other creatures, while still
+      being understood as part of the created order.
+    scope:
+      domain: christology
+
   - id: claim.firstborn_can_indicate_preeminence
     question_id: question.christology.firstborn_preeminence
     summary: >

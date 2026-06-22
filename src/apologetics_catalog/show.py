@@ -10,6 +10,7 @@ OUTGOING_LABELS = {
     "supports": "Supports",
     "challenges": "Challenges",
     "contradicts": "Contradicts",
+    "qualifies": "Qualifies",
     "uses": "Uses",
 }
 
@@ -18,6 +19,7 @@ INCOMING_LABELS = {
     "supports": "Supported by",
     "challenges": "Challenged by",
     "contradicts": "Contradicts",
+    "qualifies": "Qualified by",
     "uses": "Used by",
 }
 

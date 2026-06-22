@@ -41,3 +41,17 @@ evidence:
     quotation: >
       The usual Scriptural meaning of the term "firstborn" is the one born first
       in order of time
+
+  - id: evidence.jw_study_bible.colossians.1_15.first_creation_gloss
+    source_id: source.publication.jw.study_bible.colossians_1_15
+    locator:
+      type: study_note
+      value: "Colossians 1:15, note on 'the firstborn of all creation'"
+    quotation: "That is, the first creation by Jehovah God."
+
+  - id: evidence.jw_study_bible.colossians.1_15.preeminent_other_creatures
+    source_id: source.publication.jw.study_bible.colossians_1_15
+    locator:
+      type: study_note
+      value: "Colossians 1:15, note on 'the firstborn of all creation'"
+    quotation: "Jesus is preeminent in relation to all other creatures"

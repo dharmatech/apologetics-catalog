@@ -121,3 +121,35 @@ relationships:
     summary: >
       The general temporal-priority claim supports the Jehovah's Witnesses
       response that Colossians 1:15 should retain the usual meaning.
+
+  - id: relationship.jw.first_creation_gloss.supports_created_reading
+    type: supports
+    from_id: evidence.jw_study_bible.colossians.1_15.first_creation_gloss
+    to_id: interpretation.jw.colossians.1_15.firstborn_created_order
+    summary: >
+      The Study Bible note's first-creation gloss directly supports the
+      Jehovah's Witnesses created-order interpretation of Colossians 1:15.
+
+  - id: relationship.jw.preeminence_concession.supports_preeminent_creatures_claim
+    type: supports
+    from_id: evidence.jw_study_bible.colossians.1_15.preeminent_other_creatures
+    to_id: claim.jesus_preeminent_in_relation_to_other_creatures
+    summary: >
+      The Study Bible note's concession supports the claim that Jesus is
+      preeminent in relation to all other creatures.
+
+  - id: relationship.jw.preeminent_creatures.qualifies_nicene_preeminence
+    type: qualifies
+    from_id: claim.jesus_preeminent_in_relation_to_other_creatures
+    to_id: interpretation.nicene.colossians.1_15.firstborn_preeminence
+    summary: >
+      The claim qualifies the Nicene preeminence reading by accepting
+      preeminence while locating Jesus in relation to all other creatures.
+
+  - id: relationship.jw.preeminent_creatures.supports_created_reading
+    type: supports
+    from_id: claim.jesus_preeminent_in_relation_to_other_creatures
+    to_id: interpretation.jw.colossians.1_15.firstborn_created_order
+    summary: >
+      The claim supports the Jehovah's Witnesses created-order reading by
+      treating Jesus' preeminence as compatible with creaturely status.
