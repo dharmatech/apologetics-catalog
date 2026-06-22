@@ -35,6 +35,10 @@ The first position records should follow
 distinction between sources that establish a position and sources that a
 position uses as evidence.
 
+Non-Scripture attribution sources should follow
+[v0.1 Bibliography Sources](16-bibliography-sources.md), including concrete
+source records, web access metadata, and edition/version conventions.
+
 Initial deliverables:
 
 * YAML dataset

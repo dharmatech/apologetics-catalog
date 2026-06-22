@@ -253,6 +253,9 @@ They are not project-extensible in v0.1.
 Source types classify works, editions, publications, media, and other evidence
 sources.
 
+Bibliography source modeling guidance is defined in
+[v0.1 Bibliography Sources](16-bibliography-sources.md).
+
 They are project-extensible in v0.1.
 
 | ID | Label | Description |

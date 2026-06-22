@@ -6,6 +6,9 @@ defined in [v0.1 Scripture Sources](14-scripture-sources.md).
 Position attribution provenance is discussed in
 [v0.1 Position Attribution](15-position-attribution.md).
 
+Non-Scripture source and bibliography conventions are defined in
+[v0.1 Bibliography Sources](16-bibliography-sources.md).
+
 ## Provenance
 
 Interpretations, arguments, relationships, and other derived statements should
@@ -112,6 +115,9 @@ Rights metadata may vary by source, edition, translation, or publication.
 For exact quotations, the evidence should cite the concrete source whose wording
 is quoted, because rights and attribution requirements may differ between
 editions or translations.
+
+For web sources, source metadata should include the URL and access date when
+known.
 
 ---
 

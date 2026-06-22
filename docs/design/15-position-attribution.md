@@ -16,6 +16,10 @@ It explains how to distinguish:
 The schema allows `Position.provenance` to be optional, but substantive modeled
 positions should not remain unsupported in practice.
 
+Bibliography source conventions for official publications, creeds, web pages,
+books, articles, and historical reconstruction sources are defined in
+[v0.1 Bibliography Sources](16-bibliography-sources.md).
+
 ---
 
 ## Attribution Principle
@@ -109,6 +113,11 @@ modern historical analysis
 
 For a broad tradition, representative sources and dataset-author synthesis are
 acceptable, but the synthesis should be identified as such.
+
+Source roles are contextual. A source can establish a position in one record and
+serve as evidence used by a position in another. The role should be expressed by
+the provenance, evidence, argument, interpretation, or relationship that uses
+the source.
 
 ---
 

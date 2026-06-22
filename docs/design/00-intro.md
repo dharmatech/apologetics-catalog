@@ -43,6 +43,7 @@ in a machine-readable form that can be validated, queried, visualized, analyzed,
 * [v0.1 Project Manifest](13-project-manifest.md)
 * [v0.1 Scripture Sources](14-scripture-sources.md)
 * [v0.1 Position Attribution](15-position-attribution.md)
+* [v0.1 Bibliography Sources](16-bibliography-sources.md)
 
 ### Overview
 

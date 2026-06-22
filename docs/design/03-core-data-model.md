@@ -275,6 +275,9 @@ not sufficient for exact quotation wording.
 Scripture-specific source, locator, evidence, and quotation conventions are
 defined in [v0.1 Scripture Sources](14-scripture-sources.md).
 
+Non-Scripture bibliography and attribution source conventions are defined in
+[v0.1 Bibliography Sources](16-bibliography-sources.md).
+
 Examples:
 
 * Biblical book or corpus
