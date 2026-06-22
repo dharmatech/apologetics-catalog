@@ -16,6 +16,36 @@ interpretations:
       work:
         source_id: source.publication.jw.official_christology_summary
 
+  - id: interpretation.trinitarian.john_1_14.word_identified_with_jesus
+    evidence_id: evidence.nwt.john.1_14.word_became_flesh
+    method: contextual
+    summary: >
+      The Word who becomes flesh in John 1:14 is read as Jesus, making the
+      prologue's statements about the Word relevant to claims about Jesus.
+    provenance:
+      attributed_to:
+        type: tradition
+        id: tradition.nicene_trinitarian
+      work:
+        title: "Dataset author synthesis"
+
+  - id: interpretation.trinitarian.john_1_3.excludes_created_word
+    evidence_id: evidence.nwt.john.1_3.all_things_through_him
+    related_evidence_ids:
+      - evidence.nwt.john.1_14.word_became_flesh
+    method: contextual
+    summary: >
+      John 1:3 is read as dividing the Word from the whole class of things that
+      came into existence through him. Since the Word is identified with Jesus,
+      this reading excludes Jesus from the class of things that came into
+      existence.
+    provenance:
+      attributed_to:
+        type: tradition
+        id: tradition.nicene_trinitarian
+      work:
+        title: "Dataset author synthesis using NWT John 1:3 and John 1:14"
+
   - id: interpretation.jw.colossians.1_18.firstborn_from_dead_temporal
     evidence_id: evidence.nwt.colossians.1_18.firstborn_from_dead
     method: contextual

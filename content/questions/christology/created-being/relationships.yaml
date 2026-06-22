@@ -82,6 +82,88 @@ relationships:
       The argument challenges the inference from firstborn of all creation to
       created status.
 
+  - id: relationship.trinitarian.john_1_3.depends_on_word_identification
+    type: depends_on
+    from_id: interpretation.trinitarian.john_1_3.excludes_created_word
+    to_id: interpretation.trinitarian.john_1_14.word_identified_with_jesus
+    summary: >
+      The John 1:3 argument depends on reading the Word in John's prologue as
+      Jesus through John 1:14.
+
+  - id: relationship.trinitarian.john_1_3.depends_on_created_being_assumption
+    type: depends_on
+    from_id: interpretation.trinitarian.john_1_3.excludes_created_word
+    to_id: assumption.created_beings.came_into_existence
+    summary: >
+      The argument depends on treating created beings as beings that came into
+      existence.
+
+  - id: relationship.trinitarian.john_1_3.depends_on_all_things_scope
+    type: depends_on
+    from_id: interpretation.trinitarian.john_1_3.excludes_created_word
+    to_id: assumption.trinitarian.john_1_3.all_things_scope
+    summary: >
+      The argument depends on taking John 1:3's all things language as covering
+      the whole class of things that came into existence.
+
+  - id: relationship.trinitarian.john_1_3_response.uses_interpretation
+    type: uses
+    from_id: argument.trinitarian.john_1_3_created_things_response
+    to_id: interpretation.trinitarian.john_1_3.excludes_created_word
+    summary: >
+      The response uses the Trinitarian reading of John 1:3 as excluding Jesus
+      from the class of things that came into existence.
+
+  - id: relationship.trinitarian.john_1_3_response.challenges_created_claim
+    type: challenges
+    from_id: argument.trinitarian.john_1_3_created_things_response
+    to_id: claim.jesus_created
+    summary: >
+      If Jesus is excluded from the class of things that came into existence,
+      this challenges the claim that Jesus is a created being.
+
+  - id: relationship.trinitarian.john_1_3_response.supports_uncreated_claim
+    type: supports
+    from_id: argument.trinitarian.john_1_3_created_things_response
+    to_id: claim.jesus_uncreated
+    summary: >
+      The John 1:3 argument supports the claim that Jesus is not a created
+      being.
+
+  - id: relationship.trinitarian.john_1_3_response.challenges_jw_created_reading
+    type: challenges
+    from_id: argument.trinitarian.john_1_3_created_things_response
+    to_id: interpretation.jw.colossians.1_15.firstborn_created_order
+    summary: >
+      The argument challenges the Jehovah's Witnesses created-order reading of
+      Colossians 1:15 by appealing to John 1:3 as a broader contextual
+      constraint.
+
+  - id: relationship.trinitarian.john_1_3_response.responds_to_no_basis_assertion
+    type: responds_to
+    from_id: argument.trinitarian.john_1_3_created_things_response
+    to_id: evidence.jw_study_bible.colossians.1_15.no_basis_other_meaning
+    summary: >
+      The argument responds to the Study Bible note's no-basis assertion by
+      offering John 1:3 as a proposed contextual and theological basis for a
+      non-created reading of firstborn in Colossians 1:15.
+
+  - id: relationship.trinitarian.john_1_3_response.supports_limited_claim
+    type: supports
+    from_id: argument.trinitarian.john_1_3_created_things_response
+    to_id: claim.colossians_firstborn_not_decisive_created
+    summary: >
+      The argument supports the limited claim that firstborn in Colossians 1:15
+      does not by itself establish that Jesus belongs to the created order.
+
+  - id: relationship.trinitarian.john_1_3_response.supports_preeminence_reading
+    type: supports
+    from_id: argument.trinitarian.john_1_3_created_things_response
+    to_id: interpretation.nicene.colossians.1_15.firstborn_preeminence
+    summary: >
+      The argument supports the Nicene preeminence reading as a way to read
+      Colossians 1:15 consistently with John 1:3.
+
   - id: relationship.jw.firstborn_usual_meaning_response.uses_study_note
     type: uses
     from_id: argument.jw.firstborn_usual_meaning_response

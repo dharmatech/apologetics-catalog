@@ -1,0 +1,22 @@
+schema_version: "0.1"
+
+kind: assumption
+
+assumptions:
+  - id: assumption.created_beings.came_into_existence
+    category: theological
+    summary: >
+      A created being is a being that came into existence.
+
+  - id: assumption.trinitarian.john_1_3.all_things_scope
+    category: textual
+    summary: >
+      In the Trinitarian reading modeled here, John 1:3's all things and not
+      even one thing language covers the whole class of things that came into
+      existence, not merely all other things after Jesus.
+    provenance:
+      attributed_to:
+        type: tradition
+        id: tradition.nicene_trinitarian
+      work:
+        title: "Dataset author synthesis"

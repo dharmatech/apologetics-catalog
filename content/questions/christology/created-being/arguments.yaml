@@ -10,6 +10,20 @@ arguments:
       Colossians 1:15's use of firstborn does not by itself establish that
       Jesus is created.
 
+  - id: argument.trinitarian.john_1_3_created_things_response
+    role: response
+    summary: >
+      A Trinitarian response uses John 1:3, read through John 1:14, to argue
+      that Jesus is not among the things that came into existence. This supplies
+      a contextual and theological basis for resisting the created-order reading
+      of firstborn in Colossians 1:15.
+    provenance:
+      attributed_to:
+        type: tradition
+        id: tradition.nicene_trinitarian
+      work:
+        title: "Dataset author synthesis using NWT John 1:3 and John 1:14"
+
   - id: argument.jw.firstborn_usual_meaning_response
     role: response
     summary: >
