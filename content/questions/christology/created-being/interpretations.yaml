@@ -44,6 +44,20 @@ interpretations:
       work:
         source_id: source.publication.jw.study_bible.colossians_1_15
 
+  - id: interpretation.jw.genesis.49_3.prototokos_birth_order
+    evidence_id: evidence.lxx.ccat.genesis.49_3.reuben_firstborn
+    method: lexical
+    summary: >
+      Genesis 49:3 in the Septuagint applies prototokos language to Reuben as
+      Jacob's firstborn, and is used as an example of ordinary birth-order
+      usage.
+    provenance:
+      attributed_to:
+        type: tradition
+        id: tradition.jehovahs_witnesses
+      work:
+        source_id: source.publication.jw.study_bible.colossians_1_15
+
   - id: interpretation.nicene.colossians.1_15.firstborn_preeminence
     evidence_id: evidence.bsb.colossians.1_15.firstborn
     method: lexical

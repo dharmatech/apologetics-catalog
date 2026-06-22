@@ -195,3 +195,20 @@ relationships:
       The Revelation 3:14 reading supports the Jehovah's Witnesses response that
       Colossians 1:15 should be read as identifying Jesus with the created
       order.
+
+  - id: relationship.jw.genesis_49_3_prototokos.supports_temporal_priority_claim
+    type: supports
+    from_id: interpretation.jw.genesis.49_3.prototokos_birth_order
+    to_id: claim.prototokos_usually_indicates_temporal_priority
+    summary: >
+      The Genesis 49:3 LXX example supports the claim that prototokos can carry
+      ordinary birth-order meaning in Scriptural usage.
+
+  - id: relationship.jw.genesis_49_3_prototokos.supports_usual_meaning_response
+    type: supports
+    from_id: interpretation.jw.genesis.49_3.prototokos_birth_order
+    to_id: argument.jw.firstborn_usual_meaning_response
+    summary: >
+      The Genesis 49:3 LXX example provides lexical support for the
+      Jehovah's Witnesses response that firstborn in Colossians 1:15 should
+      retain its usual meaning.

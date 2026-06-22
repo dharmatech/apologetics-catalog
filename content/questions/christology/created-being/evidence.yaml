@@ -38,6 +38,14 @@ evidence:
       value: "Psalm 89:27"
     quotation: "firstborn, The highest of the kings of the earth"
 
+  - id: evidence.lxx.ccat.genesis.49_3.reuben_firstborn
+    source_id: source.greek.lxx.ccat_morph
+    locator:
+      type: verse
+      value: "Genesis 49:3"
+    quotation: "*ROUBHN PRWTO/TOKO/S MOU SU/"
+    paraphrase: "Reuben, you are my firstborn."
+
   - id: evidence.jw_study_bible.colossians.1_15.no_basis_other_meaning
     source_id: source.publication.jw.study_bible.colossians_1_15
     locator:

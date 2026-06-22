@@ -34,6 +34,22 @@ sources:
       identifies WATCHTOWER as creator and Watchtower Bible and Tract Society of
       New York, Inc. as publisher.
 
+  - id: source.greek.lxx.ccat_morph
+    type: morphological_text
+    title: "CCAT Morphologically Analyzed Septuagint"
+    url: https://ccat.sas.upenn.edu/gopher/text/religion/biblical/lxxmorph/
+    accessed: 2026-06-22
+    language: grc
+    rights:
+      status: restricted
+      attribution: "CCAT/CATSS Morphologically Analyzed Septuagint"
+      url: https://ccat.sas.upenn.edu/gopher/text/religion/biblical/lxxmorph/0-user-declaration.txt
+    description: >
+      CCAT/CATSS morphologically analyzed Septuagint files used as a concrete
+      Greek reference source. The local reference files are in CCAT Beta Code,
+      and the CCAT analysis notes describe the text field as following Rahlfs'
+      text.
+
   - id: source.publication.jw.official_christology_summary
     type: web_page
     title: "Official Jehovah's Witnesses Christology Summary"
