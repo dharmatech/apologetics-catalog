@@ -4,7 +4,7 @@ kind: interpretation
 
 interpretations:
   - id: interpretation.jw.colossians.1_15.firstborn_created_order
-    evidence_id: evidence.nwt.colossians.1_15.firstborn
+    evidence_id: evidence.nwt_2013.colossians.1_15.firstborn
     method: lexical
     summary: >
       The phrase firstborn of all creation is read as placing the Son within
@@ -17,9 +17,9 @@ interpretations:
         source_id: source.publication.jw.official_christology_summary
 
   - id: interpretation.jw.colossians_1_16.all_other_things_scope
-    evidence_id: evidence.nwt.colossians.1_16.all_other_things_created
+    evidence_id: evidence.nwt_2013.colossians.1_16.all_other_things_created
     related_evidence_ids:
-      - evidence.nwt.colossians.1_13_20.other_pattern
+      - evidence.nwt_2013.colossians.1_13_20.other_pattern
     method: translation_scope
     summary: >
       The NWT rendering of Colossians 1:16 is read as scoping the created
@@ -31,13 +31,13 @@ interpretations:
         type: tradition
         id: tradition.jehovahs_witnesses
       work:
-        source_id: source.bible.nwt
+        source_id: source.bible.nwt_2013
 
   - id: interpretation.trinitarian.nwt_1984_bracketed_other.supplied_english
     evidence_id: evidence.nwt_1984_reference.colossians.1_16.bracketed_other_footnote
     related_evidence_ids:
       - evidence.nwt_1984_reference.introduction.bracket_convention
-      - evidence.nwt.colossians.1_16.all_other_things_created
+      - evidence.nwt_2013.colossians.1_16.all_other_things_created
     method: translation_history
     summary: >
       A Trinitarian reads the 1984 reference edition's bracketed "All [other]"
@@ -53,7 +53,7 @@ interpretations:
         title: "Dataset author synthesis using NWT 1984 reference materials"
 
   - id: interpretation.trinitarian.john_1_14.word_identified_with_jesus
-    evidence_id: evidence.nwt.john.1_14.word_became_flesh
+    evidence_id: evidence.nwt_2013.john.1_14.word_became_flesh
     method: contextual
     summary: >
       The Word who becomes flesh in John 1:14 is read as Jesus, making the
@@ -66,9 +66,9 @@ interpretations:
         title: "Dataset author synthesis"
 
   - id: interpretation.trinitarian.john_1_3.excludes_created_word
-    evidence_id: evidence.nwt.john.1_3.all_things_through_him
+    evidence_id: evidence.nwt_2013.john.1_3.all_things_through_him
     related_evidence_ids:
-      - evidence.nwt.john.1_14.word_became_flesh
+      - evidence.nwt_2013.john.1_14.word_became_flesh
     method: contextual
     summary: >
       John 1:3 is read as dividing the Word from the whole class of things that
@@ -83,7 +83,7 @@ interpretations:
         title: "Dataset author synthesis using NWT John 1:3 and John 1:14"
 
   - id: interpretation.jw.colossians.1_18.firstborn_from_dead_temporal
-    evidence_id: evidence.nwt.colossians.1_18.firstborn_from_dead
+    evidence_id: evidence.nwt_2013.colossians.1_18.firstborn_from_dead
     method: contextual
     summary: >
       The phrase firstborn from the dead is read as using firstborn in an
@@ -97,10 +97,10 @@ interpretations:
         source_id: source.publication.jw.study_bible.colossians_1_15
 
   - id: interpretation.modeling.revelation_1_5.firstborn_from_dead_parallel
-    evidence_id: evidence.nwt.revelation.1_5.firstborn_from_dead
+    evidence_id: evidence.nwt_2013.revelation.1_5.firstborn_from_dead
     related_evidence_ids:
       - evidence.bibleforge.greek.revelation.1_5.prototokos
-      - evidence.nwt.colossians.1_18.firstborn_from_dead
+      - evidence.nwt_2013.colossians.1_18.firstborn_from_dead
     method: contextual
     summary: >
       Revelation 1:5 uses firstborn from the dead for Jesus in a resurrection
@@ -112,7 +112,7 @@ interpretations:
         title: "Dataset author synthesis"
 
   - id: interpretation.jw.revelation.3_14.beginning_created_by_god
-    evidence_id: evidence.nwt.revelation.3_14.beginning_creation
+    evidence_id: evidence.nwt_2013.revelation.3_14.beginning_creation
     method: contextual
     summary: >
       The phrase beginning of the creation by God is read as identifying Jesus
@@ -155,8 +155,8 @@ interpretations:
   - id: interpretation.jw.luke_2_7.firstborn_child_law_context
     evidence_id: evidence.jw_study_bible.colossians.1_15.mary_firstborn_law
     related_evidence_ids:
-      - evidence.nwt.luke.2_7.mary_firstborn_child
-      - evidence.nwt.luke.2_23.firstborn_male_holy
+      - evidence.nwt_2013.luke.2_7.mary_firstborn_child
+      - evidence.nwt_2013.luke.2_23.firstborn_male_holy
     method: contextual
     summary: >
       Luke 2:7 and the temple-presentation context are read as a concrete
@@ -186,7 +186,7 @@ interpretations:
   - id: interpretation.modeling.romans_8_29.jesus_related_g4416_occurrence
     evidence_id: evidence.bibleforge.greek.romans.8_29.prototokos
     related_evidence_ids:
-      - evidence.nwt.romans.8_29.firstborn_many_brothers
+      - evidence.nwt_2013.romans.8_29.firstborn_many_brothers
     method: lexical_distribution
     summary: >
       Romans 8:29 is modeled as a Jesus-related G4416 occurrence relevant to
@@ -221,7 +221,7 @@ interpretations:
         source_id: source.creed.nicene.trinitarian_summary
 
   - id: interpretation.trinitarian.psalms.89_27.firstborn_rank
-    evidence_id: evidence.nwt.psalms.89_27.firstborn_highest
+    evidence_id: evidence.nwt_2013.psalms.89_27.firstborn_highest
     method: contextual
     summary: >
       Psalm 89:27 applies firstborn language to the Davidic king in parallel

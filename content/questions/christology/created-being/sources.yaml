@@ -16,23 +16,23 @@ sources:
       attribution: "Berean Standard Bible"
       url: https://bereanbible.com/
 
-  - id: source.bible.nwt
+  - id: source.bible.nwt_2013
     type: translation
-    title: "New World Translation (nwt-E)"
+    title: "New World Translation of the Holy Scriptures (2013 Revision)"
     work_id: source.bible
     author: "WATCHTOWER"
     language: en
-    edition: "EPUB"
+    edition: "2013 revision / nwt-E EPUB"
     rights:
       status: copyrighted
       attribution: >
-        New World Translation (nwt-E), Watchtower Bible and Tract Society of
-        New York, Inc.
+        New World Translation of the Holy Scriptures (2013 Revision),
+        Watchtower Bible and Tract Society of New York, Inc.
     description: >
-      Concrete English New World Translation EPUB used as a local reference
-      source for Jehovah's Witnesses Scripture evidence. The EPUB metadata
-      identifies WATCHTOWER as creator and Watchtower Bible and Tract Society of
-      New York, Inc. as publisher.
+      2013 revision New World Translation EPUB used as a local reference source
+      for Jehovah's Witnesses Scripture evidence. The local nwt-E EPUB metadata
+      identifies WATCHTOWER as creator and Watchtower Bible and Tract Society
+      of New York, Inc. as publisher.
 
   - id: source.bible.nwt_1984_reference
     type: translation

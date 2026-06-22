@@ -28,11 +28,13 @@ def test_cli_validate_current_dataset() -> None:
 
 
 def test_cli_show_nwt_evidence() -> None:
-    result = runner.invoke(app, ["show", "evidence.nwt.colossians.1_15.firstborn"])
+    result = runner.invoke(app, ["show", "evidence.nwt_2013.colossians.1_15.firstborn"])
 
     assert result.exit_code == 0
     assert "Evidence" in result.stdout
-    assert "New World Translation (nwt-E)" in result.stdout
+    assert (
+        "New World Translation of the Holy Scriptures (2013 Revision)" in result.stdout
+    )
     assert "firstborn of all creation" in result.stdout
     assert "Jehovah's Witnesses" in result.stdout
     assert "Claim: Jesus is a created being." in result.stdout
@@ -49,11 +51,11 @@ def test_cli_show_claim_uses_direction_labels() -> None:
 
 
 def test_cli_show_missing_id_suggests_matches() -> None:
-    result = runner.invoke(app, ["show", "evidence.nwt.colossians"])
+    result = runner.invoke(app, ["show", "evidence.nwt_2013.colossians"])
 
     assert result.exit_code == 1
-    assert "No entity found for id: evidence.nwt.colossians" in result.stdout
-    assert "evidence.nwt.colossians.1_15.firstborn" in result.stdout
+    assert "No entity found for id: evidence.nwt_2013.colossians" in result.stdout
+    assert "evidence.nwt_2013.colossians.1_15.firstborn" in result.stdout
 
 
 def test_missing_manifest_reports_error(tmp_path: Path) -> None:

@@ -36,7 +36,7 @@ arguments:
         type: tradition
         id: tradition.jehovahs_witnesses
       work:
-        source_id: source.bible.nwt
+        source_id: source.bible.nwt_2013
 
   - id: argument.trinitarian.nwt_1984_bracketed_other_response
     role: response
