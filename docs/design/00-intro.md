@@ -39,6 +39,7 @@ in a machine-readable form that can be validated, queried, visualized, analyzed,
 * [v0.1 YAML Authoring Schema](09-v0.1-schema.md)
 * [v0.1 Controlled Vocabularies](10-vocabularies.md)
 * [v0.1 Modeling Guidelines](11-modeling-guidelines.md)
+* [v0.1 ID Conventions](12-id-conventions.md)
 
 ### Overview
 

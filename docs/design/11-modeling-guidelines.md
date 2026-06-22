@@ -11,6 +11,9 @@ when building the first dataset.
 
 The goal is a faithful minimal model, not an exhaustive apologetics encyclopedia.
 
+Stable ID choices should follow
+[v0.1 ID Conventions](12-id-conventions.md).
+
 ---
 
 ## Authoring Posture
@@ -79,7 +82,7 @@ Example:
 
 ```yaml
 evidence:
-  id: evidence.colossians.1_15.firstborn
+  id: evidence.bsb.colossians.1_15.firstborn
   source_id: source.bible.bsb
   locator:
     type: verse
@@ -92,7 +95,7 @@ Example dataset wording:
 ```yaml
 interpretation:
   id: interpretation.jw.colossians.1_15.firstborn_created_order
-  evidence_id: evidence.colossians.1_15.firstborn
+  evidence_id: evidence.bsb.colossians.1_15.firstborn
   method: lexical
   summary: >
     The phrase firstborn over all creation is read as placing the Son within

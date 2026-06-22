@@ -4,6 +4,9 @@ Controlled field seed values and extension rules are consolidated in
 [v0.1 Controlled Vocabularies](10-vocabularies.md). The initial values shown in
 this document should stay consistent with that contract.
 
+Stable entity ID rules are defined in
+[v0.1 ID Conventions](12-id-conventions.md).
+
 ---
 
 ## Topic
@@ -337,7 +340,7 @@ being used, not merely a reference.
 Example:
 
 ```yaml
-id: evidence.colossians.1.15.firstborn
+id: evidence.bsb.colossians.1_15.firstborn
 
 source_id: source.bible.bsb
 
@@ -379,12 +382,12 @@ The optional `method` field identifies how the evidence is being interpreted.
 Example:
 
 ```yaml
-id: interpretation.jw.colossians.1.15.firstborn
+id: interpretation.jw.colossians.1_15.firstborn
 
-evidence_id: evidence.colossians.1.15.firstborn
+evidence_id: evidence.bsb.colossians.1_15.firstborn
 
 related_evidence_ids:
-  - evidence.revelation.3.14.beginning
+  - evidence.bsb.revelation.3_14.beginning
 
 method: lexical
 
@@ -451,11 +454,15 @@ relationships.
 
 ## Stable Identifier Strategy
 
-Identifiers should be stable and semantic.
+Identifiers should be stable, semantic, and author-chosen.
 
 Every entity should declare its own `id` explicitly.
 
 File paths and titles may suggest an ID, but they do not define identity.
+
+Detailed ID rules, allowed characters, Bible-reference encoding, alias policy,
+collision behavior, and rename policy are defined in
+[v0.1 ID Conventions](12-id-conventions.md).
 
 Preferred:
 
@@ -466,7 +473,7 @@ claim.jesus_created
 agent.council.nicaea_325
 tradition.jehovahs_witnesses
 source.bible.bsb
-evidence.colossians.1.15.firstborn
+evidence.bsb.colossians.1_15.firstborn
 ```
 
 Avoid identifiers that depend upon display wording.

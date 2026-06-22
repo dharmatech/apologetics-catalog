@@ -89,7 +89,7 @@ id: relationship.jw.colossians_firstborn.supports_created
 
 type: supports
 
-from_id: interpretation.jw.colossians.1.15.firstborn
+from_id: interpretation.jw.colossians.1_15.firstborn
 
 to_id: claim.jesus_created
 
@@ -105,7 +105,7 @@ type: challenges
 
 from_id: argument.trinitarian.firstborn_rank
 
-to_id: interpretation.jw.colossians.1.15.firstborn
+to_id: interpretation.jw.colossians.1_15.firstborn
 
 summary: >
   The argument challenges the interpretation that
@@ -133,7 +133,7 @@ type: uses
 
 from_id: argument.jw.created_from_firstborn
 
-to_id: interpretation.jw.colossians.1.15.firstborn
+to_id: interpretation.jw.colossians.1_15.firstborn
 
 summary: >
   The argument uses the interpretation that firstborn means first-created.

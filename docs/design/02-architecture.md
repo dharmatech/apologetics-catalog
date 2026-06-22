@@ -88,7 +88,7 @@ claims:
       Jesus is a created being.
 
 evidence:
-  - id: evidence.colossians.1.15.firstborn
+  - id: evidence.bsb.colossians.1_15.firstborn
     source_id: source.bible.bsb
     locator:
       type: verse
@@ -146,9 +146,9 @@ question_id: question.christology.created_being
 topic_id: topic.christology
 source_id: source.bible.bsb
 agent_id: agent.council.nicaea_325
-evidence_id: evidence.colossians.1.15.firstborn
+evidence_id: evidence.bsb.colossians.1_15.firstborn
 from_id: argument.trinitarian.firstborn_rank
-to_id: interpretation.jw.colossians.1.15.firstborn
+to_id: interpretation.jw.colossians.1_15.firstborn
 target_ids:
   - claim.jesus_created
 depends_on_ids:

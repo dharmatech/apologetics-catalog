@@ -31,7 +31,8 @@ stances, position statuses, interpretation methods, and assumption categories.
 It should validate core values and declared project-level extensions.
 
 The identity phase validates entity IDs, detects duplicate IDs, and confirms
-that every entity declares its own stable `id`.
+that every entity declares its own stable `id`. ID format, collision, and
+rename rules are defined in [v0.1 ID Conventions](12-id-conventions.md).
 
 The references phase validates cross-file and cross-entity references.
 
@@ -68,6 +69,7 @@ Validation should include:
 * duplicate ID detection
 * explicit entity ID validation
 * ID format validation
+* retired ID reuse validation when migration metadata exists
 * reference validation
 * reference field naming validation
 * topic reference validation
@@ -126,6 +128,9 @@ Examples:
 * first-class relationships whose `from_id` or `to_id` targets do not exist
 
 The compiler should reject invalid datasets.
+
+Duplicate ID diagnostics should report every known source location for the
+collision, not only the first or last record encountered.
 
 ---
 
