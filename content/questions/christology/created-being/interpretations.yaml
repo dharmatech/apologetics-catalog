@@ -30,6 +30,20 @@ interpretations:
       work:
         source_id: source.publication.jw.study_bible.colossians_1_15
 
+  - id: interpretation.jw.revelation.3_14.beginning_created_by_god
+    evidence_id: evidence.nwt.revelation.3_14.beginning_creation
+    method: contextual
+    summary: >
+      The phrase beginning of the creation by God is read as identifying Jesus
+      as the first created one, providing confirming support for the
+      Jehovah's Witnesses created-order reading.
+    provenance:
+      attributed_to:
+        type: tradition
+        id: tradition.jehovahs_witnesses
+      work:
+        source_id: source.publication.jw.study_bible.colossians_1_15
+
   - id: interpretation.nicene.colossians.1_15.firstborn_preeminence
     evidence_id: evidence.bsb.colossians.1_15.firstborn
     method: lexical

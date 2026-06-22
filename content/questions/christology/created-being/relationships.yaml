@@ -170,3 +170,28 @@ relationships:
       The Colossians 1:18 reading provides near-context support for the
       Jehovah's Witnesses response that firstborn in Colossians 1:15 should
       retain its usual temporal meaning.
+
+  - id: relationship.jw.revelation_3_14_beginning.supports_created
+    type: supports
+    from_id: interpretation.jw.revelation.3_14.beginning_created_by_god
+    to_id: claim.jesus_created
+    summary: >
+      The Revelation 3:14 reading supports the claim that Jesus belongs to the
+      created order.
+
+  - id: relationship.jw.revelation_3_14_beginning.supports_colossians_created_reading
+    type: supports
+    from_id: interpretation.jw.revelation.3_14.beginning_created_by_god
+    to_id: interpretation.jw.colossians.1_15.firstborn_created_order
+    summary: >
+      The Revelation 3:14 reading is modeled as confirming support for the
+      Jehovah's Witnesses created-order reading of Colossians 1:15.
+
+  - id: relationship.jw.revelation_3_14_beginning.supports_usual_meaning_response
+    type: supports
+    from_id: interpretation.jw.revelation.3_14.beginning_created_by_god
+    to_id: argument.jw.firstborn_usual_meaning_response
+    summary: >
+      The Revelation 3:14 reading supports the Jehovah's Witnesses response that
+      Colossians 1:15 should be read as identifying Jesus with the created
+      order.

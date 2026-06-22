@@ -24,6 +24,13 @@ evidence:
       value: "Colossians 1:18"
     quotation: "firstborn from the dead"
 
+  - id: evidence.nwt.revelation.3_14.beginning_creation
+    source_id: source.bible.nwt
+    locator:
+      type: verse
+      value: "Revelation 3:14"
+    quotation: "the beginning of the creation by God"
+
   - id: evidence.nwt.psalms.89_27.firstborn_highest
     source_id: source.bible.nwt
     locator:
