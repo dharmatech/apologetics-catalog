@@ -268,6 +268,9 @@ being quoted.
 Abstract sources are useful for grouping related concrete sources, but they are
 not sufficient for exact quotation wording.
 
+Scripture-specific source, locator, evidence, and quotation conventions are
+defined in [v0.1 Scripture Sources](14-scripture-sources.md).
+
 Examples:
 
 * Biblical book or corpus
@@ -327,6 +330,9 @@ article
 
 If reusable canonical passages or locations become necessary later, the design
 may introduce a standalone `Passage` or `Location` entity.
+
+For v0.1 Scripture modeling, biblical books and passages should remain locator
+content rather than standalone `Source` or `Passage` records.
 
 ---
 

@@ -19,6 +19,11 @@ Initial sources:
 * Hebrews 1:6
 * Philippians 2:6-11
 
+The initial Scripture evidence should follow
+[v0.1 Scripture Sources](14-scripture-sources.md), including concrete
+translation sources, full-book-name locators, source-specific quotations, and
+short quotation policy.
+
 Initial positions:
 
 * Jehovah's Witnesses

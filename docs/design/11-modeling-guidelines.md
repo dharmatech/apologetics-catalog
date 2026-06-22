@@ -14,6 +14,9 @@ The goal is a faithful minimal model, not an exhaustive apologetics encyclopedia
 Stable ID choices should follow
 [v0.1 ID Conventions](12-id-conventions.md).
 
+Scripture passage modeling should follow
+[v0.1 Scripture Sources](14-scripture-sources.md).
+
 ---
 
 ## Authoring Posture
@@ -260,6 +263,9 @@ For each passage or source excerpt, model the vertical slice in this order:
 ```text
 Source -> Evidence -> Interpretation -> Argument or Relationship -> Claim -> Position
 ```
+
+For Scripture passages, the `Source` should be a concrete translation, edition,
+or original-language text, not the abstract Bible source.
 
 Practical steps:
 

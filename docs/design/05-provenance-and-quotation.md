@@ -1,5 +1,8 @@
 # Provenance and Quotation
 
+Scripture-specific quotation, translation, locator, and rights conventions are
+defined in [v0.1 Scripture Sources](14-scripture-sources.md).
+
 ## Provenance
 
 Interpretations, arguments, relationships, and other derived statements should
@@ -155,3 +158,6 @@ Evidence quotations should be as short as practical.
 
 Generated outputs may eventually need quote-length, rights, or attribution
 rules.
+
+For Scripture evidence, exact quotations should point to the concrete
+translation, edition, or original-language source whose wording is quoted.

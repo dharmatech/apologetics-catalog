@@ -187,6 +187,10 @@ locator may appear in multiple editions, translations, or source witnesses.
 
 ## Bible and Source Locator Encoding
 
+Scripture source and locator modeling rules are defined in
+[v0.1 Scripture Sources](14-scripture-sources.md). The ID conventions here
+define only the machine-stable slug form.
+
 For Bible-style references, use:
 
 ```text
