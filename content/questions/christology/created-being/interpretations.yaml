@@ -16,6 +16,20 @@ interpretations:
       work:
         source_id: source.publication.jw.official_christology_summary
 
+  - id: interpretation.jw.colossians.1_18.firstborn_from_dead_temporal
+    evidence_id: evidence.nwt.colossians.1_18.firstborn_from_dead
+    method: contextual
+    summary: >
+      The phrase firstborn from the dead is read as using firstborn in an
+      order-of-time sense, providing modest lexical and near-context support for
+      a temporal reading of firstborn in Colossians.
+    provenance:
+      attributed_to:
+        type: tradition
+        id: tradition.jehovahs_witnesses
+      work:
+        source_id: source.publication.jw.study_bible.colossians_1_15
+
   - id: interpretation.nicene.colossians.1_15.firstborn_preeminence
     evidence_id: evidence.bsb.colossians.1_15.firstborn
     method: lexical

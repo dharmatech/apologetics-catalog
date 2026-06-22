@@ -153,3 +153,20 @@ relationships:
     summary: >
       The claim supports the Jehovah's Witnesses created-order reading by
       treating Jesus' preeminence as compatible with creaturely status.
+
+  - id: relationship.jw.colossians_1_18_firstborn.supports_temporal_priority_claim
+    type: supports
+    from_id: interpretation.jw.colossians.1_18.firstborn_from_dead_temporal
+    to_id: claim.prototokos_usually_indicates_temporal_priority
+    summary: >
+      The Colossians 1:18 reading supports the claim that firstborn can carry an
+      order-of-time sense in Scriptural usage.
+
+  - id: relationship.jw.colossians_1_18_firstborn.supports_usual_meaning_response
+    type: supports
+    from_id: interpretation.jw.colossians.1_18.firstborn_from_dead_temporal
+    to_id: argument.jw.firstborn_usual_meaning_response
+    summary: >
+      The Colossians 1:18 reading provides near-context support for the
+      Jehovah's Witnesses response that firstborn in Colossians 1:15 should
+      retain its usual temporal meaning.

@@ -17,6 +17,13 @@ evidence:
       value: "Colossians 1:15"
     quotation: "firstborn of all creation"
 
+  - id: evidence.nwt.colossians.1_18.firstborn_from_dead
+    source_id: source.bible.nwt
+    locator:
+      type: verse
+      value: "Colossians 1:18"
+    quotation: "firstborn from the dead"
+
   - id: evidence.nwt.psalms.89_27.firstborn_highest
     source_id: source.bible.nwt
     locator:
