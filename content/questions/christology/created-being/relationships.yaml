@@ -1,0 +1,35 @@
+schema_version: "0.1"
+
+kind: relationship
+
+relationships:
+  - id: relationship.created.contradicts_uncreated
+    type: contradicts
+    from_id: claim.jesus_created
+    to_id: claim.jesus_uncreated
+    summary: >
+      In this question's scope, Jesus cannot both belong and not belong to the
+      created order.
+
+  - id: relationship.jw.colossians_firstborn.supports_created
+    type: supports
+    from_id: interpretation.jw.colossians.1_15.firstborn_created_order
+    to_id: claim.jesus_created
+    summary: >
+      The created-order reading of firstborn is modeled as supporting the claim
+      that Jesus is a created being.
+
+  - id: relationship.nicene.colossians_firstborn.supports_uncreated
+    type: supports
+    from_id: interpretation.nicene.colossians.1_15.firstborn_preeminence
+    to_id: claim.jesus_uncreated
+    summary: >
+      The preeminence reading of firstborn is modeled as supporting the claim
+      that Jesus is not a created being.
+
+  - id: relationship.nicene.firstborn.challenges_created_reading
+    type: challenges
+    from_id: interpretation.nicene.colossians.1_15.firstborn_preeminence
+    to_id: interpretation.jw.colossians.1_15.firstborn_created_order
+    summary: >
+      The preeminence reading challenges the created-order reading of firstborn.

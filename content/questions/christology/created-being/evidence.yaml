@@ -1,0 +1,11 @@
+schema_version: "0.1"
+
+kind: evidence
+
+evidence:
+  - id: evidence.bsb.colossians.1_15.firstborn
+    source_id: source.bible.bsb
+    locator:
+      type: verse
+      value: "Colossians 1:15"
+    quotation: "firstborn over all creation"

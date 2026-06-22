@@ -1,0 +1,39 @@
+schema_version: "0.1"
+
+kind: source
+
+sources:
+  - id: source.bible
+    type: scripture
+    title: "Bible"
+
+  - id: source.bible.bsb
+    type: translation
+    title: "Berean Standard Bible"
+    work_id: source.bible
+    rights:
+      status: copyrighted
+      attribution: "Berean Standard Bible"
+      url: https://bereanbible.com/
+
+  - id: source.publication.jw.official_christology_summary
+    type: web_page
+    title: "Official Jehovah's Witnesses Christology Summary"
+    rights:
+      status: unknown
+    description: >
+      Provisional source record for an official or representative Jehovah's
+      Witnesses publication used to attribute the created-being position. Before
+      publication, replace or refine this with a concrete title, URL, access
+      date, and locator.
+
+  - id: source.creed.nicene.trinitarian_summary
+    type: creed
+    title: "Nicene Creed"
+    date: 325
+    rights:
+      status: unknown
+    description: >
+      Provisional source record for the Nicene attribution source used to
+      represent the uncreated Son position. Before publication, replace or
+      refine this with a concrete edition, translation, URL, and locator.

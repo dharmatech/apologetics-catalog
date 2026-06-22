@@ -1,0 +1,19 @@
+schema_version: "0.1"
+
+kind: topic
+
+topic:
+  id: topic.christology
+  title: "Christology"
+  description: >
+    Questions about the identity, nature, status, and work of Jesus Christ.
+
+question:
+  id: question.christology.created_being
+  title: "Is Jesus a created being?"
+  question_type: yes_no
+  status: active
+  topic_ids:
+    - topic.christology
+  description: >
+    Concerns whether Jesus, the Son, belongs to the created order.

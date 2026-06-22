@@ -1,0 +1,22 @@
+schema_version: "0.1"
+
+kind: claim
+
+claims:
+  - id: claim.jesus_created
+    question_id: question.christology.created_being
+    summary: >
+      Jesus is a created being.
+    proposition: >
+      Jesus, the Son, belongs to the created order.
+    scope:
+      domain: christology
+
+  - id: claim.jesus_uncreated
+    question_id: question.christology.created_being
+    summary: >
+      Jesus is not a created being.
+    proposition: >
+      Jesus, the Son, does not belong to the created order.
+    scope:
+      domain: christology

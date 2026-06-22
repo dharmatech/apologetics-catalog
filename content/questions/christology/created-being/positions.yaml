@@ -1,0 +1,61 @@
+schema_version: "0.1"
+
+kind: position
+
+traditions:
+  - id: tradition.jehovahs_witnesses
+    name: "Jehovah's Witnesses"
+    aliases:
+      - "JW"
+    description: >
+      Modern religious movement represented in this first slice only for its
+      position on whether Jesus belongs to the created order.
+
+  - id: tradition.nicene_trinitarian
+    name: "Nicene Trinitarian"
+    description: >
+      Broad Christian tradition represented in this first slice only for its
+      position that the Son is not a created being.
+
+positions:
+  - id: position.jw.christology.created_being
+    holder:
+      type: tradition
+      id: tradition.jehovahs_witnesses
+    summary: >
+      Jehovah's Witnesses are modeled as affirming that Jesus, the Son, belongs
+      to the created order.
+    claim_stances:
+      - claim_id: claim.jesus_created
+        stance: affirms
+        status: official
+      - claim_id: claim.jesus_uncreated
+        stance: rejects
+        status: official
+    provenance:
+      attributed_to:
+        type: tradition
+        id: tradition.jehovahs_witnesses
+      work:
+        source_id: source.publication.jw.official_christology_summary
+
+  - id: position.nicene.christology.uncreated
+    holder:
+      type: tradition
+      id: tradition.nicene_trinitarian
+    summary: >
+      Nicene Trinitarians are modeled as affirming that Jesus, the Son, does
+      not belong to the created order.
+    claim_stances:
+      - claim_id: claim.jesus_uncreated
+        stance: affirms
+        status: official
+      - claim_id: claim.jesus_created
+        stance: rejects
+        status: official
+    provenance:
+      attributed_to:
+        type: tradition
+        id: tradition.nicene_trinitarian
+      work:
+        source_id: source.creed.nicene.trinitarian_summary

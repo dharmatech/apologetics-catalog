@@ -1,0 +1,18 @@
+schema_version: "0.1"
+
+kind: project
+
+project:
+  id: project.apologetics
+  title: "Apologetics Viewpoint Catalog"
+  description: >
+    A neutral catalog of competing apologetics viewpoints.
+
+content:
+  include:
+    - content/**/*.yaml
+  exclude:
+    - generated/**
+
+outputs:
+  generated_dir: generated
