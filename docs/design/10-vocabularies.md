@@ -371,6 +371,9 @@ Position statuses describe the attribution strength or standing of a position.
 
 They are not project-extensible in v0.1.
 
+Status escalation rules are defined in
+[v0.1 Position Attribution](15-position-attribution.md).
+
 | ID | Label | Description |
 | --- | --- | --- |
 | official | Official | The position is official or formally stated by the holder. |

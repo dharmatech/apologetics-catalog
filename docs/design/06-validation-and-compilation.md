@@ -369,6 +369,7 @@ W003 missing source rights metadata
 W004 unusually long quotation
 W005 possible duplicate claim summary
 W006 duplicate reverse edge for symmetric relationship
+W007 position has no attribution support
 ```
 
 Diagnostic ordering should be deterministic.

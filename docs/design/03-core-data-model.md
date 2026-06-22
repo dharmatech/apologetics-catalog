@@ -229,6 +229,10 @@ plain `claim_ids` list.
 Each `claim_stances` item should identify the claim, the holder's stance toward
 the claim, and the attribution status.
 
+Position attribution policy, provenance expectations, and `claim_stances.status`
+guidance are defined in
+[v0.1 Position Attribution](15-position-attribution.md).
+
 Initial stance values:
 
 ```text

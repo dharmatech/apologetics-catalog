@@ -30,6 +30,11 @@ Initial positions:
 * Arian
 * Nicene Trinitarian
 
+The first position records should follow
+[v0.1 Position Attribution](15-position-attribution.md), especially the
+distinction between sources that establish a position and sources that a
+position uses as evidence.
+
 Initial deliverables:
 
 * YAML dataset

@@ -17,6 +17,9 @@ Stable ID choices should follow
 Scripture passage modeling should follow
 [v0.1 Scripture Sources](14-scripture-sources.md).
 
+Position attribution should follow
+[v0.1 Position Attribution](15-position-attribution.md).
+
 ---
 
 ## Authoring Posture
@@ -290,7 +293,9 @@ A position is minimally modeled in v0.1 when it has:
 
 * a `Position` record with one holder
 * at least one `claim_stances` item
-* at least one relevant `Evidence` record or clear provenance source
+* at least one attribution source, clear position provenance, or explicit
+  dataset-author synthesis
+* at least one relevant `Evidence` record or clear source used by the position
 * at least one `Interpretation` or `Argument` explaining how the evidence or
   provenance connects to the claim
 * at least one first-class `Relationship` connecting the explanatory material

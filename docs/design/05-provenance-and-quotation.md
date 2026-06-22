@@ -3,6 +3,9 @@
 Scripture-specific quotation, translation, locator, and rights conventions are
 defined in [v0.1 Scripture Sources](14-scripture-sources.md).
 
+Position attribution provenance is discussed in
+[v0.1 Position Attribution](15-position-attribution.md).
+
 ## Provenance
 
 Interpretations, arguments, relationships, and other derived statements should
