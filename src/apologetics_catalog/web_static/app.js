@@ -11,6 +11,7 @@ let openHiddenPanels = new Set();
 let openHiddenNodePanels = new Set();
 let nodeDisplayModes = new Map();
 let openQuotePaths = new Set();
+let shownBacklinkNodePaths = new Set();
 let firstRenderedPathByEntity = new Map();
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -81,6 +82,7 @@ function openRoot(rawEntityId, options = {}) {
   openHiddenNodePanels = new Set();
   nodeDisplayModes = new Map();
   openQuotePaths = new Set();
+  shownBacklinkNodePaths = new Set();
   document.querySelector("#root-id").value = entityId;
 
   if (options.updateUrl !== false) {
@@ -126,6 +128,7 @@ function restoreViewFromHash() {
   openHiddenNodePanels = new Set();
   nodeDisplayModes = new Map(stringArray(state.fullNodePaths).map((path) => [path, "full"]));
   openQuotePaths = stringSet(state.openQuotePaths);
+  shownBacklinkNodePaths = stringSet(state.shownBacklinkNodePaths);
   document.querySelector("#root-id").value = currentRootId;
 
   renderTree();
@@ -165,6 +168,7 @@ function currentViewState() {
     hiddenGroupPaths: sortedStrings(hiddenGroupPaths),
     hiddenNodePaths: sortedStrings(hiddenNodePaths),
     openQuotePaths: sortedStrings(openQuotePaths),
+    shownBacklinkNodePaths: sortedStrings(shownBacklinkNodePaths),
     fullNodePaths: sortedStrings(
       Array.from(nodeDisplayModes.entries())
         .filter((entry) => entry[1] === "full")
@@ -301,7 +305,7 @@ function renderNode(entityId, path, ancestors, parentRelationship, options = {})
     return node;
   }
 
-  const visibleGroups = groups.filter((group) => !hiddenGroupPaths.has(relationshipGroupPath(path, group)));
+  const visibleGroups = groups.filter((group) => !isHiddenRelationshipGroup(path, group));
   if (visibleGroups.length === 0) {
     return node;
   }
@@ -461,6 +465,7 @@ function renderHiddenGroupsPanel(parentPath, hiddenGroups) {
     showButton.textContent = "Show";
     showButton.addEventListener("click", () => {
       hiddenGroupPaths.delete(groupPath);
+      showDefaultHiddenBacklinks(parentPath, group);
       expandedGroupPaths.delete(groupPath);
       if (hiddenRelationshipGroups(parentPath, relationshipGroupsForPath(parentPath)).length === 0) {
         openHiddenPanels.delete(parentPath);
@@ -499,7 +504,7 @@ function renderQuotes(quotes) {
   return section;
 }
 
-function renderHiddenNodesPanel(groupPath, hiddenItems) {
+function renderHiddenNodesPanel(parentPath, groupPath, hiddenItems) {
   const panel = document.createElement("section");
   panel.className = "hidden-groups-panel hidden-nodes-panel";
 
@@ -535,7 +540,10 @@ function renderHiddenNodesPanel(groupPath, hiddenItems) {
     showButton.textContent = "Show";
     showButton.addEventListener("click", () => {
       hiddenNodePaths.delete(itemPath);
-      if (hiddenItemsForGroup(groupPath, item.group).length === 0) {
+      if (isDefaultHiddenBacklink(parentPath, item)) {
+        shownBacklinkNodePaths.add(itemPath);
+      }
+      if (hiddenItemsForGroup(parentPath, groupPath, item.group).length === 0) {
         openHiddenNodePanels.delete(groupPath);
       }
       renderTree();
@@ -628,8 +636,8 @@ function renderRelationshipGroup(group, parentPath, ancestors) {
   section.className = "relationship-group";
 
   const groupPath = relationshipGroupPath(parentPath, group);
-  const hiddenItems = hiddenItemsForGroup(groupPath, group);
-  const visibleItems = visibleItemsForGroup(groupPath, group);
+  const hiddenItems = hiddenItemsForGroup(parentPath, groupPath, group);
+  const visibleItems = visibleItemsForGroup(parentPath, groupPath, group);
   const isExpanded = expandedGroupPaths.has(groupPath);
   const isCollapsed = !isExpanded;
   if (isCollapsed) {
@@ -695,7 +703,7 @@ function renderRelationshipGroup(group, parentPath, ancestors) {
   section.appendChild(header);
 
   if (hiddenItems.length > 0 && openHiddenNodePanels.has(groupPath)) {
-    section.appendChild(renderHiddenNodesPanel(groupPath, hiddenItems));
+    section.appendChild(renderHiddenNodesPanel(parentPath, groupPath, hiddenItems));
   }
 
   if (isCollapsed) {
@@ -723,15 +731,32 @@ function relationshipItemPath(groupPath, item, index) {
 }
 
 function hiddenRelationshipGroups(parentPath, groups) {
-  return groups.filter((group) => hiddenGroupPaths.has(relationshipGroupPath(parentPath, group)));
+  return groups.filter((group) => isHiddenRelationshipGroup(parentPath, group));
 }
 
-function visibleItemsForGroup(groupPath, group) {
-  return relationshipItemsForGroup(groupPath, group).filter((item) => !hiddenNodePaths.has(item.path));
+function isHiddenRelationshipGroup(parentPath, group) {
+  return (
+    hiddenGroupPaths.has(relationshipGroupPath(parentPath, group))
+    || isDefaultHiddenBacklinkGroup(parentPath, group)
+  );
 }
 
-function hiddenItemsForGroup(groupPath, group) {
-  return relationshipItemsForGroup(groupPath, group).filter((item) => hiddenNodePaths.has(item.path));
+function isDefaultHiddenBacklinkGroup(parentPath, group) {
+  const groupPath = relationshipGroupPath(parentPath, group);
+  const items = relationshipItemsForGroup(groupPath, group);
+  return items.length > 0 && items.every((item) => isDefaultHiddenBacklink(parentPath, item));
+}
+
+function visibleItemsForGroup(parentPath, groupPath, group) {
+  return relationshipItemsForGroup(groupPath, group).filter(
+    (item) => !isHiddenRelationshipItem(parentPath, item),
+  );
+}
+
+function hiddenItemsForGroup(parentPath, groupPath, group) {
+  return relationshipItemsForGroup(groupPath, group).filter(
+    (item) => isHiddenRelationshipItem(parentPath, item),
+  );
 }
 
 function relationshipItemsForGroup(groupPath, group) {
@@ -740,6 +765,41 @@ function relationshipItemsForGroup(groupPath, group) {
     group,
     path: relationshipItemPath(groupPath, item, index),
   }));
+}
+
+function isHiddenRelationshipItem(parentPath, item) {
+  return hiddenNodePaths.has(item.path) || isDefaultHiddenBacklink(parentPath, item);
+}
+
+function isDefaultHiddenBacklink(parentPath, item) {
+  const parentEntityId = directParentEntityId(parentPath);
+  return (
+    parentEntityId !== null
+    && item.entityId === parentEntityId
+    && !shownBacklinkNodePaths.has(item.path)
+  );
+}
+
+function showDefaultHiddenBacklinks(parentPath, group) {
+  const groupPath = relationshipGroupPath(parentPath, group);
+  for (const item of relationshipItemsForGroup(groupPath, group)) {
+    if (isDefaultHiddenBacklink(parentPath, item)) {
+      shownBacklinkNodePaths.add(item.path);
+    }
+  }
+}
+
+function directParentEntityId(path) {
+  const groupSeparatorIndex = path.lastIndexOf("|group|");
+  if (groupSeparatorIndex === -1) {
+    return null;
+  }
+  return entityIdFromPath(path.slice(0, groupSeparatorIndex));
+}
+
+function entityIdFromPath(path) {
+  const separatorIndex = path.lastIndexOf("|");
+  return separatorIndex === -1 ? path : path.slice(separatorIndex + 1);
 }
 
 function hideNodeOccurrence(path) {
@@ -756,6 +816,7 @@ function pruneNodeProjectionState(path) {
   openHiddenPanels = pathsWithoutPrefix(openHiddenPanels, path);
   openHiddenNodePanels = pathsWithoutPrefix(openHiddenNodePanels, path);
   openQuotePaths = pathsWithoutPrefix(openQuotePaths, path);
+  shownBacklinkNodePaths = pathsWithoutPrefix(shownBacklinkNodePaths, path);
   nodeDisplayModes = mapWithoutPrefix(nodeDisplayModes, path);
 }
 
