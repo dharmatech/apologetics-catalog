@@ -173,7 +173,9 @@ button:hover {
 
 .node-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.4rem;
+  justify-content: end;
 }
 
 .badge {
@@ -285,10 +287,55 @@ button:hover {
   justify-self: end;
 }
 
+.relationship-group-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  justify-content: end;
+  justify-self: end;
+}
+
 .relationship-group h3 {
   color: var(--accent-strong);
   font-size: 0.9rem;
   margin: 0;
+}
+
+.hidden-groups-panel {
+  background: var(--panel-strong);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  display: grid;
+  gap: 0.55rem;
+  padding: 0.65rem;
+}
+
+.hidden-groups-panel h3 {
+  color: var(--muted);
+  font-size: 0.86rem;
+  margin: 0;
+}
+
+.hidden-groups-list {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.hidden-group-item {
+  align-items: center;
+  display: grid;
+  gap: 0.6rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.hidden-group-label {
+  align-items: center;
+  color: var(--accent-strong);
+  display: flex;
+  flex-wrap: wrap;
+  font-weight: 650;
+  gap: 0.4rem;
+  min-width: 0;
 }
 
 .children {
@@ -313,9 +360,14 @@ button:hover {
   }
 
   .node-actions,
+  .relationship-group-actions,
   .relationship-group-header button {
     justify-content: start;
     justify-self: start;
+  }
+
+  .hidden-group-item {
+    grid-template-columns: 1fr;
   }
 
   .details {

@@ -4,6 +4,8 @@ let catalog = null;
 let currentRootId = DEFAULT_ROOT_ID;
 let expandedPaths = new Set();
 let collapsedGroupPaths = new Set();
+let hiddenGroupPaths = new Set();
+let openHiddenPanels = new Set();
 let nodeDisplayModes = new Map();
 let firstRenderedPathByEntity = new Map();
 
@@ -62,6 +64,8 @@ function openRoot(rawEntityId, options = {}) {
   currentRootId = entityId;
   expandedPaths = new Set([entityId]);
   collapsedGroupPaths = new Set();
+  hiddenGroupPaths = new Set();
+  openHiddenPanels = new Set();
   nodeDisplayModes = new Map();
   document.querySelector("#root-id").value = entityId;
 
@@ -104,11 +108,17 @@ function renderNode(entityId, path, ancestors, parentRelationship) {
   const isCycle = ancestors.includes(entityId);
   const isExpanded = expandedPaths.has(path);
   const displayMode = nodeDisplayModes.get(path) || "id";
+  const groups = relationshipGroups(entityId);
+  const hiddenGroups = hiddenRelationshipGroups(path, groups);
   if (displayMode === "id") {
     node.classList.add("node-id-mode");
   }
 
-  node.appendChild(renderNodeHeader(entity, path, isExpanded, isRepeated, displayMode));
+  node.appendChild(renderNodeHeader(entity, path, isExpanded, isRepeated, displayMode, hiddenGroups));
+
+  if (hiddenGroups.length > 0 && openHiddenPanels.has(path)) {
+    node.appendChild(renderHiddenGroupsPanel(path, hiddenGroups));
+  }
 
   if (parentRelationship && displayMode === "full") {
     node.appendChild(renderRelationshipSummary(parentRelationship));
@@ -132,15 +142,19 @@ function renderNode(entityId, path, ancestors, parentRelationship) {
     return node;
   }
 
-  const groups = relationshipGroups(entityId);
   if (groups.length === 0) {
     node.appendChild(renderNotice("No related entities."));
     return node;
   }
 
+  const visibleGroups = groups.filter((group) => !hiddenGroupPaths.has(relationshipGroupPath(path, group)));
+  if (visibleGroups.length === 0) {
+    return node;
+  }
+
   const groupsContainer = document.createElement("div");
   groupsContainer.className = "relationship-groups";
-  for (const group of groups) {
+  for (const group of visibleGroups) {
     groupsContainer.appendChild(renderRelationshipGroup(group, path, ancestors.concat(entityId)));
   }
   node.appendChild(groupsContainer);
@@ -148,7 +162,7 @@ function renderNode(entityId, path, ancestors, parentRelationship) {
   return node;
 }
 
-function renderNodeHeader(entity, path, isExpanded, isRepeated, displayMode) {
+function renderNodeHeader(entity, path, isExpanded, isRepeated, displayMode, hiddenGroups) {
   const header = document.createElement("header");
   header.className = "node-header";
 
@@ -179,7 +193,6 @@ function renderNodeHeader(entity, path, isExpanded, isRepeated, displayMode) {
   } else {
     left.appendChild(titleRow);
   }
-
 
   const actions = document.createElement("div");
   actions.className = "node-actions";
@@ -216,8 +229,62 @@ function renderNodeHeader(entity, path, isExpanded, isRepeated, displayMode) {
   });
 
   actions.append(displayButton, toggleButton, rootButton);
+  if (hiddenGroups.length > 0) {
+    const hiddenButton = document.createElement("button");
+    hiddenButton.type = "button";
+    hiddenButton.textContent = `Hidden ${hiddenGroups.length}`;
+    hiddenButton.setAttribute("aria-expanded", String(openHiddenPanels.has(path)));
+    hiddenButton.addEventListener("click", () => {
+      if (openHiddenPanels.has(path)) {
+        openHiddenPanels.delete(path);
+      } else {
+        openHiddenPanels.add(path);
+      }
+      renderTree();
+    });
+    actions.appendChild(hiddenButton);
+  }
   header.append(left, actions);
   return header;
+}
+
+function renderHiddenGroupsPanel(parentPath, hiddenGroups) {
+  const panel = document.createElement("section");
+  panel.className = "hidden-groups-panel";
+
+  const heading = document.createElement("h3");
+  heading.textContent = "Hidden groups";
+  panel.appendChild(heading);
+
+  const list = document.createElement("div");
+  list.className = "hidden-groups-list";
+  for (const group of hiddenGroups) {
+    const groupPath = relationshipGroupPath(parentPath, group);
+    const item = document.createElement("div");
+    item.className = "hidden-group-item";
+
+    const label = document.createElement("span");
+    label.className = "hidden-group-label";
+    label.textContent = group.label;
+    label.appendChild(badge(String(group.items.length), "count"));
+
+    const showButton = document.createElement("button");
+    showButton.type = "button";
+    showButton.textContent = "Show";
+    showButton.addEventListener("click", () => {
+      hiddenGroupPaths.delete(groupPath);
+      collapsedGroupPaths.add(groupPath);
+      if (hiddenRelationshipGroups(parentPath, relationshipGroupsForPath(parentPath)).length === 0) {
+        openHiddenPanels.delete(parentPath);
+      }
+      renderTree();
+    });
+
+    item.append(label, showButton);
+    list.appendChild(item);
+  }
+  panel.appendChild(list);
+  return panel;
 }
 
 function renderEntityBody(entity) {
@@ -312,6 +379,9 @@ function renderRelationshipGroup(group, parentPath, ancestors) {
   titleRow.appendChild(heading);
   titleRow.appendChild(badge(String(group.items.length), "count"));
 
+  const actions = document.createElement("div");
+  actions.className = "relationship-group-actions";
+
   const toggleButton = document.createElement("button");
   toggleButton.type = "button";
   toggleButton.textContent = isCollapsed ? "Expand" : "Collapse";
@@ -325,7 +395,20 @@ function renderRelationshipGroup(group, parentPath, ancestors) {
     renderTree();
   });
 
-  header.append(titleRow, toggleButton);
+  actions.appendChild(toggleButton);
+  if (isCollapsed) {
+    const hideButton = document.createElement("button");
+    hideButton.type = "button";
+    hideButton.textContent = "Hide";
+    hideButton.addEventListener("click", () => {
+      hiddenGroupPaths.add(groupPath);
+      collapsedGroupPaths.add(groupPath);
+      renderTree();
+    });
+    actions.appendChild(hideButton);
+  }
+
+  header.append(titleRow, actions);
   section.appendChild(header);
 
   if (isCollapsed) {
@@ -345,6 +428,16 @@ function renderRelationshipGroup(group, parentPath, ancestors) {
 
 function relationshipGroupPath(parentPath, group) {
   return `${parentPath}|group|${group.order}:${group.label}`;
+}
+
+function hiddenRelationshipGroups(parentPath, groups) {
+  return groups.filter((group) => hiddenGroupPaths.has(relationshipGroupPath(parentPath, group)));
+}
+
+function relationshipGroupsForPath(path) {
+  const parts = path.split("|");
+  const entityId = parts[parts.length - 1];
+  return relationshipGroups(entityId);
 }
 
 function relationshipGroups(entityId) {
