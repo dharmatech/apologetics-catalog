@@ -5,7 +5,9 @@ let currentRootId = DEFAULT_ROOT_ID;
 let expandedPaths = new Set();
 let expandedGroupPaths = new Set();
 let hiddenGroupPaths = new Set();
+let hiddenNodePaths = new Set();
 let openHiddenPanels = new Set();
+let openHiddenNodePanels = new Set();
 let nodeDisplayModes = new Map();
 let firstRenderedPathByEntity = new Map();
 
@@ -65,7 +67,9 @@ function openRoot(rawEntityId, options = {}) {
   expandedPaths = new Set([entityId]);
   expandedGroupPaths = new Set();
   hiddenGroupPaths = new Set();
+  hiddenNodePaths = new Set();
   openHiddenPanels = new Set();
+  openHiddenNodePanels = new Set();
   nodeDisplayModes = new Map();
   document.querySelector("#root-id").value = entityId;
 
@@ -89,7 +93,7 @@ function renderEmptyTree() {
   document.querySelector("#tree").replaceChildren();
 }
 
-function renderNode(entityId, path, ancestors, parentRelationship) {
+function renderNode(entityId, path, ancestors, parentRelationship, options = {}) {
   const entity = catalog.entities[entityId];
   const node = document.createElement("article");
   node.className = "node";
@@ -114,7 +118,7 @@ function renderNode(entityId, path, ancestors, parentRelationship) {
     node.classList.add("node-id-mode");
   }
 
-  node.appendChild(renderNodeHeader(entity, path, isExpanded, isRepeated, displayMode, hiddenGroups));
+  node.appendChild(renderNodeHeader(entity, path, isExpanded, isRepeated, displayMode, hiddenGroups, options));
 
   if (hiddenGroups.length > 0 && openHiddenPanels.has(path)) {
     node.appendChild(renderHiddenGroupsPanel(path, hiddenGroups));
@@ -162,7 +166,7 @@ function renderNode(entityId, path, ancestors, parentRelationship) {
   return node;
 }
 
-function renderNodeHeader(entity, path, isExpanded, isRepeated, displayMode, hiddenGroups) {
+function renderNodeHeader(entity, path, isExpanded, isRepeated, displayMode, hiddenGroups, options) {
   const header = document.createElement("header");
   header.className = "node-header";
 
@@ -229,6 +233,15 @@ function renderNodeHeader(entity, path, isExpanded, isRepeated, displayMode, hid
   });
 
   actions.append(displayButton, toggleButton, rootButton);
+  if (options.canHide) {
+    const hideButton = document.createElement("button");
+    hideButton.type = "button";
+    hideButton.textContent = "Hide";
+    hideButton.addEventListener("click", () => {
+      hideNodeOccurrence(path);
+    });
+    actions.appendChild(hideButton);
+  }
   if (hiddenGroups.length > 0) {
     const hiddenButton = document.createElement("button");
     hiddenButton.type = "button";
@@ -282,6 +295,55 @@ function renderHiddenGroupsPanel(parentPath, hiddenGroups) {
 
     item.append(label, showButton);
     list.appendChild(item);
+  }
+  panel.appendChild(list);
+  return panel;
+}
+
+function renderHiddenNodesPanel(groupPath, hiddenItems) {
+  const panel = document.createElement("section");
+  panel.className = "hidden-groups-panel hidden-nodes-panel";
+
+  const heading = document.createElement("h3");
+  heading.textContent = "Hidden nodes";
+  panel.appendChild(heading);
+
+  const list = document.createElement("div");
+  list.className = "hidden-groups-list";
+  for (const item of hiddenItems) {
+    const entity = catalog.entities[item.entityId];
+    const itemPath = item.path;
+    const row = document.createElement("div");
+    row.className = "hidden-group-item";
+
+    const label = document.createElement("span");
+    label.className = "hidden-node-label";
+
+    const id = document.createElement("span");
+    id.className = "hidden-node-id";
+    id.textContent = item.entityId;
+    label.appendChild(id);
+
+    if (entity) {
+      label.appendChild(badge(entity.kind, "kind"));
+      if (entity.perspective && entity.perspective.label) {
+        label.appendChild(badge(entity.perspective.label, "perspective"));
+      }
+    }
+
+    const showButton = document.createElement("button");
+    showButton.type = "button";
+    showButton.textContent = "Show";
+    showButton.addEventListener("click", () => {
+      hiddenNodePaths.delete(itemPath);
+      if (hiddenItemsForGroup(groupPath, item.group).length === 0) {
+        openHiddenNodePanels.delete(groupPath);
+      }
+      renderTree();
+    });
+
+    row.append(label, showButton);
+    list.appendChild(row);
   }
   panel.appendChild(list);
   return panel;
@@ -363,6 +425,8 @@ function renderRelationshipGroup(group, parentPath, ancestors) {
   section.className = "relationship-group";
 
   const groupPath = relationshipGroupPath(parentPath, group);
+  const hiddenItems = hiddenItemsForGroup(groupPath, group);
+  const visibleItems = visibleItemsForGroup(groupPath, group);
   const isExpanded = expandedGroupPaths.has(groupPath);
   const isCollapsed = !isExpanded;
   if (isCollapsed) {
@@ -397,6 +461,21 @@ function renderRelationshipGroup(group, parentPath, ancestors) {
   });
 
   actions.appendChild(toggleButton);
+  if (hiddenItems.length > 0) {
+    const hiddenButton = document.createElement("button");
+    hiddenButton.type = "button";
+    hiddenButton.textContent = `Hidden ${hiddenItems.length}`;
+    hiddenButton.setAttribute("aria-expanded", String(openHiddenNodePanels.has(groupPath)));
+    hiddenButton.addEventListener("click", () => {
+      if (openHiddenNodePanels.has(groupPath)) {
+        openHiddenNodePanels.delete(groupPath);
+      } else {
+        openHiddenNodePanels.add(groupPath);
+      }
+      renderTree();
+    });
+    actions.appendChild(hiddenButton);
+  }
   if (isCollapsed) {
     const hideButton = document.createElement("button");
     hideButton.type = "button";
@@ -412,17 +491,22 @@ function renderRelationshipGroup(group, parentPath, ancestors) {
   header.append(titleRow, actions);
   section.appendChild(header);
 
+  if (hiddenItems.length > 0 && openHiddenNodePanels.has(groupPath)) {
+    section.appendChild(renderHiddenNodesPanel(groupPath, hiddenItems));
+  }
+
   if (isCollapsed) {
     return section;
   }
 
-  const list = document.createElement("div");
-  list.className = "children";
-  for (const item of group.items) {
-    const childPath = `${parentPath}|${item.relationship.id}|${item.entityId}`;
-    list.appendChild(renderNode(item.entityId, childPath, ancestors, item.relationship));
+  if (visibleItems.length > 0) {
+    const list = document.createElement("div");
+    list.className = "children";
+    for (const item of visibleItems) {
+      list.appendChild(renderNode(item.entityId, item.path, ancestors, item.relationship, { canHide: true }));
+    }
+    section.appendChild(list);
   }
-  section.appendChild(list);
 
   return section;
 }
@@ -431,8 +515,56 @@ function relationshipGroupPath(parentPath, group) {
   return `${parentPath}|group|${group.order}:${group.label}`;
 }
 
+function relationshipItemPath(groupPath, item, index) {
+  return `${groupPath}|item|${index}:${item.relationship.id}|${item.entityId}`;
+}
+
 function hiddenRelationshipGroups(parentPath, groups) {
   return groups.filter((group) => hiddenGroupPaths.has(relationshipGroupPath(parentPath, group)));
+}
+
+function visibleItemsForGroup(groupPath, group) {
+  return relationshipItemsForGroup(groupPath, group).filter((item) => !hiddenNodePaths.has(item.path));
+}
+
+function hiddenItemsForGroup(groupPath, group) {
+  return relationshipItemsForGroup(groupPath, group).filter((item) => hiddenNodePaths.has(item.path));
+}
+
+function relationshipItemsForGroup(groupPath, group) {
+  return group.items.map((item, index) => ({
+    ...item,
+    group,
+    path: relationshipItemPath(groupPath, item, index),
+  }));
+}
+
+function hideNodeOccurrence(path) {
+  pruneNodeProjectionState(path);
+  hiddenNodePaths.add(path);
+  renderTree();
+}
+
+function pruneNodeProjectionState(path) {
+  expandedPaths = pathsWithoutPrefix(expandedPaths, path);
+  expandedGroupPaths = pathsWithoutPrefix(expandedGroupPaths, path);
+  hiddenGroupPaths = pathsWithoutPrefix(hiddenGroupPaths, path);
+  hiddenNodePaths = pathsWithoutPrefix(hiddenNodePaths, path);
+  openHiddenPanels = pathsWithoutPrefix(openHiddenPanels, path);
+  openHiddenNodePanels = pathsWithoutPrefix(openHiddenNodePanels, path);
+  nodeDisplayModes = mapWithoutPrefix(nodeDisplayModes, path);
+}
+
+function pathsWithoutPrefix(paths, prefix) {
+  return new Set(Array.from(paths).filter((path) => !pathMatchesPrefix(path, prefix)));
+}
+
+function mapWithoutPrefix(map, prefix) {
+  return new Map(Array.from(map.entries()).filter(([path]) => !pathMatchesPrefix(path, prefix)));
+}
+
+function pathMatchesPrefix(path, prefix) {
+  return path === prefix || path.startsWith(`${prefix}|`);
 }
 
 function relationshipGroupsForPath(path) {

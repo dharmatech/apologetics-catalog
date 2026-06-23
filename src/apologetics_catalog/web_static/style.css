@@ -338,6 +338,22 @@ button:hover {
   min-width: 0;
 }
 
+.hidden-node-label {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.hidden-node-id {
+  color: var(--text);
+  font-family: Consolas, "Liberation Mono", monospace;
+  font-size: 0.82rem;
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+
 .children {
   display: grid;
   gap: 0.65rem;
