@@ -92,7 +92,9 @@ evidence:
     locator:
       type: verse
       value: "Psalm 89:27"
-    quotation: "firstborn, The highest of the kings of the earth"
+    quotation: |-
+      And I will place him as firstborn,
+      The highest of the kings of the earth.
 
   - id: evidence.nwt_2013.luke.2_7.mary_firstborn_child
     source_id: source.bible.nwt_2013
