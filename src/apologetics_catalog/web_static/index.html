@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Apologetics Catalog Browser</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <h1>Apologetics Catalog Browser</h1>
+        <p id="project-summary" class="project-summary">Loading catalog...</p>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="toolbar" aria-label="Root entity selection">
+        <label for="root-id">Root entity ID</label>
+        <div class="root-control">
+          <input
+            id="root-id"
+            name="root-id"
+            type="text"
+            autocomplete="off"
+            spellcheck="false"
+            value="claim.jesus_created"
+          >
+          <button id="open-root" type="button">Open</button>
+        </div>
+        <p id="status" class="status" role="status"></p>
+      </section>
+
+      <section id="tree" class="tree" aria-label="Reasoning tree"></section>
+    </main>
+  </body>
+</html>
