@@ -3,7 +3,7 @@ const DEFAULT_ROOT_ID = "claim.jesus_created";
 let catalog = null;
 let currentRootId = DEFAULT_ROOT_ID;
 let expandedPaths = new Set();
-let collapsedGroupPaths = new Set();
+let expandedGroupPaths = new Set();
 let hiddenGroupPaths = new Set();
 let openHiddenPanels = new Set();
 let nodeDisplayModes = new Map();
@@ -63,7 +63,7 @@ function openRoot(rawEntityId, options = {}) {
 
   currentRootId = entityId;
   expandedPaths = new Set([entityId]);
-  collapsedGroupPaths = new Set();
+  expandedGroupPaths = new Set();
   hiddenGroupPaths = new Set();
   openHiddenPanels = new Set();
   nodeDisplayModes = new Map();
@@ -273,7 +273,7 @@ function renderHiddenGroupsPanel(parentPath, hiddenGroups) {
     showButton.textContent = "Show";
     showButton.addEventListener("click", () => {
       hiddenGroupPaths.delete(groupPath);
-      collapsedGroupPaths.add(groupPath);
+      expandedGroupPaths.delete(groupPath);
       if (hiddenRelationshipGroups(parentPath, relationshipGroupsForPath(parentPath)).length === 0) {
         openHiddenPanels.delete(parentPath);
       }
@@ -363,7 +363,8 @@ function renderRelationshipGroup(group, parentPath, ancestors) {
   section.className = "relationship-group";
 
   const groupPath = relationshipGroupPath(parentPath, group);
-  const isCollapsed = collapsedGroupPaths.has(groupPath);
+  const isExpanded = expandedGroupPaths.has(groupPath);
+  const isCollapsed = !isExpanded;
   if (isCollapsed) {
     section.classList.add("is-collapsed");
   }
@@ -387,10 +388,10 @@ function renderRelationshipGroup(group, parentPath, ancestors) {
   toggleButton.textContent = isCollapsed ? "Expand" : "Collapse";
   toggleButton.setAttribute("aria-expanded", String(!isCollapsed));
   toggleButton.addEventListener("click", () => {
-    if (collapsedGroupPaths.has(groupPath)) {
-      collapsedGroupPaths.delete(groupPath);
+    if (expandedGroupPaths.has(groupPath)) {
+      expandedGroupPaths.delete(groupPath);
     } else {
-      collapsedGroupPaths.add(groupPath);
+      expandedGroupPaths.add(groupPath);
     }
     renderTree();
   });
@@ -402,7 +403,7 @@ function renderRelationshipGroup(group, parentPath, ancestors) {
     hideButton.textContent = "Hide";
     hideButton.addEventListener("click", () => {
       hiddenGroupPaths.add(groupPath);
-      collapsedGroupPaths.add(groupPath);
+      expandedGroupPaths.delete(groupPath);
       renderTree();
     });
     actions.appendChild(hideButton);
