@@ -3,6 +3,7 @@ const DEFAULT_ROOT_ID = "claim.jesus_created";
 let catalog = null;
 let currentRootId = DEFAULT_ROOT_ID;
 let expandedPaths = new Set();
+let collapsedGroupPaths = new Set();
 let firstRenderedPathByEntity = new Map();
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -59,6 +60,7 @@ function openRoot(rawEntityId, options = {}) {
 
   currentRootId = entityId;
   expandedPaths = new Set([entityId]);
+  collapsedGroupPaths = new Set();
   document.querySelector("#root-id").value = entityId;
 
   if (options.updateUrl !== false) {
@@ -268,9 +270,42 @@ function renderRelationshipGroup(group, parentPath, ancestors) {
   const section = document.createElement("section");
   section.className = "relationship-group";
 
+  const groupPath = relationshipGroupPath(parentPath, group);
+  const isCollapsed = collapsedGroupPaths.has(groupPath);
+  if (isCollapsed) {
+    section.classList.add("is-collapsed");
+  }
+
+  const header = document.createElement("header");
+  header.className = "relationship-group-header";
+
+  const titleRow = document.createElement("div");
+  titleRow.className = "relationship-group-title-row";
+
   const heading = document.createElement("h3");
   heading.textContent = group.label;
-  section.appendChild(heading);
+  titleRow.appendChild(heading);
+  titleRow.appendChild(badge(String(group.items.length), "count"));
+
+  const toggleButton = document.createElement("button");
+  toggleButton.type = "button";
+  toggleButton.textContent = isCollapsed ? "Expand" : "Collapse";
+  toggleButton.setAttribute("aria-expanded", String(!isCollapsed));
+  toggleButton.addEventListener("click", () => {
+    if (collapsedGroupPaths.has(groupPath)) {
+      collapsedGroupPaths.delete(groupPath);
+    } else {
+      collapsedGroupPaths.add(groupPath);
+    }
+    renderTree();
+  });
+
+  header.append(titleRow, toggleButton);
+  section.appendChild(header);
+
+  if (isCollapsed) {
+    return section;
+  }
 
   const list = document.createElement("div");
   list.className = "children";
@@ -281,6 +316,10 @@ function renderRelationshipGroup(group, parentPath, ancestors) {
   section.appendChild(list);
 
   return section;
+}
+
+function relationshipGroupPath(parentPath, group) {
+  return `${parentPath}|group|${group.order}:${group.label}`;
 }
 
 function relationshipGroups(entityId) {
