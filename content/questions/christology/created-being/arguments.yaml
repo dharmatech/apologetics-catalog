@@ -9,6 +9,12 @@ arguments:
       Since Psalm 89:27 can use firstborn in a rank or preeminence sense,
       Colossians 1:15's use of firstborn does not by itself establish that
       Jesus is created.
+    provenance:
+      attributed_to:
+        type: tradition
+        id: tradition.nicene_trinitarian
+      work:
+        title: "Dataset author synthesis using NWT Colossians 1:15 and Psalm 89:27"
 
   - id: argument.trinitarian.john_1_3_created_things_response
     role: response
