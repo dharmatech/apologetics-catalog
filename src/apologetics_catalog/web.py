@@ -160,6 +160,9 @@ def _entity_details(catalog: Catalog, entity: EntityRecord) -> dict[str, Any]:
         source = catalog.get(_string_value(entity.data.get("source_id")))
         if source is not None:
             details["source_label"] = _entity_label(source)
+            source_short_label = _string_value(source.data.get("short_label"))
+            if source_short_label:
+                details["source_short_label"] = source_short_label
 
     if entity.kind == "interpretation":
         evidence = catalog.get(_string_value(entity.data.get("evidence_id")))

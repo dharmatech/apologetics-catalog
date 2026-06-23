@@ -10,6 +10,7 @@ sources:
   - id: source.bible.bsb
     type: translation
     title: "Berean Standard Bible"
+    short_label: "BSB"
     work_id: source.bible
     rights:
       status: copyrighted
@@ -19,6 +20,7 @@ sources:
   - id: source.bible.nwt_2013
     type: translation
     title: "New World Translation of the Holy Scriptures (2013 Revision)"
+    short_label: "NWT 2013"
     work_id: source.bible
     author: "WATCHTOWER"
     language: en
@@ -37,6 +39,7 @@ sources:
   - id: source.bible.nwt_1984_reference
     type: translation
     title: "New World Translation of the Holy Scriptures—With References"
+    short_label: "NWT 1984"
     url: https://wol.jw.org/en/wol/d/r1/lp-e/1001060001
     accessed: 2026-06-22
     work_id: source.bible

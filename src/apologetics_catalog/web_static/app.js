@@ -1,4 +1,5 @@
 const DEFAULT_ROOT_ID = "claim.jesus_created";
+const VIEW_STATE_VERSION = 1;
 
 let catalog = null;
 let currentRootId = DEFAULT_ROOT_ID;
@@ -14,10 +15,15 @@ let firstRenderedPathByEntity = new Map();
 
 document.addEventListener("DOMContentLoaded", () => {
   const openButton = document.querySelector("#open-root");
+  const copyViewButton = document.querySelector("#copy-view-link");
   const rootInput = document.querySelector("#root-id");
 
   openButton.addEventListener("click", () => {
     openRoot(rootInput.value);
+  });
+
+  copyViewButton.addEventListener("click", () => {
+    copyCurrentViewLink();
   });
 
   rootInput.addEventListener("keydown", (event) => {
@@ -40,8 +46,10 @@ async function loadCatalog() {
     const rootFromUrl = new URLSearchParams(window.location.search).get("root");
     const initialRoot = rootFromUrl || DEFAULT_ROOT_ID;
     document.querySelector("#project-summary").textContent = projectSummary();
-    document.querySelector("#root-id").value = initialRoot;
-    openRoot(initialRoot, { updateUrl: false });
+    if (!restoreViewFromHash()) {
+      document.querySelector("#root-id").value = initialRoot;
+      openRoot(initialRoot, { updateUrl: false });
+    }
   } catch (error) {
     setStatus(`Could not load catalog.json: ${error.message}`);
   }
@@ -78,10 +86,142 @@ function openRoot(rawEntityId, options = {}) {
   if (options.updateUrl !== false) {
     const url = new URL(window.location.href);
     url.searchParams.set("root", entityId);
+    url.hash = "";
     window.history.replaceState({}, "", url);
   }
 
   renderTree();
+}
+
+async function copyCurrentViewLink() {
+  if (!catalog) {
+    return;
+  }
+
+  const url = new URL(window.location.href);
+  url.searchParams.set("root", currentRootId);
+  url.hash = `view=${encodeViewState(currentViewState())}`;
+  window.history.replaceState({}, "", url);
+
+  try {
+    await writeClipboardText(url.toString());
+    setStatus("View link copied.");
+  } catch (error) {
+    setStatus("View link added to the address bar. Copy it from there.");
+  }
+}
+
+function restoreViewFromHash() {
+  const state = viewStateFromHash();
+  if (!state || !catalog.entities[state.root]) {
+    return false;
+  }
+
+  currentRootId = state.root;
+  expandedPaths = stringSet(state.expandedPaths);
+  expandedGroupPaths = stringSet(state.expandedGroupPaths);
+  hiddenGroupPaths = stringSet(state.hiddenGroupPaths);
+  hiddenNodePaths = stringSet(state.hiddenNodePaths);
+  openHiddenPanels = new Set();
+  openHiddenNodePanels = new Set();
+  nodeDisplayModes = new Map(stringArray(state.fullNodePaths).map((path) => [path, "full"]));
+  openQuotePaths = stringSet(state.openQuotePaths);
+  document.querySelector("#root-id").value = currentRootId;
+
+  renderTree();
+  setStatus("View restored from link.");
+  return true;
+}
+
+function viewStateFromHash() {
+  const hash = window.location.hash.replace(/^#/, "");
+  if (!hash) {
+    return null;
+  }
+
+  const encoded = new URLSearchParams(hash).get("view");
+  if (!encoded) {
+    return null;
+  }
+
+  try {
+    const state = decodeViewState(encoded);
+    if (state && state.v === VIEW_STATE_VERSION && typeof state.root === "string") {
+      return state;
+    }
+  } catch (error) {
+    return null;
+  }
+
+  return null;
+}
+
+function currentViewState() {
+  return {
+    v: VIEW_STATE_VERSION,
+    root: currentRootId,
+    expandedPaths: sortedStrings(expandedPaths),
+    expandedGroupPaths: sortedStrings(expandedGroupPaths),
+    hiddenGroupPaths: sortedStrings(hiddenGroupPaths),
+    hiddenNodePaths: sortedStrings(hiddenNodePaths),
+    openQuotePaths: sortedStrings(openQuotePaths),
+    fullNodePaths: sortedStrings(
+      Array.from(nodeDisplayModes.entries())
+        .filter((entry) => entry[1] === "full")
+        .map((entry) => entry[0]),
+    ),
+  };
+}
+
+function encodeViewState(state) {
+  const bytes = new TextEncoder().encode(JSON.stringify(state));
+  let binary = "";
+  for (const byte of bytes) {
+    binary += String.fromCharCode(byte);
+  }
+  return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+
+function decodeViewState(encoded) {
+  const base64 = encoded.replace(/-/g, "+").replace(/_/g, "/");
+  const padded = base64.padEnd(Math.ceil(base64.length / 4) * 4, "=");
+  const binary = atob(padded);
+  const bytes = Uint8Array.from(binary, (character) => character.charCodeAt(0));
+  return JSON.parse(new TextDecoder().decode(bytes));
+}
+
+async function writeClipboardText(text) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    await navigator.clipboard.writeText(text);
+    return;
+  }
+
+  const input = document.createElement("textarea");
+  input.value = text;
+  input.setAttribute("readonly", "");
+  input.className = "clipboard-fallback";
+  document.body.appendChild(input);
+  input.select();
+
+  try {
+    if (!document.execCommand("copy")) {
+      throw new Error("copy command failed");
+    }
+  } finally {
+    input.remove();
+  }
+}
+
+function sortedStrings(values) {
+  return Array.from(values).filter((value) => typeof value === "string").sort();
+}
+
+function stringArray(values) {
+  return Array.isArray(values) ? values.filter((value) => typeof value === "string") : [];
+}
+
+function stringSet(values) {
+  return new Set(stringArray(values));
 }
 
 function renderTree() {
@@ -670,7 +810,7 @@ function quoteFromEvidence(evidence) {
   return [
     {
       evidenceId: evidence.id,
-      sourceLabel: details.source_label || details.source_id || "",
+      sourceLabel: details.source_short_label || details.source_label || details.source_id || "",
       locator: formatLocatorForCitation(details.locator),
       quotation: details.quotation.trim(),
     },

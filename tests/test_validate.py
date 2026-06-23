@@ -83,6 +83,18 @@ def test_cli_build_web_generates_viewer_files(tmp_path: Path) -> None:
         data["entities"]["claim.jesus_created"]["label"] == "Jesus is a created being."
     )
     assert (
+        data["entities"]["evidence.nwt_2013.colossians.1_15.firstborn"]["details"][
+            "source_label"
+        ]
+        == "New World Translation of the Holy Scriptures (2013 Revision)"
+    )
+    assert (
+        data["entities"]["evidence.nwt_2013.colossians.1_15.firstborn"]["details"][
+            "source_short_label"
+        ]
+        == "NWT 2013"
+    )
+    assert (
         "relationship.trinitarian.john_1_3_response.challenges_created_claim"
         in data["indexes"]["incoming"]["claim.jesus_created"]
     )
