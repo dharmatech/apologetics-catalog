@@ -47,6 +47,7 @@ in a machine-readable form that can be validated, queried, visualized, analyzed,
 * [v0.1 Provenance Conventions](17-provenance-conventions.md)
 * [First Topic Modeling Plan](18-first-topic-modeling-plan.md)
 * [Web UI Reasoning Browser](19-web-ui-reasoning-browser.md)
+* [Future: Descendant Response Discovery](20-descendant-response-discovery.md)
 
 ### Overview
 

@@ -139,12 +139,12 @@ relationships:
       Colossians 1:15 by appealing to John 1:3 as a broader contextual
       constraint.
 
-  - id: relationship.trinitarian.john_1_3_response.responds_to_no_basis_assertion
+  - id: relationship.trinitarian.john_1_3_response.responds_to_jw_usual_meaning_response
     type: responds_to
     from_id: argument.trinitarian.john_1_3_created_things_response
-    to_id: evidence.jw_study_bible.colossians.1_15.no_basis_other_meaning
+    to_id: argument.jw.firstborn_usual_meaning_response
     summary: >
-      The argument responds to the Study Bible note's no-basis assertion by
+      The argument responds to the Jehovah's Witnesses usual-meaning response by
       offering John 1:3 as a proposed contextual and theological basis for a
       non-created reading of firstborn in Colossians 1:15.
 
