@@ -15,7 +15,7 @@ evidence:
     locator:
       type: verse
       value: "Colossians 1:15"
-    quotation: "firstborn of all creation"
+    quotation: "He is the image of the invisible God, the firstborn of all creation;"
 
   - id: evidence.nwt_2013.colossians.1_16.all_other_things_created
     source_id: source.bible.nwt_2013

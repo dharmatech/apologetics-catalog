@@ -9,6 +9,7 @@ let hiddenNodePaths = new Set();
 let openHiddenPanels = new Set();
 let openHiddenNodePanels = new Set();
 let nodeDisplayModes = new Map();
+let openQuotePaths = new Set();
 let firstRenderedPathByEntity = new Map();
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -71,6 +72,7 @@ function openRoot(rawEntityId, options = {}) {
   openHiddenPanels = new Set();
   openHiddenNodePanels = new Set();
   nodeDisplayModes = new Map();
+  openQuotePaths = new Set();
   document.querySelector("#root-id").value = entityId;
 
   if (options.updateUrl !== false) {
@@ -112,13 +114,21 @@ function renderNode(entityId, path, ancestors, parentRelationship, options = {})
   const isCycle = ancestors.includes(entityId);
   const isExpanded = expandedPaths.has(path);
   const displayMode = nodeDisplayModes.get(path) || "id";
+  const quotes = quotesForEntity(entity);
+  const shouldShowQuotes = quotes.length > 0 && (displayMode === "full" || openQuotePaths.has(path));
   const groups = relationshipGroups(entityId);
   const hiddenGroups = hiddenRelationshipGroups(path, groups);
   if (displayMode === "id") {
     node.classList.add("node-id-mode");
   }
 
-  node.appendChild(renderNodeHeader(entity, path, isExpanded, isRepeated, displayMode, hiddenGroups, options));
+  node.appendChild(
+    renderNodeHeader(entity, path, isExpanded, isRepeated, displayMode, hiddenGroups, options, quotes, shouldShowQuotes)
+  );
+
+  if (shouldShowQuotes) {
+    node.appendChild(renderQuotes(quotes));
+  }
 
   if (hiddenGroups.length > 0 && openHiddenPanels.has(path)) {
     node.appendChild(renderHiddenGroupsPanel(path, hiddenGroups));
@@ -129,7 +139,7 @@ function renderNode(entityId, path, ancestors, parentRelationship, options = {})
   }
 
   if (displayMode === "full") {
-    node.appendChild(renderEntityBody(entity));
+    node.appendChild(renderEntityBody(entity, { omitQuotationFields: shouldShowQuotes }));
   }
 
   if (!isExpanded) {
@@ -166,7 +176,17 @@ function renderNode(entityId, path, ancestors, parentRelationship, options = {})
   return node;
 }
 
-function renderNodeHeader(entity, path, isExpanded, isRepeated, displayMode, hiddenGroups, options) {
+function renderNodeHeader(
+  entity,
+  path,
+  isExpanded,
+  isRepeated,
+  displayMode,
+  hiddenGroups,
+  options,
+  quotes,
+  shouldShowQuotes,
+) {
   const header = document.createElement("header");
   header.className = "node-header";
 
@@ -233,6 +253,21 @@ function renderNodeHeader(entity, path, isExpanded, isRepeated, displayMode, hid
   });
 
   actions.append(displayButton, toggleButton, rootButton);
+  if (displayMode === "id" && quotes.length > 0) {
+    const quoteButton = document.createElement("button");
+    quoteButton.type = "button";
+    quoteButton.textContent = quoteButtonLabel(quotes, shouldShowQuotes);
+    quoteButton.setAttribute("aria-expanded", String(shouldShowQuotes));
+    quoteButton.addEventListener("click", () => {
+      if (openQuotePaths.has(path)) {
+        openQuotePaths.delete(path);
+      } else {
+        openQuotePaths.add(path);
+      }
+      renderTree();
+    });
+    actions.insertBefore(quoteButton, toggleButton);
+  }
   if (options.canHide) {
     const hideButton = document.createElement("button");
     hideButton.type = "button";
@@ -300,6 +335,30 @@ function renderHiddenGroupsPanel(parentPath, hiddenGroups) {
   return panel;
 }
 
+function renderQuotes(quotes) {
+  const section = document.createElement("section");
+  section.className = "quotes";
+  section.setAttribute("aria-label", "Quotations");
+
+  for (const quote of quotes) {
+    const figure = document.createElement("figure");
+    figure.className = "quote-card";
+
+    const caption = document.createElement("figcaption");
+    caption.className = "quote-citation";
+    caption.textContent = quoteCitationLabel(quote);
+
+    const blockquote = document.createElement("blockquote");
+    blockquote.className = "quote-text";
+    blockquote.textContent = quote.quotation;
+
+    figure.append(caption, blockquote);
+    section.appendChild(figure);
+  }
+
+  return section;
+}
+
 function renderHiddenNodesPanel(groupPath, hiddenItems) {
   const panel = document.createElement("section");
   panel.className = "hidden-groups-panel hidden-nodes-panel";
@@ -349,7 +408,7 @@ function renderHiddenNodesPanel(groupPath, hiddenItems) {
   return panel;
 }
 
-function renderEntityBody(entity) {
+function renderEntityBody(entity, options = {}) {
   const body = document.createElement("div");
   body.className = "node-body";
 
@@ -361,7 +420,7 @@ function renderEntityBody(entity) {
   }
 
   const details = entity.details || {};
-  const fields = detailFields(entity.kind, details);
+  const fields = detailFields(entity.kind, details, options);
   if (fields.length > 0) {
     const list = document.createElement("dl");
     list.className = "details";
@@ -384,14 +443,18 @@ function renderEntityBody(entity) {
   return body;
 }
 
-function detailFields(kind, details) {
+function detailFields(kind, details, options = {}) {
   if (kind === "evidence") {
-    return [
-      { key: "quotation", label: "Quotation" },
-      { key: "paraphrase", label: "Paraphrase" },
-      { key: "source_label", label: "Source" },
-      { key: "locator", label: "Locator" },
-    ];
+    const fields = [];
+    if (!options.omitQuotationFields) {
+      fields.push(
+        { key: "quotation", label: "Quotation" },
+        { key: "source_label", label: "Source" },
+        { key: "locator", label: "Locator" },
+      );
+    }
+    fields.push({ key: "paraphrase", label: "Paraphrase" });
+    return fields;
   }
   if (kind === "interpretation") {
     return [
@@ -552,6 +615,7 @@ function pruneNodeProjectionState(path) {
   hiddenNodePaths = pathsWithoutPrefix(hiddenNodePaths, path);
   openHiddenPanels = pathsWithoutPrefix(openHiddenPanels, path);
   openHiddenNodePanels = pathsWithoutPrefix(openHiddenNodePanels, path);
+  openQuotePaths = pathsWithoutPrefix(openQuotePaths, path);
   nodeDisplayModes = mapWithoutPrefix(nodeDisplayModes, path);
 }
 
@@ -571,6 +635,77 @@ function relationshipGroupsForPath(path) {
   const parts = path.split("|");
   const entityId = parts[parts.length - 1];
   return relationshipGroups(entityId);
+}
+
+function quotesForEntity(entity) {
+  if (entity.kind === "evidence") {
+    return quoteFromEvidence(entity);
+  }
+
+  if (entity.kind === "interpretation") {
+    return evidenceIdsForInterpretation(entity)
+      .map((evidenceId) => catalog.entities[evidenceId])
+      .filter((evidence) => evidence && evidence.kind === "evidence")
+      .flatMap(quoteFromEvidence);
+  }
+
+  return [];
+}
+
+function evidenceIdsForInterpretation(entity) {
+  const details = entity.details || {};
+  return uniqueStrings([
+    details.evidence_id,
+    ...(Array.isArray(details.evidence_ids) ? details.evidence_ids : []),
+    ...(Array.isArray(details.related_evidence_ids) ? details.related_evidence_ids : []),
+  ]);
+}
+
+function quoteFromEvidence(evidence) {
+  const details = evidence.details || {};
+  if (typeof details.quotation !== "string" || details.quotation.trim() === "") {
+    return [];
+  }
+
+  return [
+    {
+      evidenceId: evidence.id,
+      sourceLabel: details.source_label || details.source_id || "",
+      locator: formatLocatorForCitation(details.locator),
+      quotation: details.quotation.trim(),
+    },
+  ];
+}
+
+function uniqueStrings(values) {
+  const result = [];
+  const seen = new Set();
+  for (const value of values) {
+    if (typeof value !== "string" || value.trim() === "" || seen.has(value)) {
+      continue;
+    }
+    seen.add(value);
+    result.push(value);
+  }
+  return result;
+}
+
+function quoteButtonLabel(quotes, shouldShowQuotes) {
+  if (shouldShowQuotes) {
+    return quotes.length === 1 ? "Hide Quote" : "Hide Quotes";
+  }
+  return quotes.length === 1 ? "Quote" : `Quotes ${quotes.length}`;
+}
+
+function quoteCitationLabel(quote) {
+  return [quote.sourceLabel, quote.locator].filter((value) => value !== "").join(", ");
+}
+
+function formatLocatorForCitation(locator) {
+  if (locator && typeof locator === "object" && typeof locator.value === "string") {
+    return locator.value;
+  }
+  return typeof locator === "string" ? locator : "";
 }
 
 function relationshipGroups(entityId) {
