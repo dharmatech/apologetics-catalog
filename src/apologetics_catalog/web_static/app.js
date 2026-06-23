@@ -4,6 +4,7 @@ let catalog = null;
 let currentRootId = DEFAULT_ROOT_ID;
 let expandedPaths = new Set();
 let collapsedGroupPaths = new Set();
+let nodeDisplayModes = new Map();
 let firstRenderedPathByEntity = new Map();
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -61,6 +62,7 @@ function openRoot(rawEntityId, options = {}) {
   currentRootId = entityId;
   expandedPaths = new Set([entityId]);
   collapsedGroupPaths = new Set();
+  nodeDisplayModes = new Map();
   document.querySelector("#root-id").value = entityId;
 
   if (options.updateUrl !== false) {
@@ -101,14 +103,20 @@ function renderNode(entityId, path, ancestors, parentRelationship) {
 
   const isCycle = ancestors.includes(entityId);
   const isExpanded = expandedPaths.has(path);
+  const displayMode = nodeDisplayModes.get(path) || "id";
+  if (displayMode === "id") {
+    node.classList.add("node-id-mode");
+  }
 
-  node.appendChild(renderNodeHeader(entity, path, isExpanded, isRepeated));
+  node.appendChild(renderNodeHeader(entity, path, isExpanded, isRepeated, displayMode));
 
-  if (parentRelationship) {
+  if (parentRelationship && displayMode === "full") {
     node.appendChild(renderRelationshipSummary(parentRelationship));
   }
 
-  node.appendChild(renderEntityBody(entity));
+  if (displayMode === "full") {
+    node.appendChild(renderEntityBody(entity));
+  }
 
   if (!isExpanded) {
     return node;
@@ -140,7 +148,7 @@ function renderNode(entityId, path, ancestors, parentRelationship) {
   return node;
 }
 
-function renderNodeHeader(entity, path, isExpanded, isRepeated) {
+function renderNodeHeader(entity, path, isExpanded, isRepeated, displayMode) {
   const header = document.createElement("header");
   header.className = "node-header";
 
@@ -150,8 +158,9 @@ function renderNodeHeader(entity, path, isExpanded, isRepeated) {
   const titleRow = document.createElement("div");
   titleRow.className = "node-title-row";
 
-  const title = document.createElement("h2");
-  title.textContent = entity.label || entity.id;
+  const title = document.createElement(displayMode === "id" ? "p" : "h2");
+  title.className = displayMode === "id" ? "entity-id node-id-title" : "";
+  title.textContent = displayMode === "id" ? entity.id : entity.label || entity.id;
   titleRow.appendChild(title);
 
   titleRow.appendChild(badge(entity.kind, "kind"));
@@ -162,14 +171,30 @@ function renderNodeHeader(entity, path, isExpanded, isRepeated) {
     titleRow.appendChild(badge("Repeated", "repeated"));
   }
 
-  const id = document.createElement("p");
-  id.className = "entity-id";
-  id.textContent = entity.id;
+  if (displayMode === "full") {
+    const id = document.createElement("p");
+    id.className = "entity-id";
+    id.textContent = entity.id;
+    left.append(titleRow, id);
+  } else {
+    left.appendChild(titleRow);
+  }
 
-  left.append(titleRow, id);
 
   const actions = document.createElement("div");
   actions.className = "node-actions";
+
+  const displayButton = document.createElement("button");
+  displayButton.type = "button";
+  displayButton.textContent = displayMode === "id" ? "Full" : "ID";
+  displayButton.addEventListener("click", () => {
+    if (displayMode === "id") {
+      nodeDisplayModes.set(path, "full");
+    } else {
+      nodeDisplayModes.delete(path);
+    }
+    renderTree();
+  });
 
   const toggleButton = document.createElement("button");
   toggleButton.type = "button";
@@ -190,7 +215,7 @@ function renderNodeHeader(entity, path, isExpanded, isRepeated) {
     openRoot(entity.id);
   });
 
-  actions.append(toggleButton, rootButton);
+  actions.append(displayButton, toggleButton, rootButton);
   header.append(left, actions);
   return header;
 }
