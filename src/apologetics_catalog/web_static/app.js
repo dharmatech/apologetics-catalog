@@ -11,6 +11,7 @@ let openHiddenPanels = new Set();
 let openHiddenNodePanels = new Set();
 let nodeDisplayModes = new Map();
 let openQuotePaths = new Set();
+let openProjectedQuotePaths = new Set();
 let shownBacklinkNodePaths = new Set();
 let firstRenderedPathByEntity = new Map();
 
@@ -82,6 +83,7 @@ function openRoot(rawEntityId, options = {}) {
   openHiddenNodePanels = new Set();
   nodeDisplayModes = new Map();
   openQuotePaths = new Set();
+  openProjectedQuotePaths = new Set();
   shownBacklinkNodePaths = new Set();
   document.querySelector("#root-id").value = entityId;
 
@@ -128,6 +130,7 @@ function restoreViewFromHash() {
   openHiddenNodePanels = new Set();
   nodeDisplayModes = new Map(stringArray(state.fullNodePaths).map((path) => [path, "full"]));
   openQuotePaths = stringSet(state.openQuotePaths);
+  openProjectedQuotePaths = stringSet(state.openProjectedQuotePaths);
   shownBacklinkNodePaths = stringSet(state.shownBacklinkNodePaths);
   document.querySelector("#root-id").value = currentRootId;
 
@@ -168,6 +171,7 @@ function currentViewState() {
     hiddenGroupPaths: sortedStrings(hiddenGroupPaths),
     hiddenNodePaths: sortedStrings(hiddenNodePaths),
     openQuotePaths: sortedStrings(openQuotePaths),
+    openProjectedQuotePaths: sortedStrings(openProjectedQuotePaths),
     shownBacklinkNodePaths: sortedStrings(shownBacklinkNodePaths),
     fullNodePaths: sortedStrings(
       Array.from(nodeDisplayModes.entries())
@@ -260,6 +264,9 @@ function renderNode(entityId, path, ancestors, parentRelationship, options = {})
   const displayMode = nodeDisplayModes.get(path) || "id";
   const quotes = quotesForEntity(entity);
   const shouldShowQuotes = quotes.length > 0 && (displayMode === "full" || openQuotePaths.has(path));
+  const projectedQuotes = projectedQuotesForEntity(entity);
+  const canShowProjectedQuotes = projectedQuotes.length > 0 && quotes.length === 0 && !shouldShowQuotes;
+  const shouldShowProjectedQuotes = canShowProjectedQuotes && openProjectedQuotePaths.has(path);
   const groups = relationshipGroups(entityId);
   const hiddenGroups = hiddenRelationshipGroups(path, groups);
   if (displayMode === "id") {
@@ -267,11 +274,27 @@ function renderNode(entityId, path, ancestors, parentRelationship, options = {})
   }
 
   node.appendChild(
-    renderNodeHeader(entity, path, isExpanded, isRepeated, displayMode, hiddenGroups, options, quotes, shouldShowQuotes)
+    renderNodeHeader(
+      entity,
+      path,
+      isExpanded,
+      isRepeated,
+      displayMode,
+      hiddenGroups,
+      options,
+      quotes,
+      shouldShowQuotes,
+      shouldShowProjectedQuotes,
+      canShowProjectedQuotes,
+    )
   );
 
   if (shouldShowQuotes) {
     node.appendChild(renderQuotes(quotes));
+  }
+
+  if (shouldShowProjectedQuotes) {
+    node.appendChild(renderQuotes(projectedQuotes));
   }
 
   if (hiddenGroups.length > 0 && openHiddenPanels.has(path)) {
@@ -330,6 +353,8 @@ function renderNodeHeader(
   options,
   quotes,
   shouldShowQuotes,
+  shouldShowProjectedQuotes,
+  canShowProjectedQuotes,
 ) {
   const header = document.createElement("header");
   header.className = "node-header";
@@ -412,6 +437,21 @@ function renderNodeHeader(
     });
     actions.insertBefore(quoteButton, toggleButton);
   }
+  if (canShowProjectedQuotes) {
+    const projectedQuoteButton = document.createElement("button");
+    projectedQuoteButton.type = "button";
+    projectedQuoteButton.textContent = shouldShowProjectedQuotes ? "Hide Quotes" : "Quotes";
+    projectedQuoteButton.setAttribute("aria-expanded", String(shouldShowProjectedQuotes));
+    projectedQuoteButton.addEventListener("click", () => {
+      if (openProjectedQuotePaths.has(path)) {
+        openProjectedQuotePaths.delete(path);
+      } else {
+        openProjectedQuotePaths.add(path);
+      }
+      renderTree();
+    });
+    actions.insertBefore(projectedQuoteButton, toggleButton);
+  }
   if (options.canHide) {
     const hideButton = document.createElement("button");
     hideButton.type = "button";
@@ -493,11 +533,19 @@ function renderQuotes(quotes) {
     caption.className = "quote-citation";
     caption.textContent = quoteCitationLabel(quote);
 
+    const projectedSource = document.createElement("p");
+    projectedSource.className = "quote-projected-source";
+    projectedSource.textContent = `from ${quote.projectedFromId}`;
+
     const blockquote = document.createElement("blockquote");
     blockquote.className = "quote-text";
     blockquote.textContent = quote.quotation;
 
-    figure.append(caption, blockquote);
+    figure.appendChild(caption);
+    if (quote.projectedFromId) {
+      figure.appendChild(projectedSource);
+    }
+    figure.appendChild(blockquote);
     section.appendChild(figure);
   }
 
@@ -816,6 +864,7 @@ function pruneNodeProjectionState(path) {
   openHiddenPanels = pathsWithoutPrefix(openHiddenPanels, path);
   openHiddenNodePanels = pathsWithoutPrefix(openHiddenNodePanels, path);
   openQuotePaths = pathsWithoutPrefix(openQuotePaths, path);
+  openProjectedQuotePaths = pathsWithoutPrefix(openProjectedQuotePaths, path);
   shownBacklinkNodePaths = pathsWithoutPrefix(shownBacklinkNodePaths, path);
   nodeDisplayModes = mapWithoutPrefix(nodeDisplayModes, path);
 }
@@ -853,6 +902,30 @@ function quotesForEntity(entity) {
   return [];
 }
 
+function projectedQuotesForEntity(entity) {
+  const relationshipIds = catalog.indexes.outgoing[entity.id] || [];
+  const quotes = [];
+  for (const relationshipId of relationshipIds) {
+    const relationship = relationshipById(relationshipId);
+    if (!relationship || relationship.type !== "uses") {
+      continue;
+    }
+
+    const usedEntity = catalog.entities[relationship.to_id];
+    if (!usedEntity) {
+      continue;
+    }
+
+    for (const quote of quotesForEntity(usedEntity)) {
+      quotes.push({
+        ...quote,
+        projectedFromId: usedEntity.id,
+      });
+    }
+  }
+  return dedupeQuotes(quotes);
+}
+
 function evidenceIdsForInterpretation(entity) {
   const details = entity.details || {};
   return uniqueStrings([
@@ -876,6 +949,22 @@ function quoteFromEvidence(evidence) {
       quotation: details.quotation.trim(),
     },
   ];
+}
+
+function dedupeQuotes(quotes) {
+  const result = [];
+  const seen = new Set();
+  for (const quote of quotes) {
+    const key = quote.evidenceId
+      ? `evidence:${quote.evidenceId}`
+      : `quote:${quote.sourceLabel}|${quote.locator}|${quote.quotation}`;
+    if (seen.has(key)) {
+      continue;
+    }
+    seen.add(key);
+    result.push(quote);
+  }
+  return result;
 }
 
 function uniqueStrings(values) {
