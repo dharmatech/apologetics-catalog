@@ -87,6 +87,476 @@ The UI should not pretend that the catalog is actually a tree.
 
 ---
 
+## Data Contract
+
+The browser should read compiled JSON, not source YAML.
+
+YAML remains the canonical authoring format. The Python validator/compiler owns
+validation, normalization, relationship indexing, and export generation.
+
+Initial generated path:
+
+```text
+generated/web/catalog.json
+```
+
+Static viewer assets may also be emitted under:
+
+```text
+generated/web/
+```
+
+Example files:
+
+```text
+generated/web/index.html
+generated/web/app.js
+generated/web/style.css
+generated/web/catalog.json
+```
+
+Generated files are disposable build artifacts.
+
+They should not be hand-edited. If generated files are checked into the
+repository later for convenience, the source of truth remains the YAML plus the
+compiler.
+
+The browser must treat generated JSON as read-only.
+
+---
+
+## JSON Shape
+
+The initial browser export should be UI-oriented rather than raw YAML-shaped.
+
+It should remain faithful to the catalog graph, but it should precompute common
+browser needs so the frontend does not need to reverse-engineer relationship
+direction, display labels, source summaries, or perspective hints.
+
+The top-level JSON should include at least:
+
+```json
+{
+  "schema_version": "0.1",
+  "generated_at": "2026-06-22T00:00:00Z",
+  "generator": {
+    "name": "apologetics-catalog"
+  },
+  "project": {
+    "id": "project.apologetics",
+    "title": "Apologetics Viewpoint Catalog"
+  },
+  "entities": {},
+  "relationships": [],
+  "indexes": {
+    "outgoing": {},
+    "incoming": {}
+  }
+}
+```
+
+Optional metadata may include:
+
+* generator version
+* git commit
+* content file list
+* content hash
+* generated output format version
+
+The JSON schema should be versioned from the beginning. The browser should
+reject or warn on unsupported `schema_version` values.
+
+---
+
+## Identity and Denormalization
+
+Entity IDs are the canonical join keys.
+
+Relationships should continue to connect entities by:
+
+```text
+from_id
+to_id
+```
+
+The JSON export may include denormalized fields for UI convenience:
+
+* display label
+* short summary
+* perspective badge
+* source summary
+* locator summary
+* relationship group label
+
+These fields are convenience data only. They do not create a separate identity
+model.
+
+The browser should render entities and relationships from IDs and indexes. If a
+denormalized display field is missing, the browser should fall back to the
+entity ID or relationship ID.
+
+---
+
+## Entity Export Records
+
+Each exported entity should include enough normalized display data for the
+browser to render a collapsed node without loading or deriving additional
+records.
+
+Suggested shape:
+
+```json
+{
+  "id": "claim.jesus_created",
+  "kind": "claim",
+  "label": "Jesus is a created being.",
+  "summary": "Jesus is a created being.",
+  "details": {},
+  "perspective": {
+    "label": "JW",
+    "source": "position"
+  }
+}
+```
+
+The exact `details` fields may vary by kind.
+
+Evidence details may include:
+
+```json
+{
+  "quotation": "all other things were created",
+  "paraphrase": null,
+  "source_id": "source.bible.nwt_2013",
+  "source_label": "New World Translation of the Holy Scriptures (2013 Revision)",
+  "locator": {
+    "type": "verse",
+    "value": "Colossians 1:16"
+  }
+}
+```
+
+Interpretation details may include:
+
+```json
+{
+  "method": "translation_scope",
+  "evidence_id": "evidence.nwt_2013.colossians.1_16.all_other_things_created",
+  "related_evidence_ids": []
+}
+```
+
+Argument details may include:
+
+```json
+{
+  "role": "response"
+}
+```
+
+The first exporter should keep enough original fields under `details` to make
+the browser useful, but it should avoid dumping every raw YAML field when a
+stable display field is better.
+
+---
+
+## Relationship Export Records
+
+Each exported relationship should include:
+
+```json
+{
+  "id": "relationship.jw.colossians_firstborn.supports_created",
+  "type": "supports",
+  "from_id": "interpretation.jw.colossians.1_15.firstborn_created_order",
+  "to_id": "claim.jesus_created",
+  "summary": "The created-order reading of firstborn is modeled as supporting the claim that Jesus is a created being.",
+  "labels": {
+    "outgoing": "Supports",
+    "incoming": "Supported by"
+  },
+  "group": {
+    "outgoing": "Supports",
+    "incoming": "Supported by",
+    "order": 7
+  }
+}
+```
+
+The exporter, not the browser, should define default group labels and sort
+order.
+
+The browser may still have fallback labels for forward compatibility.
+
+---
+
+## Indexes
+
+The export should include relationship indexes:
+
+```json
+{
+  "indexes": {
+    "outgoing": {
+      "claim.jesus_created": [
+        "relationship.created.contradicts_uncreated"
+      ]
+    },
+    "incoming": {
+      "claim.jesus_created": [
+        "relationship.jw.colossians_firstborn.supports_created"
+      ]
+    }
+  }
+}
+```
+
+Indexes should preserve deterministic order.
+
+The browser should use these indexes for expansion rather than scanning all
+relationships on every click.
+
+---
+
+## CLI Commands
+
+The first web UI command should be:
+
+```text
+apologetics-catalog build-web
+```
+
+Default output path:
+
+```text
+generated/web/
+```
+
+The command should also support:
+
+```text
+apologetics-catalog build-web --output path/to/web-output
+```
+
+The command should:
+
+* validate the catalog before writing output
+* exit nonzero if validation fails
+* avoid writing partial output when validation fails
+* create the output directory if needed
+* write only known generated files
+* overwrite known generated files on each successful build
+* avoid deleting unrelated files in the output directory
+* produce deterministic output when the source catalog has not changed
+* avoid opening a browser window
+
+Known generated files for the first version:
+
+```text
+catalog.json
+index.html
+app.js
+style.css
+```
+
+If stale generated files become a real problem, a later command may add an
+explicit cleanup option:
+
+```text
+apologetics-catalog build-web --clean
+```
+
+The first milestone should also include a local static server command:
+
+```text
+apologetics-catalog serve-web
+```
+
+By default, `serve-web` should run `build-web` first, serve `generated/web/`,
+and print the local URL.
+
+Default server address:
+
+```text
+http://127.0.0.1:8000/
+```
+
+Useful options:
+
+```text
+apologetics-catalog serve-web --host 127.0.0.1
+apologetics-catalog serve-web --port 8000
+apologetics-catalog serve-web --output generated/web
+apologetics-catalog serve-web --no-build
+```
+
+Server behavior:
+
+* use Python's standard library HTTP server
+* bind to `127.0.0.1` by default
+* allow `--host 0.0.0.0` only when the user explicitly asks for network
+  exposure
+* fail clearly if the requested port is unavailable
+* run in the foreground until interrupted with `Ctrl+C`
+* print the URL once on startup
+* avoid opening a browser window automatically
+* serve static files only
+* expose no editing API and no write endpoints
+* send no-cache headers for development, at least for `catalog.json`
+
+When `--no-build` is used, the command should verify that the output directory
+already contains the expected files:
+
+```text
+index.html
+catalog.json
+```
+
+If required files are missing, it should fail before starting the server with a
+clear message such as:
+
+```text
+generated/web/catalog.json not found; run apologetics-catalog build-web first
+```
+
+A later `--open` flag may open the browser explicitly, but automatic browser
+opening should not be the default behavior.
+
+Serving locally is likely to be the normal workflow because some browsers block
+`fetch()` access to local JSON when opening `index.html` through `file://`.
+
+---
+
+## First Implementation Milestone
+
+The first milestone should stop at a useful read-only browser, before snapshot
+exports.
+
+It should include:
+
+* `apologetics-catalog build-web`
+* `apologetics-catalog serve-web`
+* validation before output generation
+* default output to `generated/web/`
+* `--output` support
+* local serving from `127.0.0.1:8000`
+* `--host`, `--port`, `--output`, and `--no-build` support for `serve-web`
+* foreground server lifetime, stopped with `Ctrl+C`
+* no-cache headers for generated browser assets
+* `catalog.json` with entities, relationships, incoming indexes, and outgoing
+  indexes
+* static `index.html`, `app.js`, and `style.css`
+* exact-ID root loading
+* first-level relationship groups
+* expand/collapse behavior
+* repeated-node and cycle protection
+* basic evidence, source, and perspective display
+
+It should not include yet:
+
+* Markdown snapshot export
+* plain text snapshot export
+* self-contained HTML snapshot export
+* editing
+* publishing
+
+Those export features are still part of the broader MVP, but they should follow
+after the browser is useful enough to inspect the current catalog.
+
+---
+
+## Implementation Notes
+
+Editable web assets should live in the Python package, not in `generated/`.
+
+Initial source location:
+
+```text
+src/apologetics_catalog/web_static/
+```
+
+Initial asset files:
+
+```text
+index.html
+app.js
+style.css
+```
+
+These files should be included as Python package data so an installed
+`apologetics-catalog` CLI can build the browser without relying on a repository
+checkout layout.
+
+`build-web` should load package assets through `importlib.resources` rather
+than hard-coded paths relative to the current working directory.
+
+The first viewer should use plain HTML, CSS, and JavaScript. It should not add
+npm, a bundler, TypeScript, generated minified assets, or a frontend build step.
+
+On every successful `build-web`, the command should copy package assets into
+the output directory and overwrite the known generated files:
+
+```text
+catalog.json
+index.html
+app.js
+style.css
+```
+
+Generated files are disposable. User edits inside `generated/web/` are not
+preserved. The command should still avoid deleting unrelated files.
+
+`catalog.json` is the frontend contract and should have focused exporter tests.
+Those tests should verify:
+
+* entity export records
+* relationship export records
+* incoming and outgoing indexes
+* stable relationship group labels
+* stable ordering
+* deterministic output
+
+If `generated_at` or similar build metadata is included, tests should be able
+to inject a fixed timestamp.
+
+The browser must render catalog content as text, not HTML. User-controlled
+catalog fields such as summaries, quotations, source titles, locators, and
+labels should be assigned with text APIs such as `textContent`, not injected
+with `innerHTML`.
+
+---
+
+## Implementation Approach
+
+The first implementation should be dependency-light.
+
+Recommended sequence:
+
+1. Add `apologetics-catalog build-web` with the validation-first output
+   contract.
+2. Write `generated/web/catalog.json`.
+3. Include entities, relationships, incoming/outgoing indexes, display labels,
+   and perspective/source summaries.
+4. Add a static viewer scaffold under `generated/web/`.
+5. Add `apologetics-catalog serve-web` using Python's standard library HTTP
+   server.
+6. Implement exact-ID root loading.
+7. Implement first-level relationship groups.
+8. Implement expand/collapse and repeated-node detection.
+9. Add simple search.
+10. Add Markdown and plain text snapshot export.
+11. Add self-contained HTML snapshot export.
+
+The MVP can use vanilla HTML, CSS, and JavaScript.
+
+No React, Vite, TypeScript, package bundler, or frontend build step is required
+unless the UI grows enough to justify that complexity.
+
+The generated static viewer should normally be served by `serve-web` so browser
+JSON loading behavior is predictable across environments.
+
+---
+
 ## Primary Workflow
 
 The main workflow is:
@@ -574,8 +1044,9 @@ For the MVP, the tree browser is the primary visualization.
 
 ## MVP Scope
 
-The first implementation should include:
+The broader web UI MVP should include:
 
+* Python CLI generation of `generated/web/catalog.json`
 * static or local web app for browsing compiled catalog data
 * exact-ID root loading
 * simple search
@@ -590,8 +1061,8 @@ The first implementation should include:
 * plain text export of current expanded view
 * self-contained HTML export of current expanded view
 
-The MVP may read from generated JSON produced by the compiler rather than raw
-YAML.
+The MVP should read from generated JSON produced by the compiler rather than
+raw YAML.
 
 ---
 
