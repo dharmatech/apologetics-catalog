@@ -1,5 +1,6 @@
 const DEFAULT_ROOT_ID = "claim.jesus_created";
 const VIEW_STATE_VERSION = 1;
+const PATH_LINK_VERSION = "v1";
 
 let catalog = null;
 let currentRootId = DEFAULT_ROOT_ID;
@@ -48,7 +49,7 @@ async function loadCatalog() {
     const rootFromUrl = new URLSearchParams(window.location.search).get("root");
     const initialRoot = rootFromUrl || DEFAULT_ROOT_ID;
     document.querySelector("#project-summary").textContent = projectSummary();
-    if (!restoreViewFromHash()) {
+    if (!restoreViewFromHash() && !restorePathFromHash()) {
       document.querySelector("#root-id").value = initialRoot;
       openRoot(initialRoot, { updateUrl: false });
     }
@@ -115,6 +116,51 @@ async function copyCurrentViewLink() {
   }
 }
 
+async function copyPathLink(path) {
+  const entityIds = entityIdsFromPath(path);
+  if (entityIds.length < 2) {
+    return;
+  }
+
+  const url = new URL(window.location.href);
+  url.searchParams.set("root", entityIds[0]);
+  url.hash = `path=${encodePathLink(entityIds)}`;
+  window.history.replaceState({}, "", url);
+
+  try {
+    await writeClipboardText(url.toString());
+    setStatus("Path link copied.");
+  } catch (error) {
+    setStatus("Path link added to the address bar. Copy it from there.");
+  }
+}
+
+function attachPathLinkControl(element, path) {
+  const entityIds = entityIdsFromPath(path);
+  if (entityIds.length < 2) {
+    return;
+  }
+
+  element.classList.add("entity-id-path-link");
+  element.setAttribute("role", "button");
+  element.setAttribute("tabindex", "0");
+  element.setAttribute("title", "Copy path link from the root to this node");
+  element.setAttribute(
+    "aria-label",
+    `Copy path link from ${entityIds[0]} to ${entityIds[entityIds.length - 1]}`,
+  );
+
+  element.addEventListener("click", () => {
+    copyPathLink(path);
+  });
+  element.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      copyPathLink(path);
+    }
+  });
+}
+
 function restoreViewFromHash() {
   const state = viewStateFromHash();
   if (!state || !catalog.entities[state.root]) {
@@ -136,6 +182,37 @@ function restoreViewFromHash() {
 
   renderTree();
   setStatus("View restored from link.");
+  return true;
+}
+
+function restorePathFromHash() {
+  const entityIds = pathEntityIdsFromHash();
+  if (!entityIds) {
+    return false;
+  }
+
+  const result = pathProjectionState(entityIds);
+  if (result.error) {
+    renderEmptyTree();
+    setStatus(result.error);
+    return true;
+  }
+
+  currentRootId = entityIds[0];
+  expandedPaths = new Set(result.expandedPaths);
+  expandedGroupPaths = new Set(result.expandedGroupPaths);
+  hiddenGroupPaths = new Set(result.hiddenGroupPaths);
+  hiddenNodePaths = new Set(result.hiddenNodePaths);
+  openHiddenPanels = new Set();
+  openHiddenNodePanels = new Set();
+  nodeDisplayModes = new Map();
+  openQuotePaths = new Set(result.openQuotePaths);
+  openProjectedQuotePaths = new Set(result.openProjectedQuotePaths);
+  shownBacklinkNodePaths = new Set(result.shownBacklinkNodePaths);
+  document.querySelector("#root-id").value = currentRootId;
+
+  renderTree();
+  setStatus("Path restored from link.");
   return true;
 }
 
@@ -162,6 +239,26 @@ function viewStateFromHash() {
   return null;
 }
 
+function pathEntityIdsFromHash() {
+  const hash = window.location.hash.replace(/^#/, "");
+  if (!hash) {
+    return null;
+  }
+
+  const encoded = new URLSearchParams(hash).get("path");
+  if (!encoded || !encoded.startsWith(`${PATH_LINK_VERSION}:`)) {
+    return null;
+  }
+
+  const pathBody = encoded.slice(PATH_LINK_VERSION.length + 1);
+  const entityIds = pathBody
+    .split("~")
+    .filter((value) => value !== "")
+    .map((value) => decodeURIComponent(value));
+
+  return entityIds.length >= 2 ? entityIds : null;
+}
+
 function currentViewState() {
   return {
     v: VIEW_STATE_VERSION,
@@ -179,6 +276,107 @@ function currentViewState() {
         .map((entry) => entry[0]),
     ),
   };
+}
+
+function encodePathLink(entityIds) {
+  return `${PATH_LINK_VERSION}:${entityIds.map((entityId) => encodeURIComponent(entityId)).join("~")}`;
+}
+
+function pathProjectionState(entityIds) {
+  const expanded = new Set();
+  const expandedGroups = new Set();
+  const hiddenGroups = new Set();
+  const hiddenNodes = new Set();
+  const openQuotes = new Set();
+  const openProjectedQuotes = new Set();
+  const shownBacklinks = new Set();
+
+  for (const entityId of entityIds) {
+    if (!catalog.entities[entityId]) {
+      return { error: `Path link references missing entity: ${entityId}` };
+    }
+  }
+
+  let parentPath = entityIds[0];
+  expanded.add(parentPath);
+  addDefaultQuoteState(entityIds[0], parentPath, openQuotes, openProjectedQuotes);
+
+  for (let index = 0; index < entityIds.length - 1; index += 1) {
+    const parentEntityId = entityIds[index];
+    const targetEntityId = entityIds[index + 1];
+    const groups = relationshipGroups(parentEntityId);
+    const match = pathRelationshipMatch(parentPath, groups, targetEntityId);
+
+    if (!match) {
+      return {
+        error: `Path link cannot connect ${parentEntityId} to ${targetEntityId}.`,
+      };
+    }
+
+    for (const group of groups) {
+      const groupPath = relationshipGroupPath(parentPath, group);
+      if (groupPath !== match.groupPath) {
+        hiddenGroups.add(groupPath);
+      }
+    }
+
+    for (const item of match.items) {
+      if (item.path !== match.item.path) {
+        hiddenNodes.add(item.path);
+      }
+    }
+
+    if (isDefaultHiddenBacklink(parentPath, match.item)) {
+      shownBacklinks.add(match.item.path);
+    }
+
+    expandedGroups.add(match.groupPath);
+    expanded.add(match.item.path);
+    addDefaultQuoteState(targetEntityId, match.item.path, openQuotes, openProjectedQuotes);
+    parentPath = match.item.path;
+  }
+
+  for (const group of relationshipGroups(entityIds[entityIds.length - 1])) {
+    hiddenGroups.add(relationshipGroupPath(parentPath, group));
+  }
+
+  return {
+    expandedPaths: sortedStrings(expanded),
+    expandedGroupPaths: sortedStrings(expandedGroups),
+    hiddenGroupPaths: sortedStrings(hiddenGroups),
+    hiddenNodePaths: sortedStrings(hiddenNodes),
+    openQuotePaths: sortedStrings(openQuotes),
+    openProjectedQuotePaths: sortedStrings(openProjectedQuotes),
+    shownBacklinkNodePaths: sortedStrings(shownBacklinks),
+  };
+}
+
+function pathRelationshipMatch(parentPath, groups, targetEntityId) {
+  for (const group of groups) {
+    const groupPath = relationshipGroupPath(parentPath, group);
+    const items = relationshipItemsForGroup(groupPath, group);
+    const item = items.find((candidate) => candidate.entityId === targetEntityId);
+    if (item) {
+      return { group, groupPath, item, items };
+    }
+  }
+  return null;
+}
+
+function addDefaultQuoteState(entityId, path, openQuotes, openProjectedQuotes) {
+  const entity = catalog.entities[entityId];
+  if (!entity) {
+    return;
+  }
+
+  if (quotesForEntity(entity).length > 0) {
+    openQuotes.add(path);
+    return;
+  }
+
+  if (projectedQuotesForEntity(entity).length > 0) {
+    openProjectedQuotes.add(path);
+  }
 }
 
 function encodeViewState(state) {
@@ -368,6 +566,9 @@ function renderNodeHeader(
   const title = document.createElement(displayMode === "id" ? "p" : "h2");
   title.className = displayMode === "id" ? "entity-id node-id-title" : "";
   title.textContent = displayMode === "id" ? entity.id : entity.label || entity.id;
+  if (displayMode === "id") {
+    attachPathLinkControl(title, path);
+  }
   titleRow.appendChild(title);
 
   titleRow.appendChild(badge(entity.kind, "kind"));
@@ -382,6 +583,7 @@ function renderNodeHeader(
     const id = document.createElement("p");
     id.className = "entity-id";
     id.textContent = entity.id;
+    attachPathLinkControl(id, path);
     left.append(titleRow, id);
   } else {
     left.appendChild(titleRow);
@@ -848,6 +1050,19 @@ function directParentEntityId(path) {
 function entityIdFromPath(path) {
   const separatorIndex = path.lastIndexOf("|");
   return separatorIndex === -1 ? path : path.slice(separatorIndex + 1);
+}
+
+function entityIdsFromPath(path) {
+  const parts = path.split("|");
+  const entityIds = parts[0] ? [parts[0]] : [];
+
+  for (let index = 0; index < parts.length - 2; index += 1) {
+    if (parts[index] === "item") {
+      entityIds.push(parts[index + 2]);
+    }
+  }
+
+  return entityIds;
 }
 
 function hideNodeOccurrence(path) {

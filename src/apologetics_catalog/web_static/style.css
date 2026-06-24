@@ -184,6 +184,23 @@ button:hover {
   margin: 0;
 }
 
+.entity-id-path-link {
+  border-radius: 4px;
+  cursor: pointer;
+  text-underline-offset: 0.18em;
+}
+
+.entity-id-path-link:hover,
+.entity-id-path-link:focus {
+  color: var(--accent-strong);
+  text-decoration: underline;
+}
+
+.entity-id-path-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 .node-actions {
   display: flex;
   flex-wrap: wrap;
