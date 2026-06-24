@@ -48,6 +48,7 @@ in a machine-readable form that can be validated, queried, visualized, analyzed,
 * [First Topic Modeling Plan](18-first-topic-modeling-plan.md)
 * [Web UI Reasoning Browser](19-web-ui-reasoning-browser.md)
 * [Future: Descendant Response Discovery](20-descendant-response-discovery.md)
+* [Path Links](21-path-links.md)
 
 ### Overview
 
