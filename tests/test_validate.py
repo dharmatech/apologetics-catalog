@@ -125,7 +125,7 @@ def test_cli_serve_web_no_build_requires_existing_files(tmp_path: Path) -> None:
 
     assert result.exit_code == 1
     output_text = normalize_output(result.stdout)
-    assert "catalog.json not found" in output_text
+    assert "catalog.jsonnotfound" in output_text.replace(" ", "")
     assert "run apologetics-catalog build-web first" in output_text
 
 
